@@ -751,22 +751,25 @@
         .slot {
             border: 0 !important;
             background: transparent !important;
-            flex: 1 1 auto;
-            width: 100%;
-            height: auto;
-            min-height: 0;
-            padding: 6px 6px 2px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
+            flex: 1 1 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: calc(100% - 28px) !important;
+            padding: 5px 4px 2px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            box-sizing: border-box !important;
             cursor: pointer;
             border-radius: 0 !important;
             text-align: center;
+            overflow: hidden !important;
         }
 
         .slot-top {
+            flex: 0 0 auto !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -836,16 +839,17 @@
         }
 
         .slot img {
-            flex: 1 1 auto;
-            max-width: 82%;
-            max-height: 62%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
+            flex: 1 1 0 !important;
+            min-height: 0 !important;
+            max-width: 82% !important;
+            max-height: 100% !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
             image-rendering: auto;
             transition: transform .15s ease;
             pointer-events: none;
-            margin: auto 0;
+            margin: auto 0 !important;
         }
 
         .slot:hover img {
@@ -853,28 +857,31 @@
         }
 
         .slot-name {
-            font-size: 11.5px;
-            font-weight: 700;
-            text-align: center;
-            line-height: 1.2;
-            display: block;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            padding: 1px 4px 2px;
-            color: var(--ink);
+            flex: 0 0 auto !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            line-height: 1.2 !important;
+            display: block !important;
+            max-width: 100% !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            padding: 1px 4px 2px !important;
+            color: var(--ink) !important;
             pointer-events: none;
             box-sizing: border-box;
         }
 
         .slot-footer {
-            display: flex;
-            width: 100%;
-            height: 28px;
-            min-height: 28px;
-            border-top: 1px solid rgba(105, 69, 165, 0.15);
-            background: rgba(255, 255, 255, 0.88);
+            flex: 0 0 28px !important;
+            width: 100% !important;
+            height: 28px !important;
+            min-height: 28px !important;
+            max-height: 28px !important;
+            display: flex !important;
+            border-top: 1px solid rgba(105, 69, 165, 0.15) !important;
+            background: rgba(255, 255, 255, 0.92) !important;
             backdrop-filter: blur(4px);
             z-index: 2;
             box-sizing: border-box;
@@ -882,37 +889,38 @@
 
         .slot-footer .where-button,
         .slot-footer .evolution-link {
-            flex: 1 1 50%;
-            height: 100%;
-            min-height: 100%;
-            border: 0;
-            background: transparent;
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--violet);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
+            flex: 1 1 50% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            max-height: 100% !important;
+            border: 0 !important;
+            background: transparent !important;
+            font-size: 10.5px !important;
+            font-weight: 700 !important;
+            color: var(--violet) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 2px !important;
             cursor: pointer;
-            padding: 0 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-decoration: none;
-            line-height: 1;
+            padding: 0 3px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            text-decoration: none !important;
+            line-height: 1 !important;
             transition: background .12s, color .12s;
             box-sizing: border-box;
         }
 
         .slot-footer .where-button {
-            border-right: 1px solid rgba(105, 69, 165, 0.15);
+            border-right: 1px solid rgba(105, 69, 165, 0.15) !important;
         }
 
         .slot-footer .where-button:hover,
         .slot-footer .evolution-link:hover {
-            background: var(--lavender);
-            color: var(--dark);
+            background: var(--lavender) !important;
+            color: var(--dark) !important;
         }
 
         .slot-footer .evolution-link.quiet {
@@ -920,9 +928,9 @@
         }
 
         .slot-footer.no-evo .where-button {
-            flex: 1 1 100%;
-            border-right: 0;
-            font-size: 10.5px;
+            flex: 1 1 100% !important;
+            border-right: 0 !important;
+            font-size: 10.5px !important;
         }
 
         .slot-position,
@@ -1694,17 +1702,32 @@
                 min-height: unset !important;
                 height: auto !important;
                 border-radius: 11px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .slot {
-                min-height: unset !important;
-                padding: 5px 4px 2px !important;
+                flex: 1 1 0 !important;
+                min-height: 0 !important;
+                height: auto !important;
+                max-height: calc(100% - 28px) !important;
+                padding: 4px 3px 1px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
                 -webkit-tap-highlight-color: transparent;
             }
 
             .slot img {
-                max-width: 82% !important;
-                max-height: 60% !important;
+                flex: 1 1 0 !important;
+                min-height: 0 !important;
+                max-width: 84% !important;
+                max-height: 100% !important;
                 width: auto !important;
                 height: auto !important;
                 margin: auto 0 !important;
@@ -1713,7 +1736,8 @@
             }
 
             .slot-top {
-                font-size: 9px !important;
+                flex: 0 0 auto !important;
+                font-size: 9.5px !important;
                 font-weight: 700 !important;
                 width: 100% !important;
                 padding: 0 2px !important;
@@ -1735,7 +1759,8 @@
             }
 
             .slot-name {
-                font-size: 10px !important;
+                flex: 0 0 auto !important;
+                font-size: 10.5px !important;
                 line-height: 1.15 !important;
                 font-weight: 700 !important;
                 white-space: nowrap !important;
@@ -1743,21 +1768,41 @@
                 text-overflow: ellipsis !important;
                 max-width: 100% !important;
                 text-align: center !important;
-                padding: 1px 2px 2px !important;
+                padding: 0 2px 2px !important;
+                box-sizing: border-box !important;
             }
 
             .slot-footer {
-                height: 27px !important;
-                min-height: 27px !important;
+                flex: 0 0 28px !important;
+                height: 28px !important;
+                min-height: 28px !important;
+                max-height: 28px !important;
+                display: flex !important;
+                width: 100% !important;
+                z-index: 2 !important;
+                box-sizing: border-box !important;
             }
 
             .slot-footer .where-button,
             .slot-footer .evolution-link {
+                flex: 1 1 50% !important;
+                height: 100% !important;
+                min-height: 100% !important;
+                max-height: 100% !important;
                 font-size: 9.5px !important;
-                padding: 0 3px !important;
+                font-weight: 700 !important;
+                padding: 0 2px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important;
+                box-sizing: border-box !important;
             }
 
             .slot-footer.no-evo .where-button {
+                flex: 1 1 100% !important;
                 font-size: 10px !important;
             }
 
@@ -1823,34 +1868,72 @@
                 min-height: unset !important;
                 height: auto !important;
                 border-radius: 12px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .box-panel.view-3col .slot {
-                min-height: unset !important;
-                padding: 6px 5px 3px !important;
-                border-radius: 12px !important;
+                flex: 1 1 0 !important;
+                min-height: 0 !important;
+                height: auto !important;
+                max-height: calc(100% - 28px) !important;
+                padding: 5px 4px 2px !important;
+                border-radius: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .box-panel.view-3col .slot img {
-                max-width: 82% !important;
-                max-height: 62% !important;
+                flex: 1 1 0 !important;
+                min-height: 0 !important;
+                max-width: 84% !important;
+                max-height: 100% !important;
+                width: auto !important;
+                height: auto !important;
+                object-fit: contain !important;
+                margin: auto 0 !important;
             }
 
             .box-panel.view-3col .slot-name {
+                flex: 0 0 auto !important;
                 font-size: 11px !important;
                 font-weight: 700 !important;
                 padding: 1px 3px 2px !important;
+                box-sizing: border-box !important;
             }
 
             .box-panel.view-3col .slot-footer {
-                height: 29px !important;
-                min-height: 29px !important;
+                flex: 0 0 28px !important;
+                height: 28px !important;
+                min-height: 28px !important;
+                max-height: 28px !important;
+                display: flex !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             .box-panel.view-3col .slot-footer .where-button,
             .box-panel.view-3col .slot-footer .evolution-link {
+                flex: 1 1 50% !important;
+                height: 100% !important;
+                min-height: 100% !important;
+                max-height: 100% !important;
                 font-size: 10px !important;
-                padding: 0 4px !important;
+                font-weight: 700 !important;
+                padding: 0 3px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important;
+                box-sizing: border-box !important;
             }
 
             .box-meta {
@@ -3562,73 +3645,97 @@
             background: rgba(198, 165, 255, 0.55);
         }
 
+        html[data-theme=dark] .slot-cell,
+        html[data-theme=dark] .slot.empty {
+            background: #231c2e !important;
+            border-color: #493a59 !important;
+            color: var(--ink) !important;
+        }
+
+        html[data-theme=dark] .slot-cell:hover {
+            background: #2c223a !important;
+            border-color: #aa86d2 !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.caught) {
+            background: #183327 !important;
+            border-color: #3b6650 !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.caught):hover {
+            background: #204434 !important;
+            border-color: #4f8c6d !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.shiny-caught) {
+            background: #3e311b !important;
+            border-color: #8c6e2e !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.shiny-caught):hover {
+            background: #4e3e22 !important;
+            border-color: #b38f3f !important;
+        }
+
         html[data-theme=dark] .slot {
-            background: #2a2135;
-            border-color: #51405f
+            background: transparent !important;
+            border: 0 !important;
         }
 
-        html[data-theme=dark] .slot:hover {
-            background: #392b48
-        }
-
-        html[data-theme=dark] :is(.slot.caught, .form-card.recorded, .item-card.item-ready) {
+        html[data-theme=dark] :is(.form-card.recorded, .item-card.item-ready) {
             background: var(--green-light);
-            border-color: #42735a
-        }
-
-        html[data-theme=dark] .slot.caught:hover {
-            background: #234d3b
-        }
-
-        html[data-theme=dark] .slot.shiny-caught {
-            background: #43351e;
-            border-color: #9e7f38
+            border-color: #42735a;
         }
 
         html[data-theme=dark] :is(.slot.shiny-caught .slot-top, .slot.shiny-caught .slot-position, .result .shiny-result) {
-            color: #ffe1a0
+            color: #ffe1a0;
         }
 
         html[data-theme=dark] :is(.caught .slot-top, .caught .slot-position) {
-            color: #a4d8bb
+            color: #a4d8bb;
         }
 
         html[data-theme=dark] :is(.slot-position, .column-label, .row-label) {
-            color: #bcaacb
+            color: #bcaacb;
+        }
+
+        html[data-theme=dark] .check {
+            background: #2a2036;
+            border-color: #5d4a72;
         }
 
         html[data-theme=dark] .caught .check {
             background: #8ed4ae;
             color: #122a20;
-            border-color: #8ed4ae
+            border-color: #8ed4ae;
         }
 
         html[data-theme=dark] .evolution-link {
-            color: #dac2ff
+            color: #dac2ff;
         }
 
         html[data-theme=dark] .evolution-link.quiet {
-            background: #241d2c;
-            color: var(--muted)
+            display: none !important;
         }
 
         html[data-theme=dark] .slot-footer {
-            background: rgba(30, 24, 40, 0.9) !important;
-            border-top-color: rgba(255, 255, 255, 0.1) !important;
+            background: rgba(26, 20, 35, 0.95) !important;
+            border-top-color: rgba(255, 255, 255, 0.12) !important;
         }
 
         html[data-theme=dark] .slot-footer .where-button,
         html[data-theme=dark] .slot-footer .evolution-link {
-            color: #d1b8eb !important;
+            color: #dac2ff !important;
         }
 
         html[data-theme=dark] .slot-footer .where-button {
-            border-right-color: rgba(255, 255, 255, 0.1) !important;
+            border-right-color: rgba(255, 255, 255, 0.12) !important;
         }
 
         html[data-theme=dark] .slot-footer .where-button:hover,
         html[data-theme=dark] .slot-footer .evolution-link:hover {
-            background: #47355f !important;
+            background: #44325a !important;
             color: #fff !important;
         }
 
@@ -4800,10 +4907,12 @@
                         button.querySelector('.slot-status').prepend(star);
                         button.querySelector('.slot-name').textContent = p.name; button.querySelector('.slot-form').textContent = e.form?.label || ''; const badge = button.querySelector('.version-badge'); badge.classList.add(e.exclusive); badge.textContent = e.exclusive === 'scarlet' ? 'Scarlet' : e.exclusive === 'violet' ? 'Violet' : e.exclusive === 'forms' ? 'Formas S/V' : 'Ambos'; setSlot(button, e); button.classList.toggle('highlight', highlighted === e.key);
                         const cell = document.createElement('div'); cell.className = 'slot-cell'; cell.dataset.species = n; cell.dataset.entryIndex = e.index; cell.append(button);
-                        const footer = document.createElement('div'); footer.className = 'slot-footer' + (!p.evoTo.length ? ' no-evo' : '');
-                        const where = toolButton('📍 Onde', () => showLocation(n)); where.className = 'where-button'; where.dataset.where = n; where.setAttribute('aria-label', 'Onde encontrar ' + p.name);
-                        const evoLabel = p.evoTo.length > 1 ? `${p.evoTo.length} evoluções ↗` : p.evoTo.length ? `${p.evoTo[0].label} ↗` : p.evoFrom.length ? 'Ver pré-evo' : '';
-                        const evolution = toolButton(evoLabel || 'Sem evolução', () => showEvolution(n)); evolution.className = 'evolution-link' + (!p.evoTo.length ? ' quiet' : ''); evolution.dataset.evolution = n;
+                        const hasEvo = p.evoTo && p.evoTo.length > 0, hasFamily = p.evoFrom && p.evoFrom.length > 0;
+                        const footer = document.createElement('div'); footer.className = 'slot-footer' + (!hasEvo && !hasFamily ? ' no-evo' : '');
+                        const whereLabel = (hasEvo || hasFamily) ? '📍 Onde' : '📍 Onde encontrar';
+                        const where = toolButton(whereLabel, () => showLocation(n)); where.className = 'where-button'; where.dataset.where = n; where.setAttribute('aria-label', 'Onde encontrar ' + p.name);
+                        const evoLabel = p.evoTo.length > 1 ? `${p.evoTo.length} evoluções ↗` : hasEvo ? `${p.evoTo[0].label} ↗` : hasFamily ? 'Evolução ↗' : '';
+                        const evolution = toolButton(evoLabel || 'Sem evolução', () => showEvolution(n)); evolution.className = 'evolution-link' + (!hasEvo && !hasFamily ? ' quiet' : ''); evolution.dataset.evolution = n;
                         footer.append(where, evolution);
                         cell.append(footer);
                         const placeholder = document.createElement('div'); placeholder.className = 'filter-placeholder'; placeholder.setAttribute('aria-hidden', 'true'); const text = document.createElement('strong'); text.textContent = `#${pad(n)} ${e.form?.label || p.name}`; const desc = document.createElement('span'); desc.textContent = 'Oculto pelo filtro'; const location = document.createElement('small'); location.textContent = `Slot ${slot} · L${r} C${c}`; placeholder.append(text, desc, location); cell.append(placeholder); grid.append(cell);
