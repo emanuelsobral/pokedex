@@ -3,3 +3,11 @@
 .netlify/
 node_modules/
 
+# Desenvolvimento e guias locais
+server.js
+iniciar-servidor.bat
+supabase/
+DEPLOY-NETLIFY.md
+.env.example
+
+
