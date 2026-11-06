@@ -771,10 +771,15 @@
         }
 
         .slot img {
-            width: 60px;
-            height: 57px;
+            width: 72px;
+            height: 68px;
             object-fit: contain;
-            image-rendering: pixelated
+            image-rendering: auto;
+            transition: transform .15s ease
+        }
+
+        .slot:hover img {
+            transform: scale(1.06)
         }
 
         .slot-name {
@@ -1035,12 +1040,12 @@
 
         @media(min-width:1500px) {
             .slot {
-                min-height: 133px
+                min-height: 140px
             }
 
             .slot img {
-                height: 66px;
-                width: 70px
+                height: 80px;
+                width: 84px
             }
         }
 
@@ -1498,10 +1503,10 @@
                 display: none !important;
             }
 
-            /* MODO 6x5 EQUILIBRADO (Meio termo: ~76px por slot, não espremido e não gigante) */
+            /* MODO 6x5 EQUILIBRADO (Largura otimizada para sprites destacados) */
             .box-grid {
-                min-width: 495px !important;
-                width: 495px !important;
+                min-width: 520px !important;
+                width: 520px !important;
                 grid-template-columns: 20px repeat(6, minmax(0, 1fr)) !important;
                 gap: 5px !important;
             }
@@ -1560,9 +1565,9 @@
             .row-label:nth-of-type(5)::after { content: 'L5'; }
 
             .slot {
-                min-height: 98px !important;
+                min-height: 104px !important;
                 height: auto !important;
-                padding: 6px 4px 5px 4px !important;
+                padding: 4px 2px 4px 2px !important;
                 border-radius: 10px !important;
                 -webkit-tap-highlight-color: transparent;
             }
@@ -1573,10 +1578,11 @@
             }
 
             .slot img {
-                width: 44px !important;
-                height: 42px !important;
-                margin: 2px 0 !important;
+                width: 58px !important;
+                height: 54px !important;
+                margin: 1px 0 !important;
                 object-fit: contain !important;
+                image-rendering: auto !important;
             }
 
             .slot-top {
@@ -1727,17 +1733,20 @@
             }
 
             .box-panel.view-3col .slot {
-                min-height: 110px !important;
-                padding: 8px 6px 6px 6px !important;
+                min-height: 138px !important;
+                padding: 6px 4px 6px 4px !important;
             }
 
             .box-panel.view-3col .slot img {
-                width: 52px !important;
-                height: 50px !important;
+                width: 82px !important;
+                height: 78px !important;
+                margin: 2px 0 2px !important;
+                image-rendering: auto !important;
             }
 
             .box-panel.view-3col .slot-name {
-                font-size: 11px !important;
+                font-size: 11.5px !important;
+                font-weight: 700 !important;
             }
 
             .box-panel.view-3col .slot-position {
