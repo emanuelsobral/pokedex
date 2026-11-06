@@ -710,18 +710,52 @@
             letter-spacing: .1px
         }
 
+        .slot-cell,
+        .slot.empty {
+            aspect-ratio: 1 / 1 !important;
+            width: 100%;
+            min-width: 0;
+            min-height: unset !important;
+            height: auto !important;
+            border-radius: 12px !important;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .slot-cell {
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
         .slot {
             position: relative;
             border: 1px solid #e9e3ef;
-            border-radius: 11px;
+            border-radius: 12px !important;
             background: #f9f7fc;
             min-width: 0;
-            min-height: 123px;
-            padding: 9px 5px 7px;
+            width: 100%;
+            height: 100% !important;
+            min-height: unset !important;
+            padding: 5px 4px 4px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             flex-direction: column;
-            isolation: isolate
+            isolation: isolate;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .slot-cell .slot {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px !important;
+            border-bottom-left-radius: 12px !important;
+            border-bottom-right-radius: 12px !important;
+            min-height: unset !important;
         }
 
         .slot:hover {
@@ -748,7 +782,8 @@
             font-size: 11px;
             color: var(--muted);
             font-variant-numeric: tabular-nums;
-            line-height: 16px
+            line-height: 16px;
+            z-index: 1;
         }
 
         .check {
@@ -761,7 +796,8 @@
             justify-content: center;
             font-size: 11px;
             color: transparent;
-            background: var(--white)
+            background: var(--white);
+            flex-shrink: 0;
         }
 
         .caught .check {
@@ -771,35 +807,42 @@
         }
 
         .slot img {
-            width: 72px;
-            height: 68px;
+            max-width: 76%;
+            max-height: 60%;
+            width: auto;
+            height: auto;
             object-fit: contain;
             image-rendering: auto;
-            transition: transform .15s ease
+            transition: transform .15s ease;
+            pointer-events: none;
+            margin: auto 0;
         }
 
         .slot:hover img {
-            transform: scale(1.06)
+            transform: scale(1.08)
         }
 
         .slot-name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 650;
             text-align: center;
             line-height: 1.2;
-            min-height: 15px;
+            min-height: unset;
             display: block;
             max-width: 100%;
-            overflow-wrap: anywhere
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 2px;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .slot-position {
-            font-size: 9px;
-            color: #766781;
-            line-height: 1.4;
-            display: block;
-            margin-top: 4px;
-            white-space: nowrap
+        .slot-position,
+        .slot-form,
+        .slot-record,
+        .version-badge {
+            display: none !important;
         }
 
         .caught .slot-position,
@@ -811,13 +854,26 @@
             border-style: dashed;
             background: #fcfbfe;
             justify-content: center;
+            align-items: center;
             color: #998ca6;
-            min-height: 123px
+            min-height: unset !important;
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 12px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
 
         .empty-symbol {
             font-size: 22px;
             font-weight: 300;
+            margin-bottom: 2px;
+        }
+
+        .slot.empty .slot-name {
+            font-size: 10px;
+            color: #998ca6;
+        }
             margin-bottom: 8px
         }
 
@@ -1039,13 +1095,9 @@
         }
 
         @media(min-width:1500px) {
-            .slot {
-                min-height: 140px
-            }
-
-            .slot img {
-                height: 80px;
-                width: 84px
+            .slot-cell,
+            .slot.empty {
+                aspect-ratio: 1 / 1 !important;
             }
         }
 
@@ -1095,10 +1147,6 @@
 
             .box-button {
                 padding: 10px
-            }
-
-            .slot {
-                min-height: 119px
             }
         }
 
@@ -1564,141 +1612,177 @@
             .row-label:nth-of-type(4)::after { content: 'L4'; }
             .row-label:nth-of-type(5)::after { content: 'L5'; }
 
-            .slot {
-                min-height: 104px !important;
+            .slot-cell,
+            .slot.empty {
+                aspect-ratio: 1 / 1 !important;
+                min-height: unset !important;
                 height: auto !important;
-                padding: 4px 2px 4px 2px !important;
+                border-radius: 10px !important;
+            }
+
+            .slot {
+                min-height: unset !important;
+                height: 100% !important;
+                padding: 4px 3px 3px !important;
                 border-radius: 10px !important;
                 -webkit-tap-highlight-color: transparent;
             }
 
             .slot-cell .slot {
-                border-bottom-left-radius: 0 !important;
-                border-bottom-right-radius: 0 !important;
+                border-radius: 10px !important;
+                border-bottom-left-radius: 10px !important;
+                border-bottom-right-radius: 10px !important;
             }
 
             .slot img {
-                width: 58px !important;
-                height: 54px !important;
-                margin: 1px 0 !important;
+                max-width: 78% !important;
+                max-height: 60% !important;
+                width: auto !important;
+                height: auto !important;
+                margin: auto 0 !important;
                 object-fit: contain !important;
                 image-rendering: auto !important;
             }
 
             .slot-top {
-                font-size: 8.5px !important;
+                font-size: 8px !important;
                 font-weight: 700 !important;
                 width: 100% !important;
-                padding: 0 2px !important;
+                padding: 0 1px !important;
             }
 
             .slot-top .check {
-                font-size: 10px !important;
+                font-size: 9px !important;
+                width: 14px !important;
+                height: 14px !important;
             }
 
             .slot-name {
-                font-size: 9.5px !important;
-                line-height: 1.2 !important;
+                font-size: 8.5px !important;
+                line-height: 1.1 !important;
                 font-weight: 600 !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
                 text-overflow: ellipsis !important;
                 max-width: 100% !important;
                 text-align: center !important;
+                padding: 0 14px !important;
             }
 
-            .slot-form {
-                font-size: 7.5px !important;
-                line-height: 1 !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 100% !important;
-            }
-
-            .version-badge {
-                font-size: 7.5px !important;
-                padding: 1px 3px !important;
-                border-radius: 3px !important;
-                margin-top: 2px !important;
-            }
-
-            .slot-position {
-                display: none !important;
-            }
-
+            .slot-form,
+            .version-badge,
+            .slot-position,
             .slot-record {
-                font-size: 7px !important;
-                line-height: 1 !important;
-                margin-top: 1px !important;
-            }
-
-            .evolution-link.quiet {
                 display: none !important;
             }
 
-            .evolution-link {
-                width: 100% !important;
-                min-height: 20px !important;
-                padding: 2px 2px !important;
-                font-size: 8px !important;
-                line-height: 1.1 !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                border-radius: 0 !important;
-                font-weight: 600 !important;
+            .slot-cell .slot-tools {
+                position: absolute !important;
+                inset: 0 !important;
+                display: block !important;
+                pointer-events: none !important;
+                border: 0 !important;
+                background: transparent !important;
+                border-radius: 10px !important;
+                z-index: 3 !important;
             }
 
-            .slot-tools {
-                grid-template-columns: 1fr 24px !important;
-                min-height: 24px !important;
-                border-radius: 0 0 10px 10px !important;
+            .slot-cell .slot-tools button {
+                pointer-events: auto !important;
             }
 
-            .slot-tools button {
-                min-height: 24px !important;
+            .slot-cell .slot-tools .shiny-button {
+                position: absolute !important;
+                top: 2px !important;
+                right: 17px !important;
+                width: 15px !important;
+                height: 15px !important;
+                font-size: 13px !important;
                 padding: 0 !important;
+                border: 0 !important;
+                background: transparent !important;
             }
 
-            .slot-tools .where-button {
-                font-size: 8px !important;
+            .slot-cell .slot-tools .where-button {
+                position: absolute !important;
+                bottom: 2px !important;
+                left: 2px !important;
+                width: 16px !important;
+                height: 16px !important;
+                min-height: unset !important;
+                padding: 0 !important;
+                font-size: 0 !important;
+                border: 1px solid rgba(105, 69, 165, 0.2) !important;
+                border-radius: 4px !important;
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(4px);
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                gap: 2px !important;
+                z-index: 3 !important;
             }
 
-            .slot-tools .where-button::before {
-                content: '📍';
+            .slot-cell .slot-tools .where-button::before {
+                content: '📍' !important;
+                font-size: 9px !important;
+            }
+
+            .slot-cell .evolution-link {
+                position: absolute !important;
+                bottom: 2px !important;
+                right: 2px !important;
+                width: 16px !important;
+                height: 16px !important;
+                min-height: unset !important;
+                padding: 0 !important;
+                font-size: 0 !important;
+                border: 1px solid rgba(105, 69, 165, 0.2) !important;
+                border-radius: 4px !important;
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(4px);
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                z-index: 3 !important;
+            }
+
+            .slot-cell .evolution-link::after {
+                content: '↗' !important;
                 font-size: 10px !important;
+                font-weight: 700 !important;
             }
 
-            .slot-tools .shiny-button {
-                font-size: 15px !important;
-                padding: 0 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
+            .slot-cell .evolution-link.quiet {
+                display: none !important;
             }
 
             .slot.empty {
-                min-height: 80px !important;
+                aspect-ratio: 1 / 1 !important;
+                min-height: unset !important;
+                height: auto !important;
                 border-radius: 10px !important;
-                padding: 6px 2px !important;
+                padding: 2px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
 
             .slot.empty .empty-symbol {
-                font-size: 14px !important;
+                font-size: 16px !important;
+                margin-bottom: 0 !important;
             }
 
             .slot.empty .slot-name {
-                font-size: 8px !important;
+                font-size: 7.5px !important;
             }
 
             .slot-cell.filtered .filter-placeholder {
-                padding: 6px 2px !important;
-                min-height: 80px !important;
+                position: absolute !important;
+                inset: 0 !important;
+                aspect-ratio: 1 / 1 !important;
+                border-radius: 10px !important;
+                padding: 4px !important;
             }
 
             .slot-cell.filtered .filter-placeholder strong {
@@ -1713,7 +1797,7 @@
                 display: none !important;
             }
 
-            /* MODO 3 COLUNAS (Sem nenhuma rolagem lateral) */
+            /* MODO 3 COLUNAS (Sem nenhuma rolagem lateral, quadrados grandes) */
             .box-panel.view-3col .grid-scroll {
                 overflow-x: hidden !important;
                 padding: 0 !important;
@@ -1732,41 +1816,63 @@
                 gap: 8px !important;
             }
 
+            .box-panel.view-3col .slot-cell,
+            .box-panel.view-3col .slot.empty {
+                aspect-ratio: 1 / 1 !important;
+                min-height: unset !important;
+                height: auto !important;
+                border-radius: 12px !important;
+            }
+
             .box-panel.view-3col .slot {
-                min-height: 138px !important;
-                padding: 6px 4px 6px 4px !important;
+                min-height: unset !important;
+                padding: 5px 4px 4px !important;
+                border-radius: 12px !important;
             }
 
             .box-panel.view-3col .slot img {
-                width: 82px !important;
-                height: 78px !important;
-                margin: 2px 0 2px !important;
-                image-rendering: auto !important;
+                max-width: 80% !important;
+                max-height: 62% !important;
             }
 
             .box-panel.view-3col .slot-name {
-                font-size: 11.5px !important;
+                font-size: 11px !important;
                 font-weight: 700 !important;
+                padding: 0 22px !important;
             }
 
             .box-panel.view-3col .slot-position {
-                display: block !important;
-                font-size: 8px !important;
-                color: var(--muted) !important;
-                margin-top: 2px !important;
+                display: none !important;
             }
 
-            .box-panel.view-3col .slot-tools {
-                grid-template-columns: 1fr 30px !important;
-                min-height: 28px !important;
+            .box-panel.view-3col .slot-cell .slot-tools .shiny-button {
+                top: 3px !important;
+                right: 22px !important;
+                font-size: 15px !important;
+                width: 18px !important;
+                height: 18px !important;
             }
 
-            .box-panel.view-3col .slot-tools .where-button {
-                font-size: 9px !important;
+            .box-panel.view-3col .slot-cell .slot-tools .where-button {
+                width: 22px !important;
+                height: 22px !important;
+                bottom: 3px !important;
+                left: 3px !important;
             }
 
-            .box-panel.view-3col .slot-tools .where-button::before {
-                content: '📍 ';
+            .box-panel.view-3col .slot-cell .slot-tools .where-button::before {
+                font-size: 11px !important;
+            }
+
+            .box-panel.view-3col .slot-cell .evolution-link {
+                width: 22px !important;
+                height: 22px !important;
+                bottom: 3px !important;
+                right: 3px !important;
+            }
+
+            .box-panel.view-3col .slot-cell .evolution-link::after {
+                font-size: 12px !important;
             }
 
             .box-meta {
@@ -1828,41 +1934,54 @@
         }
 
         .slot-cell {
+            position: relative;
+            aspect-ratio: 1 / 1 !important;
+            width: 100%;
             min-width: 0;
-            display: flex;
-            flex-direction: column
+            border-radius: 12px !important;
+            overflow: hidden;
+            display: block;
         }
 
         .slot-cell .slot {
+            position: absolute;
+            inset: 0;
             width: 100%;
-            flex: 1;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0
+            height: 100%;
+            border-radius: 12px !important;
+            border-bottom-left-radius: 12px !important;
+            border-bottom-right-radius: 12px !important;
         }
 
         .evolution-link {
-            width: 100%;
-            min-height: 34px;
-            padding: 6px 4px;
-            border: 1px solid #d7c8e9;
-            border-top: 0;
-            border-radius: 0 0 10px 10px;
-            background: #eee7f7;
-            color: #553284;
-            font-size: 10px;
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            height: 19px;
+            min-height: unset !important;
+            padding: 0 5px;
+            border: 1px solid rgba(105, 69, 165, 0.2) !important;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(4px);
+            font-size: 9px;
             font-weight: 600;
-            line-height: 1.3;
-            overflow-wrap: anywhere
+            color: var(--violet);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            line-height: 1;
         }
 
         .evolution-link:hover {
-            background: #dfd1f0
+            background: var(--lavender) !important;
+            border-color: var(--violet) !important;
         }
 
         .evolution-link.quiet {
-            background: #f7f4fa;
-            color: #72627e;
-            font-weight: 400
+            display: none !important;
         }
 
         .evolution-hint {
@@ -2094,51 +2213,73 @@
         }
 
         .slot-tools {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 33px;
-            gap: 0;
-            border: 1px solid var(--line);
-            border-top: 0;
-            border-radius: 0 0 10px 10px;
-            overflow: hidden;
-            background: white
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border: 0 !important;
+            background: transparent !important;
+            display: block !important;
+            z-index: 3;
         }
 
         .slot-tools button {
-            border: 0;
-            background: transparent;
-            min-height: 36px;
-            padding: 5px;
-            font-size: 10px;
-            line-height: 1.3
+            pointer-events: auto;
         }
 
         .slot-tools .where-button {
-            color: var(--violet)
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            height: 19px;
+            min-height: unset !important;
+            padding: 0 5px;
+            border: 1px solid rgba(105, 69, 165, 0.2) !important;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(4px);
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--violet);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            line-height: 1;
         }
 
         .slot-tools .where-button:hover {
-            background: #f1eafa
+            background: var(--lavender) !important;
+            border-color: var(--violet) !important;
         }
 
         .slot-tools .shiny-button {
-            font-size: 21px;
-            border-left: 1px solid var(--line);
-            color: #817390
+            position: absolute;
+            top: 3px;
+            right: 25px;
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            border: 0 !important;
+            background: transparent !important;
+            font-size: 15px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #bfaecf;
+            transition: transform .15s, color .15s;
         }
 
         .slot-tools .shiny-button[aria-pressed="true"] {
-            color: #8a5b00;
-            background: #fff0b9
+            color: #f1a500 !important;
+            text-shadow: 0 0 5px rgba(241, 165, 0, 0.5);
+            transform: scale(1.1);
         }
 
         .slot-tools .shiny-button:hover {
-            background: #fff6db
-        }
-
-        .evolution-link {
-            border-radius: 0;
-            min-height: 30px
+            color: #f1a500;
+            transform: scale(1.15);
         }
 
         .filter-placeholder {
@@ -3612,13 +3753,38 @@
             color: var(--muted)
         }
 
+        html[data-theme=dark] .slot-tools {
+            background: transparent !important;
+            border: 0 !important;
+        }
+
+        html[data-theme=dark] .slot-tools .where-button,
+        html[data-theme=dark] .slot-cell .evolution-link {
+            background: rgba(35, 28, 48, 0.9) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            color: #d1b8eb !important;
+        }
+
+        html[data-theme=dark] .slot-tools .where-button:hover,
+        html[data-theme=dark] .slot-cell .evolution-link:hover {
+            background: #47355f !important;
+            border-color: #aa86d2 !important;
+        }
+
+        html[data-theme=dark] .slot-tools .shiny-button {
+            color: #7a6e8b;
+            background: transparent !important;
+        }
+
         html[data-theme=dark] .slot-tools .shiny-button[aria-pressed=true] {
-            background: #51401b;
-            color: #ffda81
+            color: #ffc83b !important;
+            text-shadow: 0 0 6px rgba(255, 200, 59, 0.5);
+            background: transparent !important;
         }
 
         html[data-theme=dark] .slot-tools .shiny-button:hover {
-            background: #44371e
+            color: #ffc83b;
+            background: transparent !important;
         }
 
         html[data-theme=dark] .version-badge.scarlet {
@@ -3866,7 +4032,8 @@
         }
 
         .slot-cell .slot {
-            min-height: 155px
+            min-height: unset !important;
+            aspect-ratio: 1 / 1 !important;
         }
 
         .account-button {
