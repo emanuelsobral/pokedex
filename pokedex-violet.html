@@ -920,45 +920,101 @@
 
         dialog {
             border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 28px;
-            max-width: 460px;
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 480px;
             width: calc(100% - 32px);
+            max-height: 88vh;
             color: var(--ink);
-            box-shadow: 0 20px 100px #30254322
+            background: var(--white);
+            box-shadow: 0 28px 80px -15px rgba(48, 37, 67, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(105, 69, 165, 0.3) transparent;
+        }
+
+        dialog[open] {
+            animation: modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         dialog::backdrop {
-            background: #30254370;
-            backdrop-filter: blur(3px)
+            background: rgba(22, 14, 38, 0.68);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: backdropFadeIn 0.2s ease forwards;
+        }
+
+        @keyframes backdropFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        dialog::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        dialog::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 16px 0;
+        }
+
+        dialog::-webkit-scrollbar-thumb {
+            background: rgba(105, 69, 165, 0.25);
+            border-radius: 999px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        dialog::-webkit-scrollbar-thumb:hover {
+            background: rgba(105, 69, 165, 0.55);
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        dialog#cloud-conflict-dialog,
+        dialog#import-dialog {
+            padding: 28px;
         }
 
         dialog h2 {
-            font-size: 23px;
+            font-size: 22px;
             letter-spacing: -.5px;
-            margin-bottom: 13px
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         dialog p {
             font-size: 14px;
             line-height: 1.7;
             color: var(--muted);
-            margin-top: 9px
+            margin-top: 8px;
         }
 
         dialog .dialog-actions {
             display: flex;
             flex-direction: column;
-            gap: 9px;
-            margin-top: 22px
+            gap: 10px;
+            margin-top: 24px;
         }
 
         dialog .btn {
-            min-height: 44px
+            min-height: 44px;
+            border-radius: 12px;
+            font-weight: 600;
         }
 
         dialog .replace {
-            color: #96512e
+            color: #96512e;
         }
 
         .sr-only {
@@ -1488,30 +1544,74 @@
         }
 
         .evolution-dialog {
-            max-width: 540px;
-            max-height: 85vh;
-            overflow: auto
+            max-width: 560px;
+            max-height: 88vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0 24px 24px 24px;
+            box-sizing: border-box;
         }
 
         .evolution-dialog header {
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            margin: 0 -24px 16px -24px;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 4px 16px rgba(48, 37, 67, 0.04);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px
+            gap: 12px;
         }
 
         .evolution-dialog header h2 {
-            margin: 0
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -.4px;
+            color: var(--ink);
         }
 
         .evolution-dialog .close-dialog {
-            font-size: 23px;
-            min-width: 40px;
-            padding: 4px
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            line-height: 1;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--line);
+            background: rgba(105, 69, 165, 0.06);
+            color: var(--ink);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+        }
+
+        .evolution-dialog .close-dialog:hover {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #ef4444;
+            transform: scale(1.08);
+        }
+
+        .evolution-dialog .close-dialog:active {
+            transform: scale(0.95);
         }
 
         .evolution-dialog .evo-intro {
-            font-size: 12px
+            font-size: 13px;
+            margin-top: 0;
         }
 
         .evo-section h3 {
@@ -2738,7 +2838,12 @@
             }
 
             .planner-dialog {
-                padding: 20px
+                padding: 0 16px 20px 16px;
+            }
+
+            .planner-dialog header {
+                margin: 0 -16px 14px -16px;
+                padding: 14px 16px;
             }
 
             .planner-toolbar {
@@ -3106,6 +3211,43 @@
 
         html[data-theme=dark] .btn.subtle {
             background: transparent
+        }
+
+        html[data-theme=dark] dialog {
+            box-shadow: 0 28px 80px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+            scrollbar-color: rgba(198, 165, 255, 0.3) transparent;
+        }
+
+        html[data-theme=dark] dialog::backdrop {
+            background: rgba(10, 6, 18, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        html[data-theme=dark] .evolution-dialog header {
+            background: rgba(35, 28, 46, 0.92);
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        html[data-theme=dark] .evolution-dialog .close-dialog {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: var(--ink);
+        }
+
+        html[data-theme=dark] .evolution-dialog .close-dialog:hover {
+            background: rgba(239, 68, 68, 0.22);
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #ff7878;
+        }
+
+        html[data-theme=dark] dialog::-webkit-scrollbar-thumb {
+            background: rgba(198, 165, 255, 0.25);
+        }
+
+        html[data-theme=dark] dialog::-webkit-scrollbar-thumb:hover {
+            background: rgba(198, 165, 255, 0.55);
         }
 
         html[data-theme=dark] .slot {
@@ -4716,6 +4858,27 @@
                     await initCloud(); notify('Configuração manual restaurada.'); authMsg('');
                 });
             }
+            document.querySelectorAll('dialog').forEach(d => {
+                d.addEventListener('mousedown', e => {
+                    d._clickedBackdrop = false;
+                    if (e.target === d) {
+                        const r = d.getBoundingClientRect();
+                        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+                            d._clickedBackdrop = true;
+                        }
+                    }
+                });
+                d.addEventListener('mouseup', e => {
+                    if (d._clickedBackdrop && e.target === d) {
+                        const r = d.getBoundingClientRect();
+                        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+                            if (d.id === 'auth-dialog') recovering = false;
+                            d.close();
+                        }
+                    }
+                    d._clickedBackdrop = false;
+                });
+            });
             $('close-auth').addEventListener('click', () => { recovering = false; $('auth-dialog').close(); });
             document.querySelectorAll('[data-auth-mode]').forEach(b => b.addEventListener('click', () => setAuthMode(b.dataset.authMode)));
             $('auth-form').addEventListener('submit', async e => {
