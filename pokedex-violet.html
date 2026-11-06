@@ -686,8 +686,8 @@
 
         .box-grid {
             display: grid;
-            grid-template-columns: 21px repeat(6, minmax(0, 1fr));
-            gap: 8px
+            grid-template-columns: 24px repeat(6, minmax(130px, 1fr));
+            gap: 10px;
         }
 
         .column-label,
@@ -718,59 +718,52 @@
             min-height: unset !important;
             height: auto !important;
             border-radius: 12px !important;
-            position: relative;
+            border: 1px solid #e2d9eb;
+            background: #f9f7fc;
             box-sizing: border-box;
-        }
-
-        .slot-cell {
+            display: flex !important;
+            flex-direction: column !important;
             position: relative;
             overflow: hidden;
-            display: block;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .slot-cell:hover {
+            border-color: #aa8bcf;
+            box-shadow: 0 4px 14px rgba(105, 69, 165, 0.12);
+        }
+
+        .slot-cell:has(.slot.caught) {
+            background: var(--green-light);
+            border-color: #b7d6c4;
+        }
+
+        .slot-cell:has(.slot.caught):hover {
+            background: #dbeddf;
+            border-color: #7cb395;
+        }
+
+        .slot-cell:has(.slot.shiny-caught) {
+            background: #fff7df;
+            border-color: #dbbd64;
         }
 
         .slot {
-            position: relative;
-            border: 1px solid #e9e3ef;
-            border-radius: 12px !important;
-            background: #f9f7fc;
-            min-width: 0;
+            border: 0 !important;
+            background: transparent !important;
+            flex: 1 1 auto;
             width: 100%;
-            height: 100% !important;
-            min-height: unset !important;
-            padding: 5px 4px 4px;
+            height: auto;
+            min-height: 0;
+            padding: 6px 6px 2px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            flex-direction: column;
-            isolation: isolate;
             box-sizing: border-box;
             cursor: pointer;
-        }
-
-        .slot-cell .slot {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px !important;
-            border-bottom-left-radius: 12px !important;
-            border-bottom-right-radius: 12px !important;
-            min-height: unset !important;
-        }
-
-        .slot:hover {
-            border-color: #aa8bcf;
-            background: #f2ebfb
-        }
-
-        .slot.caught {
-            background: var(--green-light);
-            border-color: #b7d6c4
-        }
-
-        .slot.caught:hover {
-            background: #dbeddf;
-            border-color: #7cb395
+            border-radius: 0 !important;
+            text-align: center;
         }
 
         .slot-top {
@@ -778,12 +771,48 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 0 4px;
+            padding: 0 2px;
             font-size: 11px;
             color: var(--muted);
             font-variant-numeric: tabular-nums;
-            line-height: 16px;
-            z-index: 1;
+            line-height: 1;
+        }
+
+        .slot-badge {
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .slot-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .shiny-button {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            color: #bfaecf;
+            padding: 1px 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .15s, color .15s;
+        }
+
+        .shiny-button:hover {
+            color: #f1a500;
+            transform: scale(1.2);
+        }
+
+        .shiny-button[aria-pressed="true"] {
+            color: #f1a500 !important;
+            text-shadow: 0 0 6px rgba(241, 165, 0, 0.5);
+            transform: scale(1.15);
         }
 
         .check {
@@ -791,7 +820,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
@@ -803,12 +832,13 @@
         .caught .check {
             color: white;
             border-color: var(--green);
-            background: var(--green)
+            background: var(--green);
         }
 
         .slot img {
-            max-width: 76%;
-            max-height: 60%;
+            flex: 1 1 auto;
+            max-width: 82%;
+            max-height: 62%;
             width: auto;
             height: auto;
             object-fit: contain;
@@ -819,23 +849,80 @@
         }
 
         .slot:hover img {
-            transform: scale(1.08)
+            transform: scale(1.08);
         }
 
         .slot-name {
-            font-size: 11px;
-            font-weight: 650;
+            font-size: 11.5px;
+            font-weight: 700;
             text-align: center;
             line-height: 1.2;
-            min-height: unset;
             display: block;
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding: 0 2px;
+            padding: 1px 4px 2px;
+            color: var(--ink);
             pointer-events: none;
-            z-index: 1;
+            box-sizing: border-box;
+        }
+
+        .slot-footer {
+            display: flex;
+            width: 100%;
+            height: 28px;
+            min-height: 28px;
+            border-top: 1px solid rgba(105, 69, 165, 0.15);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .slot-footer .where-button,
+        .slot-footer .evolution-link {
+            flex: 1 1 50%;
+            height: 100%;
+            min-height: 100%;
+            border: 0;
+            background: transparent;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--violet);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            padding: 0 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            line-height: 1;
+            transition: background .12s, color .12s;
+            box-sizing: border-box;
+        }
+
+        .slot-footer .where-button {
+            border-right: 1px solid rgba(105, 69, 165, 0.15);
+        }
+
+        .slot-footer .where-button:hover,
+        .slot-footer .evolution-link:hover {
+            background: var(--lavender);
+            color: var(--dark);
+        }
+
+        .slot-footer .evolution-link.quiet {
+            display: none !important;
+        }
+
+        .slot-footer.no-evo .where-button {
+            flex: 1 1 100%;
+            border-right: 0;
+            font-size: 10.5px;
         }
 
         .slot-position,
@@ -843,11 +930,6 @@
         .slot-record,
         .version-badge {
             display: none !important;
-        }
-
-        .caught .slot-position,
-        .caught .slot-top {
-            color: #436c59
         }
 
         .slot.empty {
@@ -865,7 +947,7 @@
         }
 
         .empty-symbol {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 300;
             margin-bottom: 2px;
         }
@@ -873,13 +955,7 @@
         .slot.empty .slot-name {
             font-size: 10px;
             color: #998ca6;
-        }
-            margin-bottom: 8px
-        }
-
-        .slot.empty .slot-name {
-            font-size: 11px;
-            font-weight: 400
+            font-weight: 400;
         }
 
         .slot.highlight {
@@ -1551,12 +1627,12 @@
                 display: none !important;
             }
 
-            /* MODO 6x5 EQUILIBRADO (Largura otimizada para sprites destacados) */
+            /* MODO 6x5 EXPANDIDO (Tamanho generoso para fácil toque e leitura) */
             .box-grid {
-                min-width: 520px !important;
-                width: 520px !important;
-                grid-template-columns: 20px repeat(6, minmax(0, 1fr)) !important;
-                gap: 5px !important;
+                min-width: 660px !important;
+                width: 660px !important;
+                grid-template-columns: 22px repeat(6, minmax(0, 1fr)) !important;
+                gap: 6px !important;
             }
 
             .column-label {
@@ -1566,7 +1642,7 @@
             }
 
             .column-label::after {
-                font-size: 9px !important;
+                font-size: 10px !important;
                 font-weight: 700 !important;
                 color: #84738e !important;
             }
@@ -1588,7 +1664,7 @@
                 font-size: 0 !important;
                 writing-mode: horizontal-tb !important;
                 transform: none !important;
-                width: 20px !important;
+                width: 22px !important;
                 line-height: 1 !important;
                 display: flex !important;
                 align-items: center !important;
@@ -1601,7 +1677,7 @@
             }
 
             .row-label::after {
-                font-size: 9px !important;
+                font-size: 10px !important;
                 font-weight: 700 !important;
                 color: #84738e !important;
             }
@@ -1617,25 +1693,17 @@
                 aspect-ratio: 1 / 1 !important;
                 min-height: unset !important;
                 height: auto !important;
-                border-radius: 10px !important;
+                border-radius: 11px !important;
             }
 
             .slot {
                 min-height: unset !important;
-                height: 100% !important;
-                padding: 4px 3px 3px !important;
-                border-radius: 10px !important;
+                padding: 5px 4px 2px !important;
                 -webkit-tap-highlight-color: transparent;
             }
 
-            .slot-cell .slot {
-                border-radius: 10px !important;
-                border-bottom-left-radius: 10px !important;
-                border-bottom-right-radius: 10px !important;
-            }
-
             .slot img {
-                max-width: 78% !important;
+                max-width: 82% !important;
                 max-height: 60% !important;
                 width: auto !important;
                 height: auto !important;
@@ -1645,152 +1713,85 @@
             }
 
             .slot-top {
-                font-size: 8px !important;
+                font-size: 9px !important;
                 font-weight: 700 !important;
                 width: 100% !important;
-                padding: 0 1px !important;
+                padding: 0 2px !important;
+            }
+
+            .slot-badge {
+                font-size: 9.5px !important;
+            }
+
+            .shiny-button {
+                font-size: 14px !important;
+                padding: 1px 2px !important;
             }
 
             .slot-top .check {
-                font-size: 9px !important;
+                font-size: 9.5px !important;
                 width: 14px !important;
                 height: 14px !important;
             }
 
             .slot-name {
-                font-size: 8.5px !important;
-                line-height: 1.1 !important;
-                font-weight: 600 !important;
+                font-size: 10px !important;
+                line-height: 1.15 !important;
+                font-weight: 700 !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
                 text-overflow: ellipsis !important;
                 max-width: 100% !important;
                 text-align: center !important;
-                padding: 0 14px !important;
+                padding: 1px 2px 2px !important;
             }
 
-            .slot-form,
-            .version-badge,
-            .slot-position,
-            .slot-record {
-                display: none !important;
+            .slot-footer {
+                height: 27px !important;
+                min-height: 27px !important;
             }
 
-            .slot-cell .slot-tools {
-                position: absolute !important;
-                inset: 0 !important;
-                display: block !important;
-                pointer-events: none !important;
-                border: 0 !important;
-                background: transparent !important;
-                border-radius: 10px !important;
-                z-index: 3 !important;
+            .slot-footer .where-button,
+            .slot-footer .evolution-link {
+                font-size: 9.5px !important;
+                padding: 0 3px !important;
             }
 
-            .slot-cell .slot-tools button {
-                pointer-events: auto !important;
-            }
-
-            .slot-cell .slot-tools .shiny-button {
-                position: absolute !important;
-                top: 2px !important;
-                right: 17px !important;
-                width: 15px !important;
-                height: 15px !important;
-                font-size: 13px !important;
-                padding: 0 !important;
-                border: 0 !important;
-                background: transparent !important;
-            }
-
-            .slot-cell .slot-tools .where-button {
-                position: absolute !important;
-                bottom: 2px !important;
-                left: 2px !important;
-                width: 16px !important;
-                height: 16px !important;
-                min-height: unset !important;
-                padding: 0 !important;
-                font-size: 0 !important;
-                border: 1px solid rgba(105, 69, 165, 0.2) !important;
-                border-radius: 4px !important;
-                background: rgba(255, 255, 255, 0.9) !important;
-                backdrop-filter: blur(4px);
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                z-index: 3 !important;
-            }
-
-            .slot-cell .slot-tools .where-button::before {
-                content: '📍' !important;
-                font-size: 9px !important;
-            }
-
-            .slot-cell .evolution-link {
-                position: absolute !important;
-                bottom: 2px !important;
-                right: 2px !important;
-                width: 16px !important;
-                height: 16px !important;
-                min-height: unset !important;
-                padding: 0 !important;
-                font-size: 0 !important;
-                border: 1px solid rgba(105, 69, 165, 0.2) !important;
-                border-radius: 4px !important;
-                background: rgba(255, 255, 255, 0.9) !important;
-                backdrop-filter: blur(4px);
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                z-index: 3 !important;
-            }
-
-            .slot-cell .evolution-link::after {
-                content: '↗' !important;
+            .slot-footer.no-evo .where-button {
                 font-size: 10px !important;
-                font-weight: 700 !important;
-            }
-
-            .slot-cell .evolution-link.quiet {
-                display: none !important;
             }
 
             .slot.empty {
                 aspect-ratio: 1 / 1 !important;
                 min-height: unset !important;
                 height: auto !important;
-                border-radius: 10px !important;
-                padding: 2px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
+                border-radius: 11px !important;
+                padding: 4px !important;
             }
 
             .slot.empty .empty-symbol {
-                font-size: 16px !important;
+                font-size: 18px !important;
                 margin-bottom: 0 !important;
             }
 
             .slot.empty .slot-name {
-                font-size: 7.5px !important;
+                font-size: 8.5px !important;
             }
 
             .slot-cell.filtered .filter-placeholder {
                 position: absolute !important;
                 inset: 0 !important;
                 aspect-ratio: 1 / 1 !important;
-                border-radius: 10px !important;
+                border-radius: 11px !important;
                 padding: 4px !important;
             }
 
             .slot-cell.filtered .filter-placeholder strong {
-                font-size: 8.5px !important;
+                font-size: 9px !important;
             }
 
             .slot-cell.filtered .filter-placeholder span {
-                font-size: 7.5px !important;
+                font-size: 8px !important;
             }
 
             .slot-cell.filtered .filter-placeholder small {
@@ -1826,53 +1827,30 @@
 
             .box-panel.view-3col .slot {
                 min-height: unset !important;
-                padding: 5px 4px 4px !important;
+                padding: 6px 5px 3px !important;
                 border-radius: 12px !important;
             }
 
             .box-panel.view-3col .slot img {
-                max-width: 80% !important;
+                max-width: 82% !important;
                 max-height: 62% !important;
             }
 
             .box-panel.view-3col .slot-name {
                 font-size: 11px !important;
                 font-weight: 700 !important;
-                padding: 0 22px !important;
+                padding: 1px 3px 2px !important;
             }
 
-            .box-panel.view-3col .slot-position {
-                display: none !important;
+            .box-panel.view-3col .slot-footer {
+                height: 29px !important;
+                min-height: 29px !important;
             }
 
-            .box-panel.view-3col .slot-cell .slot-tools .shiny-button {
-                top: 3px !important;
-                right: 22px !important;
-                font-size: 15px !important;
-                width: 18px !important;
-                height: 18px !important;
-            }
-
-            .box-panel.view-3col .slot-cell .slot-tools .where-button {
-                width: 22px !important;
-                height: 22px !important;
-                bottom: 3px !important;
-                left: 3px !important;
-            }
-
-            .box-panel.view-3col .slot-cell .slot-tools .where-button::before {
-                font-size: 11px !important;
-            }
-
-            .box-panel.view-3col .slot-cell .evolution-link {
-                width: 22px !important;
-                height: 22px !important;
-                bottom: 3px !important;
-                right: 3px !important;
-            }
-
-            .box-panel.view-3col .slot-cell .evolution-link::after {
-                font-size: 12px !important;
+            .box-panel.view-3col .slot-footer .where-button,
+            .box-panel.view-3col .slot-footer .evolution-link {
+                font-size: 10px !important;
+                padding: 0 4px !important;
             }
 
             .box-meta {
@@ -1933,56 +1911,6 @@
             }
         }
 
-        .slot-cell {
-            position: relative;
-            aspect-ratio: 1 / 1 !important;
-            width: 100%;
-            min-width: 0;
-            border-radius: 12px !important;
-            overflow: hidden;
-            display: block;
-        }
-
-        .slot-cell .slot {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px !important;
-            border-bottom-left-radius: 12px !important;
-            border-bottom-right-radius: 12px !important;
-        }
-
-        .evolution-link {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            height: 19px;
-            min-height: unset !important;
-            padding: 0 5px;
-            border: 1px solid rgba(105, 69, 165, 0.2) !important;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.9) !important;
-            backdrop-filter: blur(4px);
-            font-size: 9px;
-            font-weight: 600;
-            color: var(--violet);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 3;
-            line-height: 1;
-        }
-
-        .evolution-link:hover {
-            background: var(--lavender) !important;
-            border-color: var(--violet) !important;
-        }
-
-        .evolution-link.quiet {
-            display: none !important;
-        }
 
         .evolution-hint {
             font-size: 11px;
@@ -2212,75 +2140,6 @@
             color: #72551c
         }
 
-        .slot-tools {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            border: 0 !important;
-            background: transparent !important;
-            display: block !important;
-            z-index: 3;
-        }
-
-        .slot-tools button {
-            pointer-events: auto;
-        }
-
-        .slot-tools .where-button {
-            position: absolute;
-            bottom: 4px;
-            left: 4px;
-            height: 19px;
-            min-height: unset !important;
-            padding: 0 5px;
-            border: 1px solid rgba(105, 69, 165, 0.2) !important;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.9) !important;
-            backdrop-filter: blur(4px);
-            font-size: 9px;
-            font-weight: 600;
-            color: var(--violet);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .slot-tools .where-button:hover {
-            background: var(--lavender) !important;
-            border-color: var(--violet) !important;
-        }
-
-        .slot-tools .shiny-button {
-            position: absolute;
-            top: 3px;
-            right: 25px;
-            width: 18px;
-            height: 18px;
-            padding: 0;
-            border: 0 !important;
-            background: transparent !important;
-            font-size: 15px;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #bfaecf;
-            transition: transform .15s, color .15s;
-        }
-
-        .slot-tools .shiny-button[aria-pressed="true"] {
-            color: #f1a500 !important;
-            text-shadow: 0 0 5px rgba(241, 165, 0, 0.5);
-            transform: scale(1.1);
-        }
-
-        .slot-tools .shiny-button:hover {
-            color: #f1a500;
-            transform: scale(1.15);
-        }
 
         .filter-placeholder {
             display: none
@@ -3753,38 +3612,37 @@
             color: var(--muted)
         }
 
-        html[data-theme=dark] .slot-tools {
-            background: transparent !important;
-            border: 0 !important;
+        html[data-theme=dark] .slot-footer {
+            background: rgba(30, 24, 40, 0.9) !important;
+            border-top-color: rgba(255, 255, 255, 0.1) !important;
         }
 
-        html[data-theme=dark] .slot-tools .where-button,
-        html[data-theme=dark] .slot-cell .evolution-link {
-            background: rgba(35, 28, 48, 0.9) !important;
-            border-color: rgba(255, 255, 255, 0.15) !important;
+        html[data-theme=dark] .slot-footer .where-button,
+        html[data-theme=dark] .slot-footer .evolution-link {
             color: #d1b8eb !important;
         }
 
-        html[data-theme=dark] .slot-tools .where-button:hover,
-        html[data-theme=dark] .slot-cell .evolution-link:hover {
+        html[data-theme=dark] .slot-footer .where-button {
+            border-right-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        html[data-theme=dark] .slot-footer .where-button:hover,
+        html[data-theme=dark] .slot-footer .evolution-link:hover {
             background: #47355f !important;
-            border-color: #aa86d2 !important;
+            color: #fff !important;
         }
 
-        html[data-theme=dark] .slot-tools .shiny-button {
+        html[data-theme=dark] .shiny-button {
             color: #7a6e8b;
-            background: transparent !important;
         }
 
-        html[data-theme=dark] .slot-tools .shiny-button[aria-pressed=true] {
+        html[data-theme=dark] .shiny-button[aria-pressed=true] {
             color: #ffc83b !important;
             text-shadow: 0 0 6px rgba(255, 200, 59, 0.5);
-            background: transparent !important;
         }
 
-        html[data-theme=dark] .slot-tools .shiny-button:hover {
+        html[data-theme=dark] .shiny-button:hover {
             color: #ffc83b;
-            background: transparent !important;
         }
 
         html[data-theme=dark] .version-badge.scarlet {
@@ -4937,11 +4795,17 @@
                     const row = document.createElement('span'); row.className = 'row-label'; row.textContent = 'Linha ' + r; grid.append(row); for (let c = 1; c <= 6; c++) {
                         const slot = (r - 1) * 6 + c, e = BOX_ENTRIES[start + slot - 1]; if (!e) { const empty = document.createElement('div'); empty.className = 'slot empty'; empty.setAttribute('aria-label', `Espaço vazio. Linha ${r}, coluna ${c}, slot ${slot}.`); empty.innerHTML = `<span class="empty-symbol">—</span><span class="slot-name">Espaço vazio</span><span class="slot-position">Slot ${String(slot).padStart(2, '0')} · L${r} C${c}</span>`; grid.append(empty); continue; }
                         const n = e.n, p = DATA[n - 1], button = document.createElement('button'); button.type = 'button'; button.id = entryId(e); button.dataset.n = n; button.dataset.entryIndex = e.index; button.dataset.entryKey = e.key; button.className = 'slot';
-                        button.innerHTML = `<span class="slot-top"><span>#${pad(n)}</span><span class="check" aria-hidden="true">✓</span></span><img alt="" width="60" height="57"><span class="slot-name"></span><span class="slot-form"></span><span class="version-badge"></span><span class="slot-record"></span><span class="slot-position">Slot ${String(slot).padStart(2, '0')} · L${r} C${c}</span>`;
+                        button.innerHTML = `<span class="slot-top"><span class="slot-badge">#${pad(n)}</span><span class="slot-status"><span class="check" aria-hidden="true">✓</span></span></span><img alt="" width="60" height="57"><span class="slot-name"></span><span class="slot-form"></span><span class="version-badge"></span><span class="slot-record"></span><span class="slot-position">Slot ${String(slot).padStart(2, '0')} · L${r} C${c}</span>`;
+                        const star = toolButton(entryShiny(e) ? '★' : '☆', () => { if (e.form) toggleForm(e.form, true); else toggleShiny(n); }); star.className = 'shiny-button'; star.dataset.shiny = n; star.dataset.entryStar = e.index; star.setAttribute('aria-pressed', String(entryShiny(e))); star.setAttribute('aria-label', 'Alternar shiny de ' + entryName(e));
+                        button.querySelector('.slot-status').prepend(star);
                         button.querySelector('.slot-name').textContent = p.name; button.querySelector('.slot-form').textContent = e.form?.label || ''; const badge = button.querySelector('.version-badge'); badge.classList.add(e.exclusive); badge.textContent = e.exclusive === 'scarlet' ? 'Scarlet' : e.exclusive === 'violet' ? 'Violet' : e.exclusive === 'forms' ? 'Formas S/V' : 'Ambos'; setSlot(button, e); button.classList.toggle('highlight', highlighted === e.key);
                         const cell = document.createElement('div'); cell.className = 'slot-cell'; cell.dataset.species = n; cell.dataset.entryIndex = e.index; cell.append(button);
-                        const evolution = toolButton(p.evoTo.length > 1 ? `${p.evoTo.length} evoluções ↗` : p.evoTo.length ? p.evoTo[0].label + ' ↗' : p.evoFrom.length ? 'Ver pré-evolução' : 'Sem evolução na lista', () => showEvolution(n)); evolution.className = 'evolution-link' + (!p.evoTo.length ? ' quiet' : ''); evolution.dataset.evolution = n; cell.append(evolution);
-                        const controls = document.createElement('div'); controls.className = 'slot-tools'; const where = toolButton('Onde encontrar', () => showLocation(n)); where.className = 'where-button'; where.dataset.where = n; where.setAttribute('aria-label', 'Onde encontrar ' + p.name); const star = toolButton(entryShiny(e) ? '★' : '☆', () => { if (e.form) toggleForm(e.form, true); else toggleShiny(n); }); star.className = 'shiny-button'; star.dataset.shiny = n; star.dataset.entryStar = e.index; star.setAttribute('aria-pressed', String(entryShiny(e))); star.setAttribute('aria-label', 'Alternar shiny de ' + entryName(e)); controls.append(where, star); cell.append(controls);
+                        const footer = document.createElement('div'); footer.className = 'slot-footer' + (!p.evoTo.length ? ' no-evo' : '');
+                        const where = toolButton('📍 Onde', () => showLocation(n)); where.className = 'where-button'; where.dataset.where = n; where.setAttribute('aria-label', 'Onde encontrar ' + p.name);
+                        const evoLabel = p.evoTo.length > 1 ? `${p.evoTo.length} evoluções ↗` : p.evoTo.length ? `${p.evoTo[0].label} ↗` : p.evoFrom.length ? 'Ver pré-evo' : '';
+                        const evolution = toolButton(evoLabel || 'Sem evolução', () => showEvolution(n)); evolution.className = 'evolution-link' + (!p.evoTo.length ? ' quiet' : ''); evolution.dataset.evolution = n;
+                        footer.append(where, evolution);
+                        cell.append(footer);
                         const placeholder = document.createElement('div'); placeholder.className = 'filter-placeholder'; placeholder.setAttribute('aria-hidden', 'true'); const text = document.createElement('strong'); text.textContent = `#${pad(n)} ${e.form?.label || p.name}`; const desc = document.createElement('span'); desc.textContent = 'Oculto pelo filtro'; const location = document.createElement('small'); location.textContent = `Slot ${slot} · L${r} C${c}`; placeholder.append(text, desc, location); cell.append(placeholder); grid.append(cell);
                     }
                 } summary(); updateFilters();
