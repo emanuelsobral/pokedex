@@ -1451,21 +1451,59 @@
                 align-items: center;
             }
 
+            .box-view-btn {
+                font-size: 11px !important;
+                font-weight: 700 !important;
+                padding: 4px 8px !important;
+                border-radius: 9px !important;
+                background: rgba(105, 69, 165, 0.08) !important;
+                color: var(--ink) !important;
+                border: 1px solid var(--line) !important;
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                cursor: pointer;
+            }
+
+            .box-view-btn:hover {
+                background: rgba(105, 69, 165, 0.16) !important;
+            }
+
+            html[data-theme=dark] .box-view-btn {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: rgba(255, 255, 255, 0.15) !important;
+                color: var(--ink) !important;
+            }
+
             .grid-scroll {
-                overflow-x: hidden;
-                padding: 0;
-                margin: 0;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                padding: 2px 2px 8px 2px !important;
+                margin: 0 -4px !important;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(105, 69, 165, 0.3) transparent;
+            }
+
+            .grid-scroll::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .grid-scroll::-webkit-scrollbar-thumb {
+                background: rgba(105, 69, 165, 0.25);
+                border-radius: 999px;
             }
 
             .mobile-hint {
                 display: none !important;
             }
 
+            /* MODO 6x5 EQUILIBRADO (Meio termo: ~76px por slot, não espremido e não gigante) */
             .box-grid {
-                min-width: 0 !important;
-                width: 100% !important;
-                grid-template-columns: 14px repeat(6, minmax(0, 1fr)) !important;
-                gap: 4px !important;
+                min-width: 495px !important;
+                width: 495px !important;
+                grid-template-columns: 20px repeat(6, minmax(0, 1fr)) !important;
+                gap: 5px !important;
             }
 
             .column-label {
@@ -1475,7 +1513,7 @@
             }
 
             .column-label::after {
-                font-size: 8.5px !important;
+                font-size: 9px !important;
                 font-weight: 700 !important;
                 color: #84738e !important;
             }
@@ -1488,15 +1526,29 @@
             .column-label:nth-of-type(6)::after { content: 'C6'; }
 
             .row-label {
+                position: sticky !important;
+                left: 0 !important;
+                z-index: 5 !important;
+                background: var(--white) !important;
+                box-shadow: 2px 0 6px rgba(48, 37, 67, 0.08);
+                border-radius: 4px;
                 font-size: 0 !important;
                 writing-mode: horizontal-tb !important;
                 transform: none !important;
-                width: 14px !important;
+                width: 20px !important;
                 line-height: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            html[data-theme=dark] .row-label {
+                background: var(--white) !important;
+                box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
             }
 
             .row-label::after {
-                font-size: 8.5px !important;
+                font-size: 9px !important;
                 font-weight: 700 !important;
                 color: #84738e !important;
             }
@@ -1508,10 +1560,10 @@
             .row-label:nth-of-type(5)::after { content: 'L5'; }
 
             .slot {
-                min-height: auto !important;
+                min-height: 98px !important;
                 height: auto !important;
-                padding: 4px 2px 3px 2px !important;
-                border-radius: 8px !important;
+                padding: 6px 4px 5px 4px !important;
+                border-radius: 10px !important;
                 -webkit-tap-highlight-color: transparent;
             }
 
@@ -1521,26 +1573,26 @@
             }
 
             .slot img {
-                width: 36px !important;
-                height: 34px !important;
-                margin: 1px 0 !important;
+                width: 44px !important;
+                height: 42px !important;
+                margin: 2px 0 !important;
                 object-fit: contain !important;
             }
 
             .slot-top {
-                font-size: 8px !important;
+                font-size: 8.5px !important;
                 font-weight: 700 !important;
                 width: 100% !important;
-                padding: 0 1px !important;
+                padding: 0 2px !important;
             }
 
             .slot-top .check {
-                font-size: 9px !important;
+                font-size: 10px !important;
             }
 
             .slot-name {
-                font-size: 8.5px !important;
-                line-height: 1.15 !important;
+                font-size: 9.5px !important;
+                line-height: 1.2 !important;
                 font-weight: 600 !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
@@ -1550,7 +1602,7 @@
             }
 
             .slot-form {
-                font-size: 7px !important;
+                font-size: 7.5px !important;
                 line-height: 1 !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
@@ -1559,10 +1611,10 @@
             }
 
             .version-badge {
-                font-size: 7px !important;
-                padding: 1px 2px !important;
+                font-size: 7.5px !important;
+                padding: 1px 3px !important;
                 border-radius: 3px !important;
-                margin-top: 1px !important;
+                margin-top: 2px !important;
             }
 
             .slot-position {
@@ -1581,9 +1633,9 @@
 
             .evolution-link {
                 width: 100% !important;
-                min-height: 18px !important;
-                padding: 2px 1px !important;
-                font-size: 7.5px !important;
+                min-height: 20px !important;
+                padding: 2px 2px !important;
+                font-size: 8px !important;
                 line-height: 1.1 !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
@@ -1593,30 +1645,31 @@
             }
 
             .slot-tools {
-                grid-template-columns: 1fr 22px !important;
-                min-height: 22px !important;
-                border-radius: 0 0 8px 8px !important;
+                grid-template-columns: 1fr 24px !important;
+                min-height: 24px !important;
+                border-radius: 0 0 10px 10px !important;
             }
 
             .slot-tools button {
-                min-height: 22px !important;
+                min-height: 24px !important;
                 padding: 0 !important;
             }
 
             .slot-tools .where-button {
-                font-size: 0 !important;
+                font-size: 8px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
+                gap: 2px !important;
             }
 
             .slot-tools .where-button::before {
                 content: '📍';
-                font-size: 11px !important;
+                font-size: 10px !important;
             }
 
             .slot-tools .shiny-button {
-                font-size: 13px !important;
+                font-size: 15px !important;
                 padding: 0 !important;
                 display: flex !important;
                 align-items: center !important;
@@ -1624,34 +1677,87 @@
             }
 
             .slot.empty {
-                min-height: 62px !important;
-                border-radius: 8px !important;
-                padding: 4px 2px !important;
+                min-height: 80px !important;
+                border-radius: 10px !important;
+                padding: 6px 2px !important;
             }
 
             .slot.empty .empty-symbol {
-                font-size: 12px !important;
+                font-size: 14px !important;
             }
 
             .slot.empty .slot-name {
-                font-size: 7.5px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder {
-                padding: 4px 2px !important;
-                min-height: 62px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder strong {
                 font-size: 8px !important;
             }
 
+            .slot-cell.filtered .filter-placeholder {
+                padding: 6px 2px !important;
+                min-height: 80px !important;
+            }
+
+            .slot-cell.filtered .filter-placeholder strong {
+                font-size: 8.5px !important;
+            }
+
             .slot-cell.filtered .filter-placeholder span {
-                font-size: 7px !important;
+                font-size: 7.5px !important;
             }
 
             .slot-cell.filtered .filter-placeholder small {
                 display: none !important;
+            }
+
+            /* MODO 3 COLUNAS (Sem nenhuma rolagem lateral) */
+            .box-panel.view-3col .grid-scroll {
+                overflow-x: hidden !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .box-panel.view-3col .column-label,
+            .box-panel.view-3col .row-label {
+                display: none !important;
+            }
+
+            .box-panel.view-3col .box-grid {
+                min-width: 0 !important;
+                width: 100% !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 8px !important;
+            }
+
+            .box-panel.view-3col .slot {
+                min-height: 110px !important;
+                padding: 8px 6px 6px 6px !important;
+            }
+
+            .box-panel.view-3col .slot img {
+                width: 52px !important;
+                height: 50px !important;
+            }
+
+            .box-panel.view-3col .slot-name {
+                font-size: 11px !important;
+            }
+
+            .box-panel.view-3col .slot-position {
+                display: block !important;
+                font-size: 8px !important;
+                color: var(--muted) !important;
+                margin-top: 2px !important;
+            }
+
+            .box-panel.view-3col .slot-tools {
+                grid-template-columns: 1fr 30px !important;
+                min-height: 28px !important;
+            }
+
+            .box-panel.view-3col .slot-tools .where-button {
+                font-size: 9px !important;
+            }
+
+            .box-panel.view-3col .slot-tools .where-button::before {
+                content: '📍 ';
             }
 
             .box-meta {
@@ -4216,7 +4322,7 @@
                                 <p id="box-range">#001 – #030 · 30 Pokémon</p>
                             </div>
                         </div>
-                        <div class="box-controls"><span id="box-page">1 de 16</span><button class="btn" id="previous"
+                        <div class="box-controls"><button type="button" class="btn box-view-btn" id="box-view-btn" title="Alternar visualização da box (6 colunas ou 3 colunas)" aria-label="Alternar visualização">⊞ 6×5</button><span id="box-page">1 de 16</span><button class="btn" id="previous"
                                 aria-label="Box anterior"><svg aria-hidden="true">
                                     <use href="#i-left" />
                                 </svg></button><button class="btn" id="next" aria-label="Próxima box"><svg
@@ -5295,6 +5401,24 @@
                     if (data?.session && !session) { session = data.session; setAccountUI(); pullCloud(false); }
                 } catch { setAccountUI('Modo offline: não foi possível carregar o serviço de nuvem.', true); }
             }
+
+            let boxViewMode = 'grid6';
+            try { boxViewMode = localStorage.getItem('paldea-box-view') || 'grid6'; } catch {}
+            function applyBoxView(mode) {
+                boxViewMode = mode;
+                try { localStorage.setItem('paldea-box-view', mode); } catch {}
+                const panel = document.querySelector('.box-panel');
+                const btn = $('box-view-btn');
+                if (panel) panel.classList.toggle('view-3col', mode === 'grid3');
+                if (btn) {
+                    btn.textContent = mode === 'grid3' ? '☷ 3 Col' : '⊞ 6×5';
+                    btn.setAttribute('aria-label', mode === 'grid3' ? 'Modo 3 colunas ativo. Clique para mudar para 6×5.' : 'Modo 6×5 ativo. Clique para mudar para 3 colunas.');
+                }
+            }
+            $('box-view-btn')?.addEventListener('click', () => {
+                applyBoxView(boxViewMode === 'grid6' ? 'grid3' : 'grid6');
+            });
+            applyBoxView(boxViewMode);
 
             renderBox(); refreshTools(); initCloud();
         })();
