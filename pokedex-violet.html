@@ -4319,6 +4319,647 @@
                 top: 4px;
             }
         }
+
+        /* Ocultar barra/badge de preview do Netlify se injetada */
+        netlify-drawer,
+        [data-netlify-drawer],
+        #netlify-drawer {
+            display: none !important;
+        }
+
+        /* === MINHA PARTY (POKÉMON HOME) — SEPARADO DA POKÉDEX/BOX === */
+        .party-panel {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .party-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #16a394 0%, #30c48d 45%, #6945a5 100%);
+        }
+
+        .party-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .party-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .party-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(22, 163, 148, 0.16), rgba(105, 69, 165, 0.16));
+            border: 1px solid rgba(22, 163, 148, 0.35);
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .party-title-text h2 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 850;
+            letter-spacing: -0.3px;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .home-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(22, 163, 148, 0.14);
+            color: #0e7c70;
+            border: 1px solid rgba(22, 163, 148, 0.32);
+            letter-spacing: 0.2px;
+        }
+
+        html[data-theme=dark] .home-pill {
+            background: rgba(48, 196, 141, 0.16);
+            color: #5eead4;
+            border-color: rgba(94, 234, 212, 0.32);
+        }
+
+        .party-title-text p {
+            margin: 3px 0 0;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        .party-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .party-count-badge {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--violet-2);
+            background: var(--violet-soft);
+            padding: 6px 11px;
+            border-radius: 999px;
+        }
+
+        .party-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .party-slot-cell {
+            aspect-ratio: 1 / 1 !important;
+            width: 100% !important;
+            border-radius: 14px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            overflow: hidden !important;
+            position: relative !important;
+            transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease !important;
+        }
+
+        .party-slot-cell:hover {
+            border-color: var(--violet-2) !important;
+            box-shadow: 0 8px 20px rgba(42, 24, 76, 0.12) !important;
+        }
+
+        .party-slot-cell.filled {
+            background: linear-gradient(180deg, rgba(22, 163, 148, 0.07) 0%, var(--surface) 65%) !important;
+            border-color: rgba(22, 163, 148, 0.42) !important;
+        }
+
+        .party-slot-cell.filled.shiny {
+            background: linear-gradient(180deg, rgba(201, 138, 16, 0.13) 0%, var(--surface) 65%) !important;
+            border-color: rgba(201, 138, 16, 0.55) !important;
+        }
+
+        html[data-theme=dark] .party-slot-cell {
+            background: #231c2e !important;
+            border-color: #493a59 !important;
+        }
+
+        html[data-theme=dark] .party-slot-cell.filled {
+            background: linear-gradient(180deg, rgba(22, 163, 148, 0.18) 0%, #231c2e 70%) !important;
+            border-color: #2bb3a3 !important;
+        }
+
+        html[data-theme=dark] .party-slot-cell.filled.shiny {
+            background: linear-gradient(180deg, rgba(242, 185, 59, 0.2) 0%, #231c2e 70%) !important;
+            border-color: #c9962a !important;
+        }
+
+        .party-empty-btn {
+            width: 100% !important;
+            height: 100% !important;
+            border: 1.5px dashed rgba(105, 69, 165, 0.28) !important;
+            border-radius: 12px !important;
+            background: transparent !important;
+            color: var(--muted) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 4px !important;
+            padding: 8px !important;
+            cursor: pointer !important;
+            font: inherit !important;
+            transition: background .14s ease, color .14s ease, border-color .14s ease !important;
+        }
+
+        .party-slot-cell.empty {
+            border: 0 !important;
+            background: var(--surface-2) !important;
+        }
+
+        html[data-theme=dark] .party-slot-cell.empty {
+            background: #1e1828 !important;
+        }
+
+        html[data-theme=dark] .party-empty-btn {
+            border-color: rgba(201, 182, 242, 0.25) !important;
+        }
+
+        .party-empty-btn:hover {
+            background: var(--violet-soft) !important;
+            color: var(--violet) !important;
+            border-color: var(--violet-2) !important;
+        }
+
+        .party-empty-plus {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: rgba(105, 69, 165, 0.12);
+            color: var(--violet);
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        html[data-theme=dark] .party-empty-plus {
+            background: rgba(201, 182, 242, 0.14);
+            color: #d8cbff;
+        }
+
+        .party-empty-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .party-empty-sub {
+            font-size: 10.5px;
+            color: var(--muted);
+        }
+
+        .party-slot-main {
+            flex: 1 1 0 !important;
+            min-height: 0 !important;
+            max-height: calc(100% - 28px) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: 6px 7px 3px !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .party-slot-top {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 4px !important;
+            width: 100% !important;
+            flex-shrink: 0 !important;
+            z-index: 2 !important;
+        }
+
+        .party-dex-badge {
+            font-size: 10.5px !important;
+            font-weight: 800 !important;
+            color: var(--muted) !important;
+            font-variant-numeric: tabular-nums !important;
+            white-space: nowrap !important;
+        }
+
+        .party-top-controls {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 3px !important;
+        }
+
+        .party-icon-btn {
+            width: 22px !important;
+            height: 22px !important;
+            min-width: 22px !important;
+            min-height: 22px !important;
+            border-radius: 999px !important;
+            border: 1px solid var(--border) !important;
+            background: var(--surface) !important;
+            color: var(--muted) !important;
+            display: inline-grid !important;
+            place-items: center !important;
+            padding: 0 !important;
+            font-size: 12px !important;
+            line-height: 1 !important;
+            cursor: pointer !important;
+        }
+
+        .party-icon-btn:hover {
+            border-color: var(--violet-2) !important;
+            color: var(--ink) !important;
+        }
+
+        .party-icon-btn.shiny-active {
+            background: var(--gold-soft) !important;
+            border-color: rgba(201, 138, 16, 0.55) !important;
+            color: var(--gold) !important;
+        }
+
+        .party-icon-btn.remove-btn:hover {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+
+        html[data-theme=dark] .party-icon-btn.remove-btn:hover {
+            background: rgba(239, 68, 68, 0.22) !important;
+            border-color: #f87171 !important;
+            color: #fecaca !important;
+        }
+
+        .party-slot-body {
+            flex: 1 1 0 !important;
+            min-height: 0 !important;
+            width: 100% !important;
+            border: 0 !important;
+            background: transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            font: inherit !important;
+            color: var(--ink) !important;
+            overflow: hidden !important;
+        }
+
+        .party-slot-body img {
+            flex: 1 1 0 !important;
+            min-height: 0 !important;
+            width: auto !important;
+            height: 100% !important;
+            max-width: 82% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            margin: 0 auto !important;
+            filter: drop-shadow(0 4px 6px rgba(25, 16, 44, 0.18));
+            transition: transform .15s ease;
+        }
+
+        .party-slot-body:hover img {
+            transform: scale(1.06);
+        }
+
+        .party-slot-name {
+            display: block !important;
+            width: 100% !important;
+            text-align: center !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            line-height: 1.15 !important;
+            color: var(--ink) !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            flex-shrink: 0 !important;
+            margin-top: 2px !important;
+        }
+
+        .party-slot-meta {
+            display: block !important;
+            width: 100% !important;
+            text-align: center !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            line-height: 1.15 !important;
+            color: #0e7c70 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            flex-shrink: 0 !important;
+        }
+
+        html[data-theme=dark] .party-slot-meta {
+            color: #5eead4 !important;
+        }
+
+        .party-slot-footer {
+            flex: 0 0 26px !important;
+            height: 26px !important;
+            display: grid !important;
+            grid-template-columns: 1fr auto auto !important;
+            border-top: 1px solid var(--border) !important;
+            background: rgba(105, 69, 165, 0.05) !important;
+            width: 100% !important;
+        }
+
+        html[data-theme=dark] .party-slot-footer {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border-top-color: #3d314c !important;
+        }
+
+        .party-foot-btn {
+            border: 0 !important;
+            background: transparent !important;
+            color: var(--violet-2) !important;
+            font: inherit !important;
+            font-size: 10.5px !important;
+            font-weight: 800 !important;
+            padding: 0 6px !important;
+            height: 26px !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .party-foot-btn + .party-foot-btn {
+            border-left: 1px solid var(--border) !important;
+        }
+
+        html[data-theme=dark] .party-foot-btn {
+            color: #d8cbff !important;
+        }
+
+        html[data-theme=dark] .party-foot-btn + .party-foot-btn {
+            border-left-color: #3d314c !important;
+        }
+
+        .party-foot-btn:hover:not(:disabled) {
+            background: var(--violet-soft) !important;
+            color: var(--ink) !important;
+        }
+
+        .party-foot-btn:disabled {
+            opacity: 0.32 !important;
+            cursor: default !important;
+        }
+
+        /* Modal Pokémon HOME / Party Picker */
+        .party-dialog {
+            max-width: 900px;
+            width: calc(100% - 24px);
+        }
+
+        .party-custom-bar {
+            display: grid;
+            grid-template-columns: 1.2fr 0.6fr 1.2fr auto;
+            gap: 10px;
+            align-items: end;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+        }
+
+        .party-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .party-field input {
+            width: 100%;
+            min-height: 38px;
+            padding: 7px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--ink);
+            font: inherit;
+            font-size: 13.5px;
+        }
+
+        .party-shiny-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            padding: 0 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--ink);
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .party-shiny-toggle input {
+            accent-color: var(--gold);
+            width: 16px;
+            height: 16px;
+        }
+
+        .party-current-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(22, 163, 148, 0.1);
+            border: 1px solid rgba(22, 163, 148, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .party-current-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .party-current-info img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .party-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .party-pick-card {
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 13px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            color: var(--ink) !important;
+            padding: 7px 6px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            cursor: pointer !important;
+            font: inherit !important;
+            overflow: hidden !important;
+            transition: transform .12s ease, border-color .12s ease, background .12s ease !important;
+        }
+
+        html[data-theme=dark] .party-pick-card {
+            background: #231c2e !important;
+            border-color: #493a59 !important;
+        }
+
+        .party-pick-card:hover {
+            transform: translateY(-2px);
+            border-color: #16a394 !important;
+            background: var(--violet-soft) !important;
+        }
+
+        .party-pick-card.active {
+            border-color: #16a394 !important;
+            box-shadow: 0 0 0 2px rgba(22, 163, 148, 0.28) !important;
+        }
+
+        .party-pick-top {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .party-pick-paldea {
+            font-size: 9px;
+            padding: 1px 5px;
+            border-radius: 999px;
+            background: var(--violet-soft);
+            color: var(--violet-2);
+        }
+
+        .party-pick-card img {
+            flex: 1 1 0 !important;
+            min-height: 0 !important;
+            width: auto !important;
+            height: 100% !important;
+            max-width: 78% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+        }
+
+        .party-pick-name {
+            width: 100%;
+            text-align: center;
+            font-size: 11.5px;
+            font-weight: 800;
+            line-height: 1.15;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+        }
+
+        .party-pick-form {
+            width: 100%;
+            text-align: center;
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #0e7c70;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+        }
+
+        html[data-theme=dark] .party-pick-form {
+            color: #5eead4;
+        }
+
+        .party-load-more-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0 4px;
+        }
+
+        @media(max-width: 750px) {
+            .party-panel {
+                padding: 14px 12px;
+            }
+
+            .party-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .party-custom-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .party-picker-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .party-slot-name {
+                font-size: 11px !important;
+            }
+
+            .party-slot-meta {
+                font-size: 9.5px !important;
+            }
+        }
     </style>
 </head>
 
@@ -4401,6 +5042,23 @@
                         número.</span></p>
             </aside>
             <div class="main-panel">
+                <section class="party-panel" aria-labelledby="party-heading">
+                    <div class="party-header">
+                        <div class="party-title-wrap">
+                            <div class="party-icon" aria-hidden="true">⚡</div>
+                            <div class="party-title-text">
+                                <h2 id="party-heading">Minha Party <span class="home-pill">Pokémon HOME · National Dex #0001–#1025</span></h2>
+                                <p>Monte sua equipe de 6 Pokémon com qualquer espécie ou forma existente nos jogos — totalmente separado das boxes e da Pokédex de Paldea.</p>
+                            </div>
+                        </div>
+                        <div class="party-actions">
+                            <span class="party-count-badge" id="party-count-badge">0 / 6 na equipe</span>
+                            <button type="button" class="btn primary" id="party-add-btn">+ Escolher no HOME</button>
+                            <button type="button" class="btn subtle" id="party-clear-btn" hidden>Limpar equipe</button>
+                        </div>
+                    </div>
+                    <div class="party-grid" id="party-grid" role="list" aria-label="Espaços da sua Party (6 Pokémon)"></div>
+                </section>
                 <div class="route-open">
                     <div><strong>Rota de captura por região</strong>
                         <p>Planeje várias paradas e encontre os Pokémon que faltam em cada região.</p>
@@ -4744,6 +5402,63 @@
         <p class="evo-scope">O histórico começa nesta atualização. Tema, busca e navegação não geram registros. Backups
             exportam o progresso, sem o histórico local; importar é registrado como uma nova alteração. Datas e horários
             usam o fuso do navegador.</p>
+    </dialog>
+    <dialog id="party-dialog" class="evolution-dialog planner-dialog party-dialog" aria-labelledby="party-dialog-title">
+        <header>
+            <h2 id="party-dialog-title">Pokémon HOME · Escolher para a Party</h2>
+            <button class="btn close-dialog" id="close-party-dialog" type="button" aria-label="Fechar seletor da Party">×</button>
+        </header>
+        <p class="planner-intro">Escolha qualquer Pokémon da National Dex (#0001 Bulbasaur ao #1025 Pecharunt) ou formas especiais (Alola, Galar, Hisui, Paldea, Mega, Origem, Coroados, Ogerpon, Terapagos…). Sua Party fica salva separadamente e não altera o contador da Pokédex de Paldea.</p>
+        <div id="party-current-banner" class="party-current-banner" hidden>
+            <div class="party-current-info">
+                <img id="party-current-img" alt="" width="44" height="44">
+                <div>
+                    <strong id="party-current-name"></strong>
+                    <div style="font-size:12px;color:var(--muted)" id="party-current-sub"></div>
+                </div>
+            </div>
+            <div class="planner-actions" style="margin:0">
+                <button type="button" class="btn primary" id="party-save-meta">Salvar detalhes</button>
+                <button type="button" class="btn subtle" id="party-remove-current">Remover do espaço</button>
+            </div>
+        </div>
+        <div class="party-custom-bar">
+            <label class="party-field" for="party-nickname">Apelido (opcional)
+                <input type="text" id="party-nickname" maxlength="24" placeholder="Ex.: Meu Rayquaza">
+            </label>
+            <label class="party-field" for="party-level">Nível (1–100)
+                <input type="number" id="party-level" min="1" max="100" value="100">
+            </label>
+            <label class="party-field" for="party-item">Item / Teratipo / Nota
+                <input type="text" id="party-item" maxlength="32" placeholder="Ex.: Booster Energy · Tera Fada">
+            </label>
+            <label class="party-shiny-toggle" for="party-shiny-check">
+                <input type="checkbox" id="party-shiny-check">
+                <span>★ Versão Shiny</span>
+            </label>
+        </div>
+        <div class="planner-toolbar">
+            <input type="search" id="party-search" aria-label="Buscar qualquer Pokémon ou forma" placeholder="Buscar por nome, forma ou nº nacional (ex.: Charizard, Greninja, Mewtwo, #151, Hisui, Mega)…">
+            <select id="party-gen-filter" aria-label="Filtrar por geração ou categoria">
+                <option value="all">Toda a National Dex + Formas HOME</option>
+                <option value="gen1">Geração 1 · Kanto (#0001–#0151)</option>
+                <option value="gen2">Geração 2 · Johto (#0152–#0251)</option>
+                <option value="gen3">Geração 3 · Hoenn (#0252–#0386)</option>
+                <option value="gen4">Geração 4 · Sinnoh (#0387–#0493)</option>
+                <option value="gen5">Geração 5 · Unova (#0494–#0649)</option>
+                <option value="gen6">Geração 6 · Kalos (#0650–#0721)</option>
+                <option value="gen7">Geração 7 · Alola (#0722–#0809)</option>
+                <option value="gen8">Geração 8 · Galar &amp; Hisui (#0810–#0905)</option>
+                <option value="gen9">Geração 9 · Paldea &amp; DLCs (#0906–#1025)</option>
+                <option value="forms">Formas Regionais, Mega &amp; Especiais</option>
+                <option value="paldea">Presentes na Pokédex de Paldea (400)</option>
+            </select>
+        </div>
+        <p id="party-picker-count" class="route-count" aria-live="polite"></p>
+        <div id="party-picker-grid" class="party-picker-grid" role="list"></div>
+        <div class="party-load-more-wrap">
+            <button type="button" class="btn" id="party-load-more" hidden>Mostrar mais Pokémon</button>
+        </div>
     </dialog>
     <dialog id="auth-dialog" class="evolution-dialog" aria-labelledby="auth-title">
         <header>
@@ -5568,6 +6283,664 @@
                 applyBoxView(boxViewMode === 'grid6' ? 'grid3' : 'grid6');
             });
             applyBoxView(boxViewMode);
+
+            /* === SISTEMA MINHA PARTY (POKÉMON HOME · NATIONAL DEX #0001–#1025 + FORMAS) === */
+            const PARTY_KEY = 'paldea-party-home-v1';
+            const NATIONAL_DEX = [
+                "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie",
+                "Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate",
+                "Spearow","Fearow","Ekans","Arbok","Pikachu","Raichu","Sandshrew","Sandslash","Nidoran♀","Nidorina",
+                "Nidoqueen","Nidoran♂","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales","Jigglypuff","Wigglytuff",
+                "Zubat","Golbat","Oddish","Gloom","Vileplume","Paras","Parasect","Venonat","Venomoth","Diglett",
+                "Dugtrio","Meowth","Persian","Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag",
+                "Poliwhirl","Poliwrath","Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell",
+                "Victreebel","Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash","Slowpoke","Slowbro",
+                "Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong","Grimer","Muk","Shellder",
+                "Cloyster","Gastly","Haunter","Gengar","Onix","Drowzee","Hypno","Krabby","Kingler","Voltorb",
+                "Electrode","Exeggcute","Exeggutor","Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing",
+                "Rhyhorn","Rhydon","Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking","Staryu",
+                "Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros","Magikarp","Gyarados",
+                "Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon","Porygon","Omanyte","Omastar","Kabuto",
+                "Kabutops","Aerodactyl","Snorlax","Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo",
+                "Mew",
+                "Chikorita","Bayleef","Meganium","Cyndaquil","Quilava","Typhlosion","Totodile","Croconaw","Feraligatr","Sentret",
+                "Furret","Hoothoot","Noctowl","Ledyba","Ledian","Spinarak","Ariados","Crobat","Chinchou","Lanturn",
+                "Pichu","Cleffa","Igglybuff","Togepi","Togetic","Natu","Xatu","Mareep","Flaaffy","Ampharos",
+                "Bellossom","Marill","Azumarill","Sudowoodo","Politoed","Hoppip","Skiploom","Jumpluff","Aipom","Sunkern",
+                "Sunflora","Yanma","Wooper","Quagsire","Espeon","Umbreon","Murkrow","Slowking","Misdreavus","Unown",
+                "Wobbuffet","Girafarig","Pineco","Forretress","Dunsparce","Gligar","Steelix","Snubbull","Granbull","Qwilfish",
+                "Scizor","Shuckle","Heracross","Sneasel","Teddiursa","Ursaring","Slugma","Magcargo","Swinub","Piloswine",
+                "Corsola","Remoraid","Octillery","Delibird","Mantine","Skarmory","Houndour","Houndoom","Kingdra","Phanpy",
+                "Donphan","Porygon2","Stantler","Smeargle","Tyrogue","Hitmontop","Smoochum","Elekid","Magby","Miltank",
+                "Blissey","Raikou","Entei","Suicune","Larvitar","Pupitar","Tyranitar","Lugia","Ho-Oh","Celebi",
+                "Treecko","Grovyle","Sceptile","Torchic","Combusken","Blaziken","Mudkip","Marshtomp","Swampert","Poochyena",
+                "Mightyena","Zigzagoon","Linoone","Wurmple","Silcoon","Beautifly","Cascoon","Dustox","Lotad","Lombre",
+                "Ludicolo","Seedot","Nuzleaf","Shiftry","Taillow","Swellow","Wingull","Pelipper","Ralts","Kirlia",
+                "Gardevoir","Surskit","Masquerain","Shroomish","Breloom","Slakoth","Vigoroth","Slaking","Nincada","Ninjask",
+                "Shedinja","Whismur","Loudred","Exploud","Makuhita","Hariyama","Azurill","Nosepass","Skitty","Delcatty",
+                "Sableye","Mawile","Aron","Lairon","Aggron","Meditite","Medicham","Electrike","Manectric","Plusle",
+                "Minun","Volbeat","Illumise","Roselia","Gulpin","Swalot","Carvanha","Sharpedo","Wailmer","Wailord",
+                "Numel","Camerupt","Torkoal","Spoink","Grumpig","Spinda","Trapinch","Vibrava","Flygon","Cacnea",
+                "Cacturne","Swablu","Altaria","Zangoose","Seviper","Lunatone","Solrock","Barboach","Whiscash","Corphish",
+                "Crawdaunt","Baltoy","Claydol","Lileep","Cradily","Anorith","Armaldo","Feebas","Milotic","Castform",
+                "Kecleon","Shuppet","Banette","Duskull","Dusclops","Tropius","Chimecho","Absol","Wynaut","Snorunt",
+                "Glalie","Spheal","Sealeo","Walrein","Clamperl","Huntail","Gorebyss","Relicanth","Luvdisc","Bagon",
+                "Shelgon","Salamence","Beldum","Metang","Metagross","Regirock","Regice","Registeel","Latias","Latios",
+                "Kyogre","Groudon","Rayquaza","Jirachi","Deoxys",
+                "Turtwig","Grotle","Torterra","Chimchar","Monferno","Infernape","Piplup","Prinplup","Empoleon","Starly",
+                "Staravia","Staraptor","Bidoof","Bibarel","Kricketot","Kricketune","Shinx","Luxio","Luxray","Budew",
+                "Roserade","Cranidos","Rampardos","Shieldon","Bastiodon","Burmy","Wormadam","Mothim","Combee","Vespiquen",
+                "Pachirisu","Buizel","Floatzel","Cherubi","Cherrim","Shellos","Gastrodon","Ambipom","Drifloon","Drifblim",
+                "Buneary","Lopunny","Mismagius","Honchkrow","Glameow","Purugly","Chingling","Stunky","Skuntank","Bronzor",
+                "Bronzong","Bonsly","Mime Jr.","Happiny","Chatot","Spiritomb","Gible","Gabite","Garchomp","Munchlax",
+                "Riolu","Lucario","Hippopotas","Hippowdon","Skorupi","Drapion","Croagunk","Toxicroak","Carnivine","Finneon",
+                "Lumineon","Mantyke","Snover","Abomasnow","Weavile","Magnezone","Lickilicky","Rhyperior","Tangrowth","Electivire",
+                "Magmortar","Togekiss","Yanmega","Leafeon","Glaceon","Gliscor","Mamoswine","Porygon-Z","Gallade","Probopass",
+                "Dusknoir","Froslass","Rotom","Uxie","Mesprit","Azelf","Dialga","Palkia","Heatran","Regigigas",
+                "Giratina","Cresselia","Phione","Manaphy","Darkrai","Shaymin","Arceus",
+                "Victini","Snivy","Servine","Serperior","Tepig","Pignite","Emboar","Oshawott","Dewott","Samurott",
+                "Patrat","Watchog","Lillipup","Herdier","Stoutland","Purrloin","Liepard","Pansage","Simisage","Pansear",
+                "Simisear","Panpour","Simipour","Munna","Musharna","Pidove","Tranquill","Unfezant","Blitzle","Zebstrika",
+                "Roggenrola","Boldore","Gigalith","Woobat","Swoobat","Drilbur","Excadrill","Audino","Timburr","Gurdurr",
+                "Conkeldurr","Tympole","Palpitoad","Seismitoad","Throh","Sawk","Sewaddle","Swadloon","Leavanny","Venipede",
+                "Whirlipede","Scolipede","Cottonee","Whimsicott","Petilil","Lilligant","Basculin","Sandile","Krokorok","Krookodile",
+                "Darumaka","Darmanitan","Maractus","Dwebble","Crustle","Scraggy","Scrafty","Sigilyph","Yamask","Cofagrigus",
+                "Tirtouga","Carracosta","Archen","Archeops","Trubbish","Garbodor","Zorua","Zoroark","Minccino","Cinccino",
+                "Gothita","Gothorita","Gothitelle","Solosis","Duosion","Reuniclus","Ducklett","Swanna","Vanillite","Vanillish",
+                "Vanilluxe","Deerling","Sawsbuck","Emolga","Karrablast","Escavalier","Foongus","Amoonguss","Frillish","Jellicent",
+                "Alomomola","Joltik","Galvantula","Ferroseed","Ferrothorn","Klink","Klang","Klinklang","Tynamo","Eelektrik",
+                "Eelektross","Elgyem","Beheeyem","Litwick","Lampent","Chandelure","Axew","Fraxure","Haxorus","Cubchoo",
+                "Beartic","Cryogonal","Shelmet","Accelgor","Stunfisk","Mienfoo","Mienshao","Druddigon","Golett","Golurk",
+                "Pawniard","Bisharp","Bouffalant","Rufflet","Braviary","Vullaby","Mandibuzz","Heatmor","Durant","Deino",
+                "Zweilous","Hydreigon","Larvesta","Volcarona","Cobalion","Terrakion","Virizion","Tornadus","Thundurus","Reshiram",
+                "Zekrom","Landorus","Kyurem","Keldeo","Meloetta","Genesect",
+                "Chespin","Quilladin","Chesnaught","Fennekin","Braixen","Delphox","Froakie","Frogadier","Greninja","Bunnelby",
+                "Diggersby","Fletchling","Fletchinder","Talonflame","Scatterbug","Spewpa","Vivillon","Litleo","Pyroar","Flabébé",
+                "Floette","Florges","Skiddo","Gogoat","Pancham","Pangoro","Furfrou","Espurr","Meowstic","Honedge",
+                "Doublade","Aegislash","Spritzee","Aromatisse","Swirlix","Slurpuff","Inkay","Malamar","Binacle","Barbaracle",
+                "Skrelp","Dragalge","Clauncher","Clawitzer","Helioptile","Heliolisk","Tyrunt","Tyrantrum","Amaura","Aurorus",
+                "Sylveon","Hawlucha","Dedenne","Carbink","Goomy","Sliggoo","Goodra","Klefki","Phantump","Trevenant",
+                "Pumpkaboo","Gourgeist","Bergmite","Avalugg","Noibat","Noivern","Xerneas","Yveltal","Zygarde","Diancie",
+                "Hoopa","Volcanion",
+                "Rowlet","Dartrix","Decidueye","Litten","Torracat","Incineroar","Popplio","Brionne","Primarina","Pikipek",
+                "Trumbeak","Toucannon","Yungoos","Gumshoos","Grubbin","Charjabug","Vikavolt","Crabrawler","Crabominable","Oricorio",
+                "Cutiefly","Ribombee","Rockruff","Lycanroc","Wishiwashi","Mareanie","Toxapex","Mudbray","Mudsdale","Dewpider",
+                "Araquanid","Fomantis","Lurantis","Morelull","Shiinotic","Salandit","Salazzle","Stufful","Bewear","Bounsweet",
+                "Steenee","Tsareena","Comfey","Oranguru","Passimian","Wimpod","Golisopod","Sandygast","Palossand","Pyukumuku",
+                "Type: Null","Silvally","Minior","Komala","Turtonator","Togedemaru","Mimikyu","Bruxish","Drampa","Dhelmise",
+                "Jangmo-o","Hakamo-o","Kommo-o","Tapu Koko","Tapu Lele","Tapu Bulu","Tapu Fini","Cosmog","Cosmoem","Solgaleo",
+                "Lunala","Nihilego","Buzzwole","Pheromosa","Xurkitree","Celesteela","Kartana","Guzzlord","Necrozma","Magearna",
+                "Marshadow","Poipole","Naganadel","Stakataka","Blacephalon","Zeraora","Meltan","Melmetal",
+                "Grookey","Thwackey","Rillaboom","Scorbunny","Raboot","Cinderace","Sobble","Drizzile","Inteleon","Skwovet",
+                "Greedent","Rookidee","Corvisquire","Corviknight","Blipbug","Dottler","Orbeetle","Nickit","Thievul","Gossifleur",
+                "Eldegoss","Wooloo","Dubwool","Chewtle","Drednaw","Yamper","Boltund","Rolycoly","Carkol","Coalossal",
+                "Applin","Flapple","Appletun","Silicobra","Sandaconda","Cramorant","Arrokuda","Barraskewda","Toxel","Toxtricity",
+                "Sizzlipede","Centiskorch","Clobbopus","Grapploct","Sinistea","Polteageist","Hatenna","Hattrem","Hatterene","Impidimp",
+                "Morgrem","Grimmsnarl","Obstagoon","Perrserker","Cursola","Sirfetch'd","Mr. Rime","Runerigus","Milcery","Alcremie",
+                "Falinks","Pincurchin","Snom","Frosmoth","Stonjourner","Eiscue","Indeedee","Morpeko","Cufant","Copperajah",
+                "Dracozolt","Arctozolt","Dracovish","Arctovish","Duraludon","Dreepy","Drakloak","Dragapult","Zacian","Zamazenta",
+                "Eternatus","Kubfu","Urshifu","Zarude","Regieleki","Regidrago","Glastrier","Spectrier","Calyrex","Wyrdeer",
+                "Kleavor","Ursaluna","Basculegion","Sneasler","Overqwil","Enamorus",
+                "Sprigatito","Floragato","Meowscarada","Fuecoco","Crocalor","Skeledirge","Quaxly","Quaxwell","Quaquaval","Lechonk",
+                "Oinkologne","Tarountula","Spidops","Nymble","Lokix","Pawmi","Pawmo","Pawmot","Tandemaus","Maushold",
+                "Fidough","Dachsbun","Smoliv","Dolliv","Arboliva","Squawkabilly","Nacli","Naclstack","Garganacl","Charcadet",
+                "Armarouge","Ceruledge","Tadbulb","Bellibolt","Wattrel","Kilowattrel","Maschiff","Mabosstiff","Shroodle","Grafaiai",
+                "Bramblin","Brambleghast","Toedscool","Toedscruel","Klawf","Capsakid","Scovillain","Rellor","Rabsca","Flittle",
+                "Espathra","Tinkatink","Tinkatuff","Tinkaton","Wiglett","Wugtrio","Bombirdier","Finizen","Palafin","Varoom",
+                "Revavroom","Cyclizar","Orthworm","Glimmet","Glimmora","Greavard","Houndstone","Flamigo","Cetoddle","Cetitan",
+                "Veluza","Dondozo","Tatsugiri","Annihilape","Clodsire","Farigiraf","Dudunsparce","Kingambit","Great Tusk","Scream Tail",
+                "Brute Bonnet","Flutter Mane","Slither Wing","Sandy Shocks","Iron Treads","Iron Bundle","Iron Hands","Iron Jugulis","Iron Moth","Iron Thorns",
+                "Frigibax","Arctibax","Baxcalibur","Gimmighoul","Gholdengo","Wo-Chien","Chien-Pao","Ting-Lu","Chi-Yu","Roaring Moon",
+                "Iron Valiant","Koraidon","Miraidon","Walking Wake","Iron Leaves","Dipplin","Poltchageist","Sinistcha","Okidogi","Munkidori",
+                "Fezandipiti","Ogerpon","Archaludon","Hydrapple","Gouging Fire","Raging Bolt","Iron Boulder","Iron Crown","Terapagos","Pecharunt"
+            ];
+
+            const HOME_SPECIAL_FORMS = [
+                { key: 'home:10091', natId: 19, spriteId: 10091, name: 'Rattata', label: 'Forma de Alola' },
+                { key: 'home:10092', natId: 20, spriteId: 10092, name: 'Raticate', label: 'Forma de Alola' },
+                { key: 'home:10100', natId: 26, spriteId: 10100, name: 'Raichu', label: 'Forma de Alola' },
+                { key: 'home:10101', natId: 27, spriteId: 10101, name: 'Sandshrew', label: 'Forma de Alola' },
+                { key: 'home:10102', natId: 28, spriteId: 10102, name: 'Sandslash', label: 'Forma de Alola' },
+                { key: 'home:10103', natId: 37, spriteId: 10103, name: 'Vulpix', label: 'Forma de Alola' },
+                { key: 'home:10104', natId: 38, spriteId: 10104, name: 'Ninetales', label: 'Forma de Alola' },
+                { key: 'home:10105', natId: 50, spriteId: 10105, name: 'Diglett', label: 'Forma de Alola' },
+                { key: 'home:10106', natId: 51, spriteId: 10106, name: 'Dugtrio', label: 'Forma de Alola' },
+                { key: 'home:10107', natId: 52, spriteId: 10107, name: 'Meowth', label: 'Forma de Alola' },
+                { key: 'home:10108', natId: 53, spriteId: 10108, name: 'Persian', label: 'Forma de Alola' },
+                { key: 'home:10109', natId: 74, spriteId: 10109, name: 'Geodude', label: 'Forma de Alola' },
+                { key: 'home:10110', natId: 75, spriteId: 10110, name: 'Graveler', label: 'Forma de Alola' },
+                { key: 'home:10111', natId: 76, spriteId: 10111, name: 'Golem', label: 'Forma de Alola' },
+                { key: 'home:10112', natId: 88, spriteId: 10112, name: 'Grimer', label: 'Forma de Alola' },
+                { key: 'home:10113', natId: 89, spriteId: 10113, name: 'Muk', label: 'Forma de Alola' },
+                { key: 'home:10114', natId: 103, spriteId: 10114, name: 'Exeggutor', label: 'Forma de Alola' },
+                { key: 'home:10115', natId: 105, spriteId: 10115, name: 'Marowak', label: 'Forma de Alola' },
+                { key: 'home:10161', natId: 52, spriteId: 10161, name: 'Meowth', label: 'Forma de Galar' },
+                { key: 'home:10162', natId: 77, spriteId: 10162, name: 'Ponyta', label: 'Forma de Galar' },
+                { key: 'home:10163', natId: 78, spriteId: 10163, name: 'Rapidash', label: 'Forma de Galar' },
+                { key: 'home:10164', natId: 79, spriteId: 10164, name: 'Slowpoke', label: 'Forma de Galar' },
+                { key: 'home:10165', natId: 80, spriteId: 10165, name: 'Slowbro', label: 'Forma de Galar' },
+                { key: 'home:10166', natId: 83, spriteId: 10166, name: "Farfetch'd", label: 'Forma de Galar' },
+                { key: 'home:10167', natId: 110, spriteId: 10167, name: 'Weezing', label: 'Forma de Galar' },
+                { key: 'home:10168', natId: 122, spriteId: 10168, name: 'Mr. Mime', label: 'Forma de Galar' },
+                { key: 'home:10169', natId: 144, spriteId: 10169, name: 'Articuno', label: 'Forma de Galar' },
+                { key: 'home:10170', natId: 145, spriteId: 10170, name: 'Zapdos', label: 'Forma de Galar' },
+                { key: 'home:10171', natId: 146, spriteId: 10171, name: 'Moltres', label: 'Forma de Galar' },
+                { key: 'home:10172', natId: 199, spriteId: 10172, name: 'Slowking', label: 'Forma de Galar' },
+                { key: 'home:10173', natId: 222, spriteId: 10173, name: 'Corsola', label: 'Forma de Galar' },
+                { key: 'home:10174', natId: 263, spriteId: 10174, name: 'Zigzagoon', label: 'Forma de Galar' },
+                { key: 'home:10175', natId: 264, spriteId: 10175, name: 'Linoone', label: 'Forma de Galar' },
+                { key: 'home:10176', natId: 554, spriteId: 10176, name: 'Darumaka', label: 'Forma de Galar' },
+                { key: 'home:10177', natId: 555, spriteId: 10177, name: 'Darmanitan', label: 'Forma de Galar' },
+                { key: 'home:10179', natId: 562, spriteId: 10179, name: 'Yamask', label: 'Forma de Galar' },
+                { key: 'home:10180', natId: 618, spriteId: 10180, name: 'Stunfisk', label: 'Forma de Galar' },
+                { key: 'home:10229', natId: 58, spriteId: 10229, name: 'Growlithe', label: 'Forma de Hisui' },
+                { key: 'home:10230', natId: 59, spriteId: 10230, name: 'Arcanine', label: 'Forma de Hisui' },
+                { key: 'home:10231', natId: 100, spriteId: 10231, name: 'Voltorb', label: 'Forma de Hisui' },
+                { key: 'home:10232', natId: 101, spriteId: 10232, name: 'Electrode', label: 'Forma de Hisui' },
+                { key: 'home:10233', natId: 157, spriteId: 10233, name: 'Typhlosion', label: 'Forma de Hisui' },
+                { key: 'home:10234', natId: 211, spriteId: 10234, name: 'Qwilfish', label: 'Forma de Hisui' },
+                { key: 'home:10235', natId: 215, spriteId: 10235, name: 'Sneasel', label: 'Forma de Hisui' },
+                { key: 'home:10236', natId: 503, spriteId: 10236, name: 'Samurott', label: 'Forma de Hisui' },
+                { key: 'home:10237', natId: 549, spriteId: 10237, name: 'Lilligant', label: 'Forma de Hisui' },
+                { key: 'home:10238', natId: 570, spriteId: 10238, name: 'Zorua', label: 'Forma de Hisui' },
+                { key: 'home:10239', natId: 571, spriteId: 10239, name: 'Zoroark', label: 'Forma de Hisui' },
+                { key: 'home:10240', natId: 628, spriteId: 10240, name: 'Braviary', label: 'Forma de Hisui' },
+                { key: 'home:10241', natId: 705, spriteId: 10241, name: 'Sliggoo', label: 'Forma de Hisui' },
+                { key: 'home:10242', natId: 706, spriteId: 10242, name: 'Goodra', label: 'Forma de Hisui' },
+                { key: 'home:10243', natId: 713, spriteId: 10243, name: 'Avalugg', label: 'Forma de Hisui' },
+                { key: 'home:10244', natId: 724, spriteId: 10244, name: 'Decidueye', label: 'Forma de Hisui' },
+                { key: 'home:10001', natId: 386, spriteId: 10001, name: 'Deoxys', label: 'Forma Ataque' },
+                { key: 'home:10002', natId: 386, spriteId: 10002, name: 'Deoxys', label: 'Forma Defesa' },
+                { key: 'home:10003', natId: 386, spriteId: 10003, name: 'Deoxys', label: 'Forma Velocidade' },
+                { key: 'home:10006', natId: 492, spriteId: 10006, name: 'Shaymin', label: 'Forma Céu' },
+                { key: 'home:10007', natId: 487, spriteId: 10007, name: 'Giratina', label: 'Forma Origem' },
+                { key: 'home:10245', natId: 483, spriteId: 10245, name: 'Dialga', label: 'Forma Origem' },
+                { key: 'home:10246', natId: 484, spriteId: 10246, name: 'Palkia', label: 'Forma Origem' },
+                { key: 'home:10019', natId: 641, spriteId: 10019, name: 'Tornadus', label: 'Forma Therian' },
+                { key: 'home:10020', natId: 642, spriteId: 10020, name: 'Thundurus', label: 'Forma Therian' },
+                { key: 'home:10021', natId: 645, spriteId: 10021, name: 'Landorus', label: 'Forma Therian' },
+                { key: 'home:10249', natId: 905, spriteId: 10249, name: 'Enamorus', label: 'Forma Therian' },
+                { key: 'home:10022', natId: 646, spriteId: 10022, name: 'Kyurem', label: 'Kyurem Preto' },
+                { key: 'home:10023', natId: 646, spriteId: 10023, name: 'Kyurem', label: 'Kyurem Branco' },
+                { key: 'home:10024', natId: 647, spriteId: 10024, name: 'Keldeo', label: 'Forma Resoluta' },
+                { key: 'home:10018', natId: 648, spriteId: 10018, name: 'Meloetta', label: 'Forma Pirueta' },
+                { key: 'home:10086', natId: 720, spriteId: 10086, name: 'Hoopa', label: 'Hoopa Libertado' },
+                { key: 'home:10118', natId: 718, spriteId: 10118, name: 'Zygarde', label: 'Forma 10%' },
+                { key: 'home:10120', natId: 718, spriteId: 10120, name: 'Zygarde', label: 'Forma Completa' },
+                { key: 'home:10155', natId: 800, spriteId: 10155, name: 'Necrozma', label: 'Juba Crepúsculo' },
+                { key: 'home:10156', natId: 800, spriteId: 10156, name: 'Necrozma', label: 'Asas Alvorada' },
+                { key: 'home:10157', natId: 800, spriteId: 10157, name: 'Necrozma', label: 'Ultra Necrozma' },
+                { key: 'home:10188', natId: 888, spriteId: 10188, name: 'Zacian', label: 'Espada Coroada' },
+                { key: 'home:10189', natId: 889, spriteId: 10189, name: 'Zamazenta', label: 'Escudo Coroado' },
+                { key: 'home:10191', natId: 892, spriteId: 10191, name: 'Urshifu', label: 'Golpe Fluido' },
+                { key: 'home:10193', natId: 898, spriteId: 10193, name: 'Calyrex', label: 'Cavaleiro Glacial' },
+                { key: 'home:10194', natId: 898, spriteId: 10194, name: 'Calyrex', label: 'Cavaleiro Espectral' },
+                { key: 'home:10272', natId: 901, spriteId: 10272, name: 'Ursaluna', label: 'Lua Sangrenta' },
+                { key: 'home:10273', natId: 1017, spriteId: 10273, name: 'Ogerpon', label: 'Máscara da Fonte' },
+                { key: 'home:10274', natId: 1017, spriteId: 10274, name: 'Ogerpon', label: 'Máscara da Fornalha' },
+                { key: 'home:10275', natId: 1017, spriteId: 10275, name: 'Ogerpon', label: 'Máscara do Alicerce' },
+                { key: 'home:10276', natId: 1024, spriteId: 10276, name: 'Terapagos', label: 'Forma Terastal' },
+                { key: 'home:10277', natId: 1024, spriteId: 10277, name: 'Terapagos', label: 'Forma Estelar' },
+                { key: 'home:10033', natId: 3, spriteId: 10033, name: 'Venusaur', label: 'Mega Venusaur' },
+                { key: 'home:10034', natId: 6, spriteId: 10034, name: 'Charizard', label: 'Mega Charizard X' },
+                { key: 'home:10035', natId: 6, spriteId: 10035, name: 'Charizard', label: 'Mega Charizard Y' },
+                { key: 'home:10036', natId: 9, spriteId: 10036, name: 'Blastoise', label: 'Mega Blastoise' },
+                { key: 'home:10038', natId: 94, spriteId: 10038, name: 'Gengar', label: 'Mega Gengar' },
+                { key: 'home:10043', natId: 150, spriteId: 10043, name: 'Mewtwo', label: 'Mega Mewtwo X' },
+                { key: 'home:10044', natId: 150, spriteId: 10044, name: 'Mewtwo', label: 'Mega Mewtwo Y' },
+                { key: 'home:10051', natId: 282, spriteId: 10051, name: 'Gardevoir', label: 'Mega Gardevoir' },
+                { key: 'home:10059', natId: 448, spriteId: 10059, name: 'Lucario', label: 'Mega Lucario' },
+                { key: 'home:10077', natId: 382, spriteId: 10077, name: 'Kyogre', label: 'Kyogre Primordial' },
+                { key: 'home:10078', natId: 383, spriteId: 10078, name: 'Groudon', label: 'Groudon Primordial' },
+                { key: 'home:10079', natId: 384, spriteId: 10079, name: 'Rayquaza', label: 'Mega Rayquaza' }
+            ];
+
+            const PALDEA_BY_NAT = new Map(DATA.map(p => [p.id, p]));
+            const HOME_CATALOG = [];
+            const HOME_BY_KEY = new Map();
+
+            function getGen(natId) {
+                if (natId <= 151) return 'gen1';
+                if (natId <= 251) return 'gen2';
+                if (natId <= 386) return 'gen3';
+                if (natId <= 493) return 'gen4';
+                if (natId <= 649) return 'gen5';
+                if (natId <= 721) return 'gen6';
+                if (natId <= 809) return 'gen7';
+                if (natId <= 905) return 'gen8';
+                return 'gen9';
+            }
+
+            NATIONAL_DEX.forEach((name, idx) => {
+                const natId = idx + 1;
+                const paldea = PALDEA_BY_NAT.get(natId);
+                const item = {
+                    key: 'nat:' + natId,
+                    natId,
+                    spriteId: natId,
+                    name,
+                    formLabel: '',
+                    gen: getGen(natId),
+                    paldeaN: paldea ? paldea.n : null,
+                    localSprite: paldea ? paldea.sprite : null,
+                    localShinySprite: paldea ? paldea.shinySprite : null,
+                    isForm: false,
+                    searchText: normalize(`#${String(natId).padStart(4, '0')} ${natId} ${name}${paldea ? ' paldea #' + pad(paldea.n) : ''}`)
+                };
+                HOME_CATALOG.push(item);
+                HOME_BY_KEY.set(item.key, item);
+            });
+
+            for (const f of FORMS) {
+                const base = DATA[f.n - 1];
+                const item = {
+                    key: 'pform:' + f.key,
+                    natId: base.id,
+                    spriteId: base.id,
+                    name: base.name,
+                    formLabel: f.label,
+                    gen: getGen(base.id),
+                    paldeaN: base.n,
+                    localSprite: f.sprite,
+                    localShinySprite: f.shinySprite,
+                    isForm: true,
+                    searchText: normalize(`#${String(base.id).padStart(4, '0')} ${base.id} ${base.name} ${f.label} forma paldea`)
+                };
+                HOME_CATALOG.push(item);
+                HOME_BY_KEY.set(item.key, item);
+            }
+
+            for (const sf of HOME_SPECIAL_FORMS) {
+                const paldea = PALDEA_BY_NAT.get(sf.natId);
+                const item = {
+                    key: sf.key,
+                    natId: sf.natId,
+                    spriteId: sf.spriteId,
+                    name: sf.name,
+                    formLabel: sf.label,
+                    gen: getGen(sf.natId),
+                    paldeaN: paldea ? paldea.n : null,
+                    localSprite: null,
+                    localShinySprite: null,
+                    isForm: true,
+                    searchText: normalize(`#${String(sf.natId).padStart(4, '0')} ${sf.natId} ${sf.name} ${sf.label} forma home`)
+                };
+                HOME_CATALOG.push(item);
+                HOME_BY_KEY.set(item.key, item);
+            }
+
+            function setPartySprite(img, item, shiny) {
+                if (!item) return;
+                if (shiny && item.localShinySprite) {
+                    img.src = item.localShinySprite;
+                    return;
+                }
+                if (!shiny && item.localSprite) {
+                    img.src = item.localSprite;
+                    return;
+                }
+                const sid = item.spriteId || item.natId;
+                const primary = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${shiny ? 'shiny/' : ''}${sid}.png`;
+                const fallback1 = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${shiny ? 'shiny/' : ''}${sid}.png`;
+                const fallback2 = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${shiny ? 'shiny/' : ''}${sid}.png`;
+                const baseLocal = PALDEA_BY_NAT.get(item.natId);
+                const fallbackLocal = shiny ? (baseLocal?.shinySprite || baseLocal?.sprite) : baseLocal?.sprite;
+                img.dataset.fbStep = '0';
+                img.onerror = () => {
+                    const step = Number(img.dataset.fbStep || '0');
+                    if (step === 0) {
+                        img.dataset.fbStep = '1';
+                        img.src = fallback1;
+                    } else if (step === 1) {
+                        img.dataset.fbStep = '2';
+                        img.src = fallback2;
+                    } else if (step === 2 && fallbackLocal) {
+                        img.dataset.fbStep = '3';
+                        img.src = fallbackLocal;
+                    } else {
+                        img.onerror = null;
+                    }
+                };
+                img.src = primary;
+            }
+
+            let partySlots = Array(6).fill(null);
+            let activePartySlot = 0;
+            let partyPickerLimit = 60;
+
+            function sanitizePartySlot(raw) {
+                if (!raw || typeof raw !== 'object') return null;
+                const item = HOME_BY_KEY.get(raw.key);
+                if (!item) return null;
+                const levelNum = Number(raw.level);
+                return {
+                    key: item.key,
+                    shiny: Boolean(raw.shiny),
+                    nickname: typeof raw.nickname === 'string' ? raw.nickname.trim().slice(0, 24) : '',
+                    level: Number.isInteger(levelNum) && levelNum >= 1 && levelNum <= 100 ? levelNum : 100,
+                    item: typeof raw.item === 'string' ? raw.item.trim().slice(0, 32) : ''
+                };
+            }
+
+            function loadParty() {
+                try {
+                    const raw = JSON.parse(localStorage.getItem(PARTY_KEY));
+                    if (Array.isArray(raw)) {
+                        partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(raw[i]));
+                    }
+                } catch {}
+            }
+
+            function persistParty() {
+                try {
+                    localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots));
+                } catch {}
+            }
+
+            function renderParty() {
+                const grid = $('party-grid');
+                if (!grid) return;
+                grid.replaceChildren();
+                const filledCount = partySlots.filter(Boolean).length;
+                if ($('party-count-badge')) {
+                    $('party-count-badge').textContent = `${filledCount} / 6 na equipe`;
+                }
+                if ($('party-clear-btn')) {
+                    $('party-clear-btn').hidden = filledCount === 0;
+                }
+                partySlots.forEach((slotData, idx) => {
+                    const cell = document.createElement('div');
+                    cell.setAttribute('role', 'listitem');
+                    const item = slotData ? HOME_BY_KEY.get(slotData.key) : null;
+                    if (!slotData || !item) {
+                        cell.className = 'party-slot-cell empty';
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'party-empty-btn';
+                        btn.setAttribute('aria-label', `Adicionar Pokémon ao espaço ${idx + 1} da Party`);
+                        btn.innerHTML = `<span class="party-empty-plus" aria-hidden="true">+</span><span class="party-empty-label">Slot 0${idx + 1}</span><span class="party-empty-sub">Escolher no HOME</span>`;
+                        btn.addEventListener('click', () => openPartyDialog(idx));
+                        cell.append(btn);
+                        grid.append(cell);
+                        return;
+                    }
+
+                    cell.className = 'party-slot-cell filled' + (slotData.shiny ? ' shiny' : '');
+                    const main = document.createElement('div');
+                    main.className = 'party-slot-main';
+
+                    const top = document.createElement('div');
+                    top.className = 'party-slot-top';
+                    const badge = document.createElement('span');
+                    badge.className = 'party-dex-badge';
+                    badge.textContent = `#${String(item.natId).padStart(4, '0')} · Nv.${slotData.level || 100}`;
+
+                    const controls = document.createElement('span');
+                    controls.className = 'party-top-controls';
+
+                    const shinyBtn = document.createElement('button');
+                    shinyBtn.type = 'button';
+                    shinyBtn.className = 'party-icon-btn' + (slotData.shiny ? ' shiny-active' : '');
+                    shinyBtn.textContent = slotData.shiny ? '★' : '☆';
+                    shinyBtn.title = slotData.shiny ? 'Versão Shiny ativa (clique para normal)' : 'Alternar para versão Shiny';
+                    shinyBtn.setAttribute('aria-label', shinyBtn.title);
+                    shinyBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        slotData.shiny = !slotData.shiny;
+                        persistParty();
+                        renderParty();
+                        notify(`${slotData.nickname || item.name}: ${slotData.shiny ? '★ Shiny ativado na Party!' : 'versão normal na Party.'}`);
+                    });
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.className = 'party-icon-btn remove-btn';
+                    removeBtn.textContent = '×';
+                    removeBtn.title = `Remover ${slotData.nickname || item.name} da Party`;
+                    removeBtn.setAttribute('aria-label', removeBtn.title);
+                    removeBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        const removedName = slotData.nickname || item.name;
+                        partySlots[idx] = null;
+                        persistParty();
+                        renderParty();
+                        notify(`${removedName} removido do espaço ${idx + 1} da Party.`);
+                    });
+
+                    controls.append(shinyBtn, removeBtn);
+                    top.append(badge, controls);
+
+                    const body = document.createElement('button');
+                    body.type = 'button';
+                    body.className = 'party-slot-body';
+                    body.setAttribute('aria-label', `Espaço ${idx + 1}: ${slotData.nickname || item.name}. Clique para trocar ou editar.`);
+                    const img = document.createElement('img');
+                    img.alt = item.name;
+                    img.loading = 'lazy';
+                    setPartySprite(img, item, slotData.shiny);
+
+                    const nameEl = document.createElement('span');
+                    nameEl.className = 'party-slot-name';
+                    nameEl.textContent = slotData.nickname ? `${slotData.nickname} (${item.name})` : item.name;
+
+                    const metaEl = document.createElement('span');
+                    metaEl.className = 'party-slot-meta';
+                    const metaParts = [];
+                    if (item.formLabel) metaParts.push(item.formLabel);
+                    if (slotData.item) metaParts.push(slotData.item);
+                    if (!metaParts.length) metaParts.push(item.paldeaN ? `Paldea #${pad(item.paldeaN)}` : 'Pokémon HOME');
+                    metaEl.textContent = metaParts.join(' · ');
+
+                    body.append(img, nameEl, metaEl);
+                    body.addEventListener('click', () => openPartyDialog(idx));
+
+                    main.append(top, body);
+
+                    const footer = document.createElement('div');
+                    footer.className = 'party-slot-footer';
+
+                    const editBtn = document.createElement('button');
+                    editBtn.type = 'button';
+                    editBtn.className = 'party-foot-btn';
+                    editBtn.textContent = '⇄ Trocar';
+                    editBtn.addEventListener('click', () => openPartyDialog(idx));
+
+                    const leftBtn = document.createElement('button');
+                    leftBtn.type = 'button';
+                    leftBtn.className = 'party-foot-btn';
+                    leftBtn.textContent = '◀';
+                    leftBtn.disabled = idx === 0;
+                    leftBtn.title = 'Mover para a esquerda';
+                    leftBtn.setAttribute('aria-label', 'Mover para a esquerda');
+                    leftBtn.addEventListener('click', () => {
+                        if (idx === 0) return;
+                        const tmp = partySlots[idx - 1];
+                        partySlots[idx - 1] = partySlots[idx];
+                        partySlots[idx] = tmp;
+                        persistParty();
+                        renderParty();
+                    });
+
+                    const rightBtn = document.createElement('button');
+                    rightBtn.type = 'button';
+                    rightBtn.className = 'party-foot-btn';
+                    rightBtn.textContent = '▶';
+                    rightBtn.disabled = idx === 5;
+                    rightBtn.title = 'Mover para a direita';
+                    rightBtn.setAttribute('aria-label', 'Mover para a direita');
+                    rightBtn.addEventListener('click', () => {
+                        if (idx === 5) return;
+                        const tmp = partySlots[idx + 1];
+                        partySlots[idx + 1] = partySlots[idx];
+                        partySlots[idx] = tmp;
+                        persistParty();
+                        renderParty();
+                    });
+
+                    footer.append(editBtn, leftBtn, rightBtn);
+                    cell.append(main, footer);
+                    grid.append(cell);
+                });
+            }
+
+            function getCustomInputs() {
+                const lvl = Number($('party-level')?.value || 100);
+                return {
+                    nickname: ($('party-nickname')?.value || '').trim().slice(0, 24),
+                    level: Number.isInteger(lvl) && lvl >= 1 && lvl <= 100 ? lvl : 100,
+                    item: ($('party-item')?.value || '').trim().slice(0, 32),
+                    shiny: Boolean($('party-shiny-check')?.checked)
+                };
+            }
+
+            function updatePartyDialogBanner() {
+                const banner = $('party-current-banner');
+                if (!banner) return;
+                const current = partySlots[activePartySlot];
+                const item = current ? HOME_BY_KEY.get(current.key) : null;
+                if (!current || !item) {
+                    banner.hidden = true;
+                    return;
+                }
+                banner.hidden = false;
+                setPartySprite($('party-current-img'), item, Boolean($('party-shiny-check')?.checked));
+                $('party-current-name').textContent = `Espaço 0${activePartySlot + 1} atual: #${String(item.natId).padStart(4, '0')} ${item.name}${item.formLabel ? ' · ' + item.formLabel : ''}`;
+                $('party-current-sub').textContent = 'Altere apelido, nível, item ou shiny abaixo e clique em "Salvar detalhes", ou selecione outro Pokémon na lista.';
+            }
+
+            function renderPartyPicker() {
+                const grid = $('party-picker-grid');
+                if (!grid) return;
+                const q = normalize(($('party-search')?.value || '').trim());
+                const gen = $('party-gen-filter')?.value || 'all';
+                const wantShiny = Boolean($('party-shiny-check')?.checked);
+                const currentKey = partySlots[activePartySlot]?.key || null;
+
+                const filtered = HOME_CATALOG.filter(item => {
+                    if (gen === 'forms' && !item.isForm) return false;
+                    if (gen === 'paldea' && !item.paldeaN) return false;
+                    if (gen.startsWith('gen') && (item.gen !== gen || item.isForm)) return false;
+                    if (!q) return true;
+                    return item.searchText.includes(q);
+                });
+
+                $('party-picker-count').textContent = `${filtered.length} Pokémon/formas disponíveis no HOME · clique em um card para colocar no Espaço 0${activePartySlot + 1}`;
+                grid.replaceChildren();
+
+                const slice = filtered.slice(0, partyPickerLimit);
+                for (const item of slice) {
+                    const card = document.createElement('button');
+                    card.type = 'button';
+                    card.setAttribute('role', 'listitem');
+                    card.className = 'party-pick-card' + (currentKey === item.key ? ' active' : '');
+                    card.innerHTML = `<span class="party-pick-top"><span>#${String(item.natId).padStart(4, '0')}</span>${item.paldeaN ? `<span class="party-pick-paldea">Paldea #${pad(item.paldeaN)}</span>` : '<span>HOME</span>'}</span><img alt="" loading="lazy" width="68" height="68"><span class="party-pick-name"></span><span class="party-pick-form"></span>`;
+                    setPartySprite(card.querySelector('img'), item, wantShiny);
+                    card.querySelector('.party-pick-name').textContent = item.name;
+                    card.querySelector('.party-pick-form').textContent = item.formLabel || (item.paldeaN ? 'Jogo base / HOME' : 'Transferível via HOME');
+                    card.addEventListener('click', () => {
+                        const meta = getCustomInputs();
+                        partySlots[activePartySlot] = {
+                            key: item.key,
+                            shiny: meta.shiny,
+                            nickname: meta.nickname,
+                            level: meta.level,
+                            item: meta.item
+                        };
+                        persistParty();
+                        renderParty();
+                        $('party-dialog').close();
+                        notify(`${meta.nickname || item.name}${item.formLabel ? ' (' + item.formLabel + ')' : ''} adicionado ao Espaço 0${activePartySlot + 1} da sua Party!`);
+                    });
+                    grid.append(card);
+                }
+
+                const moreBtn = $('party-load-more');
+                if (moreBtn) {
+                    moreBtn.hidden = filtered.length <= partyPickerLimit;
+                    if (!moreBtn.hidden) {
+                        moreBtn.textContent = `Mostrar mais Pokémon (${filtered.length - partyPickerLimit} restantes)`;
+                    }
+                }
+            }
+
+            function openPartyDialog(slotIndex) {
+                activePartySlot = slotIndex;
+                partyPickerLimit = 60;
+                const current = partySlots[slotIndex];
+                $('party-dialog-title').textContent = `Pokémon HOME · Espaço 0${slotIndex + 1} da Party`;
+                $('party-nickname').value = current?.nickname || '';
+                $('party-level').value = current?.level || 100;
+                $('party-item').value = current?.item || '';
+                $('party-shiny-check').checked = Boolean(current?.shiny);
+                updatePartyDialogBanner();
+                renderPartyPicker();
+                $('party-dialog').showModal();
+                $('party-dialog').scrollTop = 0;
+                $('party-search').focus();
+            }
+
+            $('party-add-btn')?.addEventListener('click', () => {
+                const firstEmpty = partySlots.findIndex(s => !s);
+                openPartyDialog(firstEmpty >= 0 ? firstEmpty : 0);
+            });
+
+            $('party-clear-btn')?.addEventListener('click', () => {
+                if (!partySlots.some(Boolean)) return;
+                if (!confirm('Limpar todos os 6 espaços da sua Party? (Isso não afeta suas capturas na Pokédex/Boxes).')) return;
+                partySlots = Array(6).fill(null);
+                persistParty();
+                renderParty();
+                notify('Sua Party foi limpa.');
+            });
+
+            $('close-party-dialog')?.addEventListener('click', () => $('party-dialog').close());
+            $('party-search')?.addEventListener('input', () => {
+                partyPickerLimit = 60;
+                renderPartyPicker();
+            });
+            $('party-gen-filter')?.addEventListener('change', () => {
+                partyPickerLimit = 60;
+                renderPartyPicker();
+            });
+            $('party-shiny-check')?.addEventListener('change', () => {
+                updatePartyDialogBanner();
+                renderPartyPicker();
+            });
+            $('party-load-more')?.addEventListener('click', () => {
+                partyPickerLimit += 90;
+                renderPartyPicker();
+            });
+            $('party-save-meta')?.addEventListener('click', () => {
+                const current = partySlots[activePartySlot];
+                if (!current) return;
+                const meta = getCustomInputs();
+                current.nickname = meta.nickname;
+                current.level = meta.level;
+                current.item = meta.item;
+                current.shiny = meta.shiny;
+                persistParty();
+                renderParty();
+                $('party-dialog').close();
+                const item = HOME_BY_KEY.get(current.key);
+                notify(`Detalhes de ${current.nickname || item?.name || 'Pokémon'} atualizados no Espaço 0${activePartySlot + 1}!`);
+            });
+            $('party-remove-current')?.addEventListener('click', () => {
+                partySlots[activePartySlot] = null;
+                persistParty();
+                renderParty();
+                $('party-dialog').close();
+                notify(`Espaço 0${activePartySlot + 1} da Party esvaziado.`);
+            });
+
+            window.addEventListener('storage', e => {
+                if (e.key === PARTY_KEY) {
+                    loadParty();
+                    renderParty();
+                }
+            });
+
+            loadParty();
+            renderParty();
 
             renderBox(); refreshTools(); initCloud();
         })();
