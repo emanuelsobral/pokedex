@@ -4567,11 +4567,74 @@
         }
 
         .party-dex-badge {
-            font-size: 10.5px !important;
+            font-size: 10px !important;
             font-weight: 800 !important;
             color: var(--muted) !important;
             font-variant-numeric: tabular-nums !important;
             white-space: nowrap !important;
+        }
+
+        .party-lvl-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 2px !important;
+            background: var(--violet-soft) !important;
+            border: 1px solid rgba(105, 69, 165, 0.28) !important;
+            border-radius: 999px !important;
+            padding: 1px 5px !important;
+            font-size: 10px !important;
+            font-weight: 800 !important;
+            color: var(--violet-2) !important;
+            line-height: 1 !important;
+        }
+
+        html[data-theme=dark] .party-lvl-pill {
+            background: rgba(201, 182, 242, 0.14) !important;
+            border-color: rgba(201, 182, 242, 0.32) !important;
+            color: #e4d9ff !important;
+        }
+
+        .party-lvl-input {
+            width: 28px !important;
+            border: 0 !important;
+            background: transparent !important;
+            color: inherit !important;
+            font: inherit !important;
+            font-size: 10.5px !important;
+            font-weight: 900 !important;
+            text-align: center !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            outline: none !important;
+            -moz-appearance: textfield !important;
+        }
+
+        .party-lvl-input::-webkit-outer-spin-button,
+        .party-lvl-input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0 !important;
+        }
+
+        .party-lvl-presets {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .party-lvl-preset-btn {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--violet-2);
+            border-radius: 6px;
+            padding: 1px 5px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .party-lvl-preset-btn:hover {
+            background: var(--violet-soft);
+            border-color: var(--violet-2);
         }
 
         .party-top-controls {
@@ -5426,7 +5489,8 @@
             <label class="party-field" for="party-nickname">Apelido (opcional)
                 <input type="text" id="party-nickname" maxlength="24" placeholder="Ex.: Meu Rayquaza">
             </label>
-            <label class="party-field" for="party-level">Nível (1–100)
+            <label class="party-field" for="party-level">
+                <span style="display:flex;align-items:center;justify-content:space-between;gap:4px">Nível (1–100) <span class="party-lvl-presets"><button type="button" class="party-lvl-preset-btn" data-lvl-preset="1">1</button><button type="button" class="party-lvl-preset-btn" data-lvl-preset="50">50</button><button type="button" class="party-lvl-preset-btn" data-lvl-preset="100">100</button></span></span>
                 <input type="number" id="party-level" min="1" max="100" value="100">
             </label>
             <label class="party-field" for="party-item">Item / Teratipo / Nota
@@ -6688,9 +6752,27 @@
 
                     const top = document.createElement('div');
                     top.className = 'party-slot-top';
+                    const leftMeta = document.createElement('span');
+                    leftMeta.style.cssText = 'display:inline-flex;align-items:center;gap:4px;min-width:0';
                     const badge = document.createElement('span');
                     badge.className = 'party-dex-badge';
-                    badge.textContent = `#${String(item.natId).padStart(4, '0')} · Nv.${slotData.level || 100}`;
+                    badge.textContent = `#${String(item.natId).padStart(4, '0')}`;
+
+                    const lvlWrap = document.createElement('label');
+                    lvlWrap.className = 'party-lvl-pill';
+                    lvlWrap.title = 'Clique para digitar o nível (1 a 100)';
+                    lvlWrap.innerHTML = `<span>Nv.</span><input type="number" class="party-lvl-input" min="1" max="100" value="${slotData.level || 100}" aria-label="Nível de ${slotData.nickname || item.name}">`;
+                    const lvlInput = lvlWrap.querySelector('input');
+                    lvlWrap.addEventListener('click', e => e.stopPropagation());
+                    lvlInput.addEventListener('change', e => {
+                        e.stopPropagation();
+                        const val = Math.max(1, Math.min(100, Math.round(Number(lvlInput.value) || 100)));
+                        lvlInput.value = val;
+                        slotData.level = val;
+                        persistParty();
+                        notify(`${slotData.nickname || item.name}: nível ajustado para Nv. ${val}.`);
+                    });
+                    leftMeta.append(badge, lvlWrap);
 
                     const controls = document.createElement('span');
                     controls.className = 'party-top-controls';
@@ -6725,7 +6807,7 @@
                     });
 
                     controls.append(shinyBtn, removeBtn);
-                    top.append(badge, controls);
+                    top.append(leftMeta, controls);
 
                     const body = document.createElement('button');
                     body.type = 'button';
@@ -6911,6 +6993,12 @@
             });
 
             $('close-party-dialog')?.addEventListener('click', () => $('party-dialog').close());
+            document.querySelectorAll('[data-lvl-preset]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    if ($('party-level')) $('party-level').value = btn.dataset.lvlPreset;
+                });
+            });
             $('party-search')?.addEventListener('input', () => {
                 partyPickerLimit = 60;
                 renderPartyPicker();
