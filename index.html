@@ -5564,6 +5564,19 @@
             let changeHistory = [], pendingChange = null;
             let readyItems = new Set();
             let formCaught = new Set(), formShiny = new Set(), itinerary = [];
+            let partySlots = Array(6).fill(null);
+            const PARTY_KEY = 'paldea-party-home-v1';
+            function normalizePartyEntry(raw) {
+                if (!raw || typeof raw !== 'object' || typeof raw.key !== 'string' || raw.key.length > 60) return null;
+                const levelNum = Number(raw.level);
+                return {
+                    key: raw.key,
+                    shiny: Boolean(raw.shiny),
+                    nickname: typeof raw.nickname === 'string' ? raw.nickname.trim().slice(0, 24) : '',
+                    level: Number.isInteger(levelNum) && levelNum >= 1 && levelNum <= 100 ? levelNum : 100,
+                    item: typeof raw.item === 'string' ? raw.item.trim().slice(0, 32) : ''
+                };
+            }
             let statusFilter = 'all', versionFilter = 'all';
             const SEARCH = DATA.map(p => normalize(p.name));
             function warn(message) { $('storage-warning').textContent = message; $('storage-warning').hidden = false; }
@@ -5580,9 +5593,10 @@
                     forms = data.forms; shinyForms = data.shinyForms; route = data.route.map(s => ({ key: s.key, visited: s.visited }));
                 }
                 if (data.version === 4 && (!validList(data.readyItems) || data.readyItems.some(n => !ITEM_TARGETS.has(n) || data.captured.includes(n)))) throw new Error('Checklist inválida');
-                return { readyItems: new Set(data.version === 4 ? data.readyItems : []), captured: new Set(data.captured), shiny: new Set(data.version >= 2 ? data.shiny : []), forms: new Set(forms), shinyForms: new Set(shinyForms), route };
+                const party = Array.isArray(data.party) ? Array.from({ length: 6 }, (_, i) => normalizePartyEntry(data.party[i])) : null;
+                return { readyItems: new Set(data.version === 4 ? data.readyItems : []), captured: new Set(data.captured), shiny: new Set(data.version >= 2 ? data.shiny : []), forms: new Set(forms), shinyForms: new Set(shinyForms), route, party };
             }
-            function payload() { return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', exportedAt: new Date().toISOString(), captured: [...caught].sort((a, b) => a - b), shiny: [...shinies].sort((a, b) => a - b), forms: [...formCaught].sort(), shinyForms: [...formShiny].sort(), route: itinerary.map(s => ({ ...s })), readyItems: [...readyItems].sort((a, b) => a - b) }; }
+            function payload() { return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', exportedAt: new Date().toISOString(), captured: [...caught].sort((a, b) => a - b), shiny: [...shinies].sort((a, b) => a - b), forms: [...formCaught].sort(), shinyForms: [...formShiny].sort(), route: itinerary.map(s => ({ ...s })), readyItems: [...readyItems].sort((a, b) => a - b), party: partySlots.map(s => s ? { ...s } : null) }; }
             function notify(message) { clearTimeout(toastTimer); $('toast').textContent = message; toastTimer = setTimeout(() => $('toast').textContent = '', 4200); }
             function persist() { finishHistory(); refreshUndo(); try { localStorage.setItem(KEY, JSON.stringify({ ...payload(), history: changeHistory })); storageOK = true; $('save-status').textContent = 'Progresso salvo'; $('storage-warning').hidden = true; } catch { storageFailure(); } scheduleCloud(); }
             try { const saved = localStorage.getItem(KEY); if (saved) { try { const parsed = JSON.parse(saved), state = validate(parsed); restoreState(state); try { changeHistory = loadHistory(parsed.history); } catch { changeHistory = []; } } catch { warn('O progresso salvo não pôde ser lido. Importe um backup válido para recuperá-lo. Novas marcações substituirão os dados locais inválidos.'); } } const view = Number(localStorage.getItem(VIEW_KEY)); if (Number.isInteger(view) && view >= 1 && view <= BOX_COUNT) currentBox = view; } catch { storageFailure(); }
@@ -5731,18 +5745,19 @@
             $('next-missing').addEventListener('click', () => { const start = highlighted ? ENTRY_BY_KEY.get(highlighted).index : (currentBox - 1) * 30 - 1; for (let i = 1; i <= BOX_ENTRIES.length; i++) { const e = BOX_ENTRIES[(start + i) % BOX_ENTRIES.length]; if (!entryCaught(e) && versionMatches(e)) { if (!['all', 'missing'].includes(statusFilter)) { statusFilter = 'missing'; $('status-filter').value = 'missing'; } clearSearch(); revealEntry(e); return; } } notify('Todos os espaços desta seleção estão registrados!'); });
             $('export').addEventListener('click', () => {
                 const blob = new Blob([JSON.stringify(payload(), null, 2)], { type: 'application/json;charset=utf-8' }), url = URL.createObjectURL(blob), a = document.createElement('a'), now = new Date(), date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-                a.href = url; a.download = `paldea-progresso-${date}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 10000); notify(`Backup com ${caught.size} capturas, ${shinies.size} shinies, ${formCaught.size} formas e ${itinerary.length} paradas e ${readyItems.size} preparações de itens preparado para download.`);
+                const partyCount = partySlots.filter(Boolean).length;
+                a.href = url; a.download = `paldea-progresso-${date}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 10000); notify(`Backup com ${caught.size} capturas, ${shinies.size} shinies, ${formCaught.size} formas, ${partyCount} na Party, ${itinerary.length} paradas e ${readyItems.size} preparações de itens preparado para download.`);
             });
             $('import').addEventListener('click', () => { $('import-file').value = ''; $('import-file').click(); });
             $('import-file').addEventListener('change', async event => {
                 const file = event.target.files[0]; if (!file) return;
-                try { if (file.size > 100000) throw new Error('Arquivo grande demais'); const data = JSON.parse(await file.text()); pendingImport = validate(data); const added = [...pendingImport.captured].filter(n => !caught.has(n)).length, addedShiny = [...pendingImport.shiny].filter(n => !shinies.has(n)).length; $('import-summary').textContent = `O arquivo tem ${pendingImport.captured.size} capturas, ${pendingImport.shiny.size} shinies, ${pendingImport.forms.size} formas e ${pendingImport.route.length} paradas e ${pendingImport.readyItems.size} evoluções com itens separados. Ao mesclar, serão adicionadas ${added} capturas e ${addedShiny} shinies. Ao substituir, ficarão apenas os registros do arquivo.${data.version < 3 ? ' Backup antigo: não contém formas nem rota. Substituir também limpa esses registros.' : ''}${data.version < 4 ? ' Este backup não contém checklist de itens. Substituir limpa essa checklist; mesclar preserva preparações de evoluções ainda pendentes.' : ''}`; $('import-dialog').showModal(); $('merge-import').focus(); }
+                try { if (file.size > 100000) throw new Error('Arquivo grande demais'); const data = JSON.parse(await file.text()); pendingImport = validate(data); const added = [...pendingImport.captured].filter(n => !caught.has(n)).length, addedShiny = [...pendingImport.shiny].filter(n => !shinies.has(n)).length, importPartyCount = pendingImport.party ? pendingImport.party.filter(Boolean).length : 0; $('import-summary').textContent = `O arquivo tem ${pendingImport.captured.size} capturas, ${pendingImport.shiny.size} shinies, ${pendingImport.forms.size} formas, ${importPartyCount} Pokémon na Party, ${pendingImport.route.length} paradas e ${pendingImport.readyItems.size} evoluções com itens separados. Ao mesclar, serão adicionadas ${added} capturas e ${addedShiny} shinies (e vagas livres da Party serão preenchidas). Ao substituir, ficarão apenas os registros do arquivo.${data.version < 3 ? ' Backup antigo: não contém formas nem rota. Substituir também limpa esses registros.' : ''}${data.version < 4 ? ' Este backup não contém checklist de itens. Substituir limpa essa checklist; mesclar preserva preparações de evoluções ainda pendentes.' : ''}`; $('import-dialog').showModal(); $('merge-import').focus(); }
                 catch { pendingImport = null; notify('Arquivo inválido. Selecione um backup JSON exportado por este organizador. Seu progresso foi mantido.'); }
             });
-            function applyImport(merge) { if (!pendingImport) return; checkpoint('importar progresso'); formCaught = merge ? new Set([...formCaught, ...pendingImport.forms]) : new Set(pendingImport.forms); formShiny = merge ? new Set([...formShiny, ...pendingImport.shinyForms]) : new Set(pendingImport.shinyForms); if (merge) { for (const s of pendingImport.route) { const existing = itinerary.find(x => x.key === s.key); if (existing) existing.visited = existing.visited || s.visited; else itinerary.push({ ...s }); } } else itinerary = pendingImport.route.map(s => ({ ...s })); caught = merge ? new Set([...caught, ...pendingImport.captured]) : new Set(pendingImport.captured); shinies = merge ? new Set([...shinies, ...pendingImport.shiny]) : new Set(pendingImport.shiny); readyItems = new Set([...(merge ? readyItems : []), ...pendingImport.readyItems].filter(n => !caught.has(n))); pendingImport = null; $('import-dialog').close(); persist(); renderBox(); renderSearch(); refreshTools(); notify(`Progresso ${merge ? 'mesclado' : 'substituído'}: ${caught.size} capturados e ${shinies.size} shinies.${storageOK ? '' : ' Exporte para guardar.'}`); $('import').focus(); }
+            function applyImport(merge) { if (!pendingImport) return; checkpoint('importar progresso'); formCaught = merge ? new Set([...formCaught, ...pendingImport.forms]) : new Set(pendingImport.forms); formShiny = merge ? new Set([...formShiny, ...pendingImport.shinyForms]) : new Set(pendingImport.shinyForms); if (merge) { for (const s of pendingImport.route) { const existing = itinerary.find(x => x.key === s.key); if (existing) existing.visited = existing.visited || s.visited; else itinerary.push({ ...s }); } } else itinerary = pendingImport.route.map(s => ({ ...s })); caught = merge ? new Set([...caught, ...pendingImport.captured]) : new Set(pendingImport.captured); shinies = merge ? new Set([...shinies, ...pendingImport.shiny]) : new Set(pendingImport.shiny); readyItems = new Set([...(merge ? readyItems : []), ...pendingImport.readyItems].filter(n => !caught.has(n))); if (pendingImport.party) { partySlots = merge ? Array.from({ length: 6 }, (_, i) => partySlots[i] || pendingImport.party[i] || null) : pendingImport.party.map(s => s ? { ...s } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (typeof renderParty === 'function') renderParty(); } pendingImport = null; $('import-dialog').close(); persist(); renderBox(); renderSearch(); refreshTools(); notify(`Progresso ${merge ? 'mesclado' : 'substituído'}: ${caught.size} capturados, ${shinies.size} shinies e ${partySlots.filter(Boolean).length} na Party.${storageOK ? '' : ' Exporte para guardar.'}`); $('import').focus(); }
             $('merge-import').addEventListener('click', () => applyImport(true)); $('replace-import').addEventListener('click', () => applyImport(false)); $('cancel-import').addEventListener('click', () => { pendingImport = null; $('import-dialog').close(); }); $('import-dialog').addEventListener('cancel', () => { pendingImport = null; });
             window.addEventListener('storage', event => { if (event.key !== KEY || event.newValue === null) return; try { const parsed = JSON.parse(event.newValue), state = validate(parsed); restoreState(state); try { changeHistory = loadHistory(parsed.history); } catch { changeHistory = []; } pendingChange = null; pendingImport = null; if ($('import-dialog').open) $('import-dialog').close(); renderBox(); renderSearch(); refreshTools(); notify('Progresso atualizado por outra aba.'); } catch { warn('Outra aba alterou o progresso para um formato inválido. As capturas desta página foram mantidas.'); } });
-            function restoreState(s) { readyItems = s.readyItems; caught = s.captured; shinies = s.shiny; formCaught = s.forms; formShiny = s.shinyForms; itinerary = s.route.map(x => ({ ...x })); }
+            function restoreState(s) { readyItems = s.readyItems; caught = s.captured; shinies = s.shiny; formCaught = s.forms; formShiny = s.shinyForms; itinerary = s.route.map(x => ({ ...x })); if (Array.isArray(s.party)) { partySlots = s.party.map(x => x ? { ...x } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (typeof renderParty === 'function') renderParty(); } }
             function refreshTools() {
                 refreshCompletionTools();
                 $('forms-summary').textContent = `${formCaught.size} / ${FORMS.length} formas · ${formShiny.size} shiny`;
@@ -5894,7 +5909,7 @@
             $('theme-toggle').addEventListener('click', () => { themePreference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; applyTheme(); try { localStorage.setItem(THEME_KEY, themePreference); } catch { notify('Tema alterado nesta sessão; o navegador não permitiu salvar a preferência.'); } });
             themeMedia.addEventListener('change', () => { if (!themePreference) applyTheme(); }); window.addEventListener('storage', e => { if (e.key === THEME_KEY) { themePreference = ['light', 'dark'].includes(e.newValue) ? e.newValue : null; applyTheme(); } }); applyTheme();
 
-            function stateSnapshot(raw) { const s = validate(raw); return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', captured: [...s.captured].sort((a, b) => a - b), shiny: [...s.shiny].sort((a, b) => a - b), forms: [...s.forms].sort(), shinyForms: [...s.shinyForms].sort(), route: s.route.map(r => ({ ...r })), readyItems: [...s.readyItems].sort((a, b) => a - b) }; }
+            function stateSnapshot(raw) { const s = validate(raw); return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', captured: [...s.captured].sort((a, b) => a - b), shiny: [...s.shiny].sort((a, b) => a - b), forms: [...s.forms].sort(), shinyForms: [...s.shinyForms].sort(), route: s.route.map(r => ({ ...r })), readyItems: [...s.readyItems].sort((a, b) => a - b), party: (s.party || Array(6).fill(null)).map(x => x ? { ...x } : null) }; }
             function sameState(a, b) { return JSON.stringify(stateSnapshot(a)) === JSON.stringify(stateSnapshot(b)); }
             function loadHistory(raw) {
                 if (raw === undefined) return []; if (!Array.isArray(raw) || raw.length > 100) throw new Error('Histórico inválido'); const ids = new Set();
@@ -5959,7 +5974,7 @@
                 el.classList.toggle('error', error);
             }
             function isEmptyState(s) {
-                return !s.captured.length && !s.shiny.length && !s.forms.length && !s.shinyForms.length && !s.route.length && !s.readyItems.length;
+                return !s.captured.length && !s.shiny.length && !s.forms.length && !s.shinyForms.length && !s.route.length && !s.readyItems.length && !(Array.isArray(s.party) && s.party.some(Boolean));
             }
             function mergeSnapshots(a, b) {
                 const captured = [...new Set([...a.captured, ...b.captured])].sort((x, y) => x - y);
@@ -5973,7 +5988,8 @@
                     else route.push({ ...s });
                 }
                 const readyItems = [...new Set([...a.readyItems, ...b.readyItems])].filter(n => !captured.includes(n)).sort((x, y) => x - y);
-                return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', captured, shiny, forms, shinyForms, route, readyItems };
+                const party = Array.from({ length: 6 }, (_, i) => a.party?.[i] || b.party?.[i] || null);
+                return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', captured, shiny, forms, shinyForms, route, readyItems, party };
             }
             function mergeHistories(a, b) {
                 const map = new Map();
@@ -6285,7 +6301,6 @@
             applyBoxView(boxViewMode);
 
             /* === SISTEMA MINHA PARTY (POKÉMON HOME · NATIONAL DEX #0001–#1025 + FORMAS) === */
-            const PARTY_KEY = 'paldea-party-home-v1';
             const NATIONAL_DEX = [
                 "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie",
                 "Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate",
@@ -6604,7 +6619,6 @@
                 img.src = primary;
             }
 
-            let partySlots = Array(6).fill(null);
             let activePartySlot = 0;
             let partyPickerLimit = 60;
 
@@ -6627,14 +6641,17 @@
                     const raw = JSON.parse(localStorage.getItem(PARTY_KEY));
                     if (Array.isArray(raw)) {
                         partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(raw[i]));
+                        return;
                     }
                 } catch {}
+                partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(partySlots[i]));
             }
 
             function persistParty() {
                 try {
                     localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots));
                 } catch {}
+                persist();
             }
 
             function renderParty() {
