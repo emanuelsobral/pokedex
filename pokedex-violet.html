@@ -5629,6 +5629,7 @@
             let readyItems = new Set();
             let formCaught = new Set(), formShiny = new Set(), itinerary = [];
             let partySlots = Array(6).fill(null);
+            let partyReady = false;
             const PARTY_KEY = 'paldea-party-home-v1';
             function normalizePartyEntry(raw) {
                 if (!raw || typeof raw !== 'object' || typeof raw.key !== 'string' || raw.key.length > 60) return null;
@@ -5662,8 +5663,8 @@
             }
             function payload() { return { format: 'paldea-boxes', version: 4, pokedex: 'paldea', exportedAt: new Date().toISOString(), captured: [...caught].sort((a, b) => a - b), shiny: [...shinies].sort((a, b) => a - b), forms: [...formCaught].sort(), shinyForms: [...formShiny].sort(), route: itinerary.map(s => ({ ...s })), readyItems: [...readyItems].sort((a, b) => a - b), party: partySlots.map(s => s ? { ...s } : null) }; }
             function notify(message) { clearTimeout(toastTimer); $('toast').textContent = message; toastTimer = setTimeout(() => $('toast').textContent = '', 4200); }
-            function persist() { finishHistory(); refreshUndo(); try { localStorage.setItem(KEY, JSON.stringify({ ...payload(), history: changeHistory })); storageOK = true; $('save-status').textContent = 'Progresso salvo'; $('storage-warning').hidden = true; } catch { storageFailure(); } scheduleCloud(); }
-            try { const saved = localStorage.getItem(KEY); if (saved) { try { const parsed = JSON.parse(saved), state = validate(parsed); restoreState(state); try { changeHistory = loadHistory(parsed.history); } catch { changeHistory = []; } } catch { warn('O progresso salvo não pôde ser lido. Importe um backup válido para recuperá-lo. Novas marcações substituirão os dados locais inválidos.'); } } const view = Number(localStorage.getItem(VIEW_KEY)); if (Number.isInteger(view) && view >= 1 && view <= BOX_COUNT) currentBox = view; } catch { storageFailure(); }
+            function persist() { finishHistory(); refreshUndo(); try { localStorage.setItem(KEY, JSON.stringify({ ...payload(), history: changeHistory })); localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); storageOK = true; $('save-status').textContent = 'Progresso salvo'; $('storage-warning').hidden = true; } catch { storageFailure(); } scheduleCloud(); }
+            try { const saved = localStorage.getItem(KEY); if (saved) { try { const parsed = JSON.parse(saved), state = validate(parsed); restoreState(state); try { changeHistory = loadHistory(parsed.history); } catch { changeHistory = []; } } catch { warn('O progresso salvo não pôde ser lido. Importe um backup válido para recuperá-lo. Novas marcações substituirão os dados locais inválidos.'); } } try { const rawParty = JSON.parse(localStorage.getItem(PARTY_KEY)); if (Array.isArray(rawParty) && (!partySlots.some(Boolean) && rawParty.some(Boolean))) { partySlots = Array.from({ length: 6 }, (_, i) => normalizePartyEntry(rawParty[i])); } } catch {} const view = Number(localStorage.getItem(VIEW_KEY)); if (Number.isInteger(view) && view >= 1 && view <= BOX_COUNT) currentBox = view; } catch { storageFailure(); }
             function versionMatches(p) { return versionFilter === 'all' || p.exclusive === versionFilter || p.exclusive === 'forms'; }
             function matches(p) { return versionMatches(p) && (statusFilter === 'all' || statusFilter === 'missing' && !caught.has(p.n) || statusFilter === 'caught' && caught.has(p.n) || statusFilter === 'shiny' && shinies.has(p.n) || statusFilter === 'shiny-missing' && !shinies.has(p.n)); }
             function resetFilters() { statusFilter = 'all'; versionFilter = 'all'; $('status-filter').value = 'all'; $('version-filter').value = 'all'; updateFilters(); renderSearch(); }
@@ -5818,10 +5819,10 @@
                 try { if (file.size > 100000) throw new Error('Arquivo grande demais'); const data = JSON.parse(await file.text()); pendingImport = validate(data); const added = [...pendingImport.captured].filter(n => !caught.has(n)).length, addedShiny = [...pendingImport.shiny].filter(n => !shinies.has(n)).length, importPartyCount = pendingImport.party ? pendingImport.party.filter(Boolean).length : 0; $('import-summary').textContent = `O arquivo tem ${pendingImport.captured.size} capturas, ${pendingImport.shiny.size} shinies, ${pendingImport.forms.size} formas, ${importPartyCount} Pokémon na Party, ${pendingImport.route.length} paradas e ${pendingImport.readyItems.size} evoluções com itens separados. Ao mesclar, serão adicionadas ${added} capturas e ${addedShiny} shinies (e vagas livres da Party serão preenchidas). Ao substituir, ficarão apenas os registros do arquivo.${data.version < 3 ? ' Backup antigo: não contém formas nem rota. Substituir também limpa esses registros.' : ''}${data.version < 4 ? ' Este backup não contém checklist de itens. Substituir limpa essa checklist; mesclar preserva preparações de evoluções ainda pendentes.' : ''}`; $('import-dialog').showModal(); $('merge-import').focus(); }
                 catch { pendingImport = null; notify('Arquivo inválido. Selecione um backup JSON exportado por este organizador. Seu progresso foi mantido.'); }
             });
-            function applyImport(merge) { if (!pendingImport) return; checkpoint('importar progresso'); formCaught = merge ? new Set([...formCaught, ...pendingImport.forms]) : new Set(pendingImport.forms); formShiny = merge ? new Set([...formShiny, ...pendingImport.shinyForms]) : new Set(pendingImport.shinyForms); if (merge) { for (const s of pendingImport.route) { const existing = itinerary.find(x => x.key === s.key); if (existing) existing.visited = existing.visited || s.visited; else itinerary.push({ ...s }); } } else itinerary = pendingImport.route.map(s => ({ ...s })); caught = merge ? new Set([...caught, ...pendingImport.captured]) : new Set(pendingImport.captured); shinies = merge ? new Set([...shinies, ...pendingImport.shiny]) : new Set(pendingImport.shiny); readyItems = new Set([...(merge ? readyItems : []), ...pendingImport.readyItems].filter(n => !caught.has(n))); if (pendingImport.party) { partySlots = merge ? Array.from({ length: 6 }, (_, i) => partySlots[i] || pendingImport.party[i] || null) : pendingImport.party.map(s => s ? { ...s } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (typeof renderParty === 'function') renderParty(); } pendingImport = null; $('import-dialog').close(); persist(); renderBox(); renderSearch(); refreshTools(); notify(`Progresso ${merge ? 'mesclado' : 'substituído'}: ${caught.size} capturados, ${shinies.size} shinies e ${partySlots.filter(Boolean).length} na Party.${storageOK ? '' : ' Exporte para guardar.'}`); $('import').focus(); }
+            function applyImport(merge) { if (!pendingImport) return; checkpoint('importar progresso'); formCaught = merge ? new Set([...formCaught, ...pendingImport.forms]) : new Set(pendingImport.forms); formShiny = merge ? new Set([...formShiny, ...pendingImport.shinyForms]) : new Set(pendingImport.shinyForms); if (merge) { for (const s of pendingImport.route) { const existing = itinerary.find(x => x.key === s.key); if (existing) existing.visited = existing.visited || s.visited; else itinerary.push({ ...s }); } } else itinerary = pendingImport.route.map(s => ({ ...s })); caught = merge ? new Set([...caught, ...pendingImport.captured]) : new Set(pendingImport.captured); shinies = merge ? new Set([...shinies, ...pendingImport.shiny]) : new Set(pendingImport.shiny); readyItems = new Set([...(merge ? readyItems : []), ...pendingImport.readyItems].filter(n => !caught.has(n))); if (pendingImport.party) { partySlots = merge ? Array.from({ length: 6 }, (_, i) => partySlots[i] || pendingImport.party[i] || null) : pendingImport.party.map(s => s ? { ...s } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (partyReady && typeof renderParty === 'function') renderParty(); } pendingImport = null; $('import-dialog').close(); persist(); renderBox(); renderSearch(); refreshTools(); notify(`Progresso ${merge ? 'mesclado' : 'substituído'}: ${caught.size} capturados, ${shinies.size} shinies e ${partySlots.filter(Boolean).length} na Party.${storageOK ? '' : ' Exporte para guardar.'}`); $('import').focus(); }
             $('merge-import').addEventListener('click', () => applyImport(true)); $('replace-import').addEventListener('click', () => applyImport(false)); $('cancel-import').addEventListener('click', () => { pendingImport = null; $('import-dialog').close(); }); $('import-dialog').addEventListener('cancel', () => { pendingImport = null; });
             window.addEventListener('storage', event => { if (event.key !== KEY || event.newValue === null) return; try { const parsed = JSON.parse(event.newValue), state = validate(parsed); restoreState(state); try { changeHistory = loadHistory(parsed.history); } catch { changeHistory = []; } pendingChange = null; pendingImport = null; if ($('import-dialog').open) $('import-dialog').close(); renderBox(); renderSearch(); refreshTools(); notify('Progresso atualizado por outra aba.'); } catch { warn('Outra aba alterou o progresso para um formato inválido. As capturas desta página foram mantidas.'); } });
-            function restoreState(s) { readyItems = s.readyItems; caught = s.captured; shinies = s.shiny; formCaught = s.forms; formShiny = s.shinyForms; itinerary = s.route.map(x => ({ ...x })); if (Array.isArray(s.party)) { partySlots = s.party.map(x => x ? { ...x } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (typeof renderParty === 'function') renderParty(); } }
+            function restoreState(s) { readyItems = s.readyItems; caught = s.captured; shinies = s.shiny; formCaught = s.forms; formShiny = s.shinyForms; itinerary = s.route.map(x => ({ ...x })); if (Array.isArray(s.party)) { partySlots = s.party.map(x => x ? { ...x } : null); try { localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots)); } catch {} if (partyReady && typeof renderParty === 'function') renderParty(); } }
             function refreshTools() {
                 refreshCompletionTools();
                 $('forms-summary').textContent = `${formCaught.size} / ${FORMS.length} formas · ${formShiny.size} shiny`;
@@ -5989,7 +5990,20 @@
             function historyDetails(e) {
                 const lines = []; const fields = [['captured', 'Capturas', n => `#${pad(n)} ${DATA[n - 1].name}`], ['shiny', 'Shinies', n => DATA[n - 1].name], ['forms', 'Formas', k => `${DATA[FORM_BY_KEY.get(k).n - 1].name} · ${FORM_BY_KEY.get(k).label}`], ['shinyForms', 'Formas shiny', k => `${DATA[FORM_BY_KEY.get(k).n - 1].name} · ${FORM_BY_KEY.get(k).label}`], ['readyItems', 'Itens preparados', n => DATA[n - 1].name]];
                 for (const [key, label, name] of fields) { const added = e.after[key].filter(v => !e.before[key].includes(v)), removed = e.before[key].filter(v => !e.after[key].includes(v)); if (added.length) lines.push(`${label} adicionados (${added.length}): ${added.map(name).join(', ')}.`); if (removed.length) lines.push(`${label} removidos (${removed.length}): ${removed.map(name).join(', ')}.`); }
-                if (JSON.stringify(e.before.route) !== JSON.stringify(e.after.route)) { const route = r => r.length ? r.map((s, i) => `${i + 1}. ${regionByKey.get(s.key).name}${s.visited ? ' (visitada)' : ''}`).join(' → ') : 'vazia'; lines.push('Rota anterior: ' + route(e.before.route) + '.', 'Nova rota: ' + route(e.after.route) + '.'); } return lines;
+                if (JSON.stringify(e.before.route) !== JSON.stringify(e.after.route)) { const route = r => r.length ? r.map((s, i) => `${i + 1}. ${regionByKey.get(s.key).name}${s.visited ? ' (visitada)' : ''}`).join(' → ') : 'vazia'; lines.push('Rota anterior: ' + route(e.before.route) + '.', 'Nova rota: ' + route(e.after.route) + '.'); }
+                if (JSON.stringify(e.before.party) !== JSON.stringify(e.after.party)) {
+                    const fmtParty = p => {
+                        const items = (p || []).map((s, i) => {
+                            if (!s) return null;
+                            const it = partyReady && typeof HOME_BY_KEY !== 'undefined' ? HOME_BY_KEY.get(s.key) : null;
+                            const nm = s.nickname || it?.name || s.key;
+                            return `Slot ${i + 1}: ${nm} (Nv. ${s.level || 100}${s.shiny ? ', ★' : ''})`;
+                        }).filter(Boolean);
+                        return items.length ? items.join(' · ') : 'vazia';
+                    };
+                    lines.push('Party anterior: ' + fmtParty(e.before.party) + '.', 'Nova Party: ' + fmtParty(e.after.party) + '.');
+                }
+                return lines;
             }
             function renderHistory() {
                 const q = normalize($('history-search').value), filter = $('history-filter').value, list = $('history-list'), chain = undoChain(); list.replaceChildren(); const entries = [...changeHistory].reverse().filter(e => (filter === 'all' || filter === 'undone' && e.undone || filter === 'active' && !e.undone) && (!q || normalize(e.label + ' ' + historyDetails(e).join(' ')).includes(q))); $('history-count').textContent = `${changeHistory.length} / 100 alterações guardadas · ${entries.length} exibidas`;
@@ -6115,7 +6129,7 @@
                 if (!sb || !session || applyingCloud) return;
                 cloudDirty = true; clearTimeout(cloudTimer); clearTimeout(cloudRetry);
                 setAccountUI('Alterações prontas para enviar…');
-                cloudTimer = setTimeout(() => pushCloud(), 900);
+                cloudTimer = setTimeout(() => pushCloud(), 350);
             }
             async function pushCloud() {
                 if (!sb || !session) return;
@@ -6123,9 +6137,12 @@
                 cloudBusy = true; cloudDirty = false; setAccountUI('Sincronizando…');
                 const snap = stateSnapshot(payload()), hist = changeHistory;
                 try {
-                    const { data, error } = await sb.from(CLOUD_TABLE).upsert({ user_id: session.user.id, data: snap, history: hist }, { onConflict: 'user_id' }).select('updated_at').single();
-                    if (error) throw error;
-                    cloudSyncedAt = data?.updated_at || new Date().toISOString();
+                    let res = await sb.from(CLOUD_TABLE).upsert({ user_id: session.user.id, data: snap, party: snap.party, history: hist }, { onConflict: 'user_id' }).select('updated_at').single();
+                    if (res.error) {
+                        res = await sb.from(CLOUD_TABLE).upsert({ user_id: session.user.id, data: snap, history: hist }, { onConflict: 'user_id' }).select('updated_at').single();
+                    }
+                    if (res.error) throw res.error;
+                    cloudSyncedAt = res.data?.updated_at || new Date().toISOString();
                     writeSyncRecord(snap, cloudSyncedAt);
                     cloudBusy = false; setAccountUI();
                     if (cloudDirty) scheduleCloud();
@@ -6146,26 +6163,48 @@
                 writeSyncRecord(stateSnapshot(payload()), cloudSyncedAt);
                 renderBox(); renderSearch(); refreshTools(); setAccountUI();
             }
-            function describeSnap(s) { return `${s.captured.length} capturas · ${s.shiny.length} shinies · ${s.forms.length} formas · ${s.route.length} paradas`; }
+            function describeSnap(s) {
+                const pCount = (s.party || []).filter(Boolean).length;
+                return `${s.captured.length} capturas · ${s.shiny.length} shinies · ${s.forms.length} formas · ${pCount} na Party · ${s.route.length} paradas`;
+            }
             async function pullCloud(manual = false) {
                 if (!sb || !session || cloudBusy) return;
                 cloudBusy = true; setAccountUI('Verificando dados da nuvem…');
                 try {
-                    const { data, error } = await sb.from(CLOUD_TABLE).select('data,history,updated_at').eq('user_id', session.user.id).maybeSingle();
+                    const { data, error } = await sb.from(CLOUD_TABLE).select('*').eq('user_id', session.user.id).maybeSingle();
                     if (error) throw error;
                     cloudBusy = false;
                     const local = stateSnapshot(payload());
                     if (!data) { await pushCloud(); if (manual) notify('Progresso enviado para a nuvem.'); return; }
-                    const remote = stateSnapshot(data.data); let remoteHistory = []; try { remoteHistory = loadHistory(data.history); } catch { }
+                    const remoteHasParty = Array.isArray(data.data?.party) || Array.isArray(data.party);
+                    const rawRemote = { ...(data.data || {}) };
+                    if (Array.isArray(data.party) && (!Array.isArray(rawRemote.party) || (!rawRemote.party.some(Boolean) && data.party.some(Boolean)))) {
+                        rawRemote.party = data.party;
+                    }
+                    if (!remoteHasParty && local.party.some(Boolean)) {
+                        rawRemote.party = local.party;
+                    }
+                    const remote = stateSnapshot(rawRemote); let remoteHistory = []; try { remoteHistory = loadHistory(data.history); } catch { }
                     if (sameState(local, remote)) {
                         changeHistory = mergeHistories(changeHistory, remoteHistory);
                         cloudSyncedAt = data.updated_at; writeSyncRecord(remote, data.updated_at);
                         try { localStorage.setItem(KEY, JSON.stringify({ ...payload(), history: changeHistory })); } catch { }
+                        if (!remoteHasParty) { await pushCloud(); }
                         refreshUndo(); setAccountUI(); if (manual) notify('Nuvem já está em dia com este navegador.'); return;
                     }
                     const last = readSyncRecord();
+                    const sameExceptParty = sameState({ ...local, party: remote.party }, remote);
+                    if (sameExceptParty && local.party.some(Boolean) && !remote.party.some(Boolean)) {
+                        changeHistory = mergeHistories(changeHistory, remoteHistory);
+                        await pushCloud(); if (manual) notify('Party enviada para a nuvem.'); return;
+                    }
+                    if (sameExceptParty && remote.party.some(Boolean) && !local.party.some(Boolean)) {
+                        applyCloudState(remote, mergeHistories(changeHistory, remoteHistory), null, data.updated_at);
+                        notify('Party atualizada a partir da sua conta.'); return;
+                    }
                     if (isEmptyState(local) || (last && sameState(local, last.state))) {
                         applyCloudState(remote, mergeHistories(changeHistory, remoteHistory), null, data.updated_at);
+                        if (!remoteHasParty) { await pushCloud(); }
                         notify('Progresso atualizado a partir da sua conta.'); return;
                     }
                     if (isEmptyState(remote) || (last && sameState(remote, last.state))) {
@@ -6323,7 +6362,11 @@
                 notify('Dados removidos da nuvem. O progresso local deste navegador foi mantido.');
             });
             window.addEventListener('online', () => { if (session && cloudDirty) pushCloud(); });
-            document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && session && !cloudBusy && !cloudDirty) pullCloud(false); });
+            window.addEventListener('pagehide', () => { if (session && cloudDirty) pushCloud(); });
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden' && session && cloudDirty) pushCloud();
+                else if (document.visibilityState === 'visible' && session && !cloudBusy && !cloudDirty) pullCloud(false);
+            });
             function loadSupabaseScript() {
                 if (window.supabase?.createClient) return Promise.resolve(window.supabase);
                 return new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = SUPABASE_SDK; s.async = true; s.onload = () => resolve(window.supabase); s.onerror = reject; document.head.append(s); });
@@ -6703,12 +6746,17 @@
             function loadParty() {
                 try {
                     const raw = JSON.parse(localStorage.getItem(PARTY_KEY));
-                    if (Array.isArray(raw)) {
-                        partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(raw[i]));
-                        return;
+                    if (Array.isArray(raw) && (raw.some(Boolean) || !partySlots.some(Boolean))) {
+                        partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(raw[i] || partySlots[i]));
+                    } else {
+                        partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(partySlots[i]));
                     }
-                } catch {}
-                partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(partySlots[i]));
+                    localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots));
+                    localStorage.setItem(KEY, JSON.stringify({ ...payload(), history: changeHistory }));
+                } catch {
+                    partySlots = Array.from({ length: 6 }, (_, i) => sanitizePartySlot(partySlots[i]));
+                }
+                partyReady = true;
             }
 
             function persistParty() {
@@ -6716,11 +6764,15 @@
                     localStorage.setItem(PARTY_KEY, JSON.stringify(partySlots));
                 } catch {}
                 persist();
+                if (sb && session && !applyingCloud) {
+                    clearTimeout(cloudTimer);
+                    cloudTimer = setTimeout(() => pushCloud(), 150);
+                }
             }
 
             function renderParty() {
                 const grid = $('party-grid');
-                if (!grid) return;
+                if (!grid || !partyReady) return;
                 grid.replaceChildren();
                 const filledCount = partySlots.filter(Boolean).length;
                 if ($('party-count-badge')) {
@@ -6768,6 +6820,7 @@
                         e.stopPropagation();
                         const val = Math.max(1, Math.min(100, Math.round(Number(lvlInput.value) || 100)));
                         lvlInput.value = val;
+                        checkpoint(`ajustar nível de ${slotData.nickname || item.name} na Party para Nv. ${val}`);
                         slotData.level = val;
                         persistParty();
                         notify(`${slotData.nickname || item.name}: nível ajustado para Nv. ${val}.`);
@@ -6785,6 +6838,7 @@
                     shinyBtn.setAttribute('aria-label', shinyBtn.title);
                     shinyBtn.addEventListener('click', e => {
                         e.stopPropagation();
+                        checkpoint(`alternar shiny de ${slotData.nickname || item.name} na Party`);
                         slotData.shiny = !slotData.shiny;
                         persistParty();
                         renderParty();
@@ -6800,6 +6854,7 @@
                     removeBtn.addEventListener('click', e => {
                         e.stopPropagation();
                         const removedName = slotData.nickname || item.name;
+                        checkpoint(`remover ${removedName} da Party`);
                         partySlots[idx] = null;
                         persistParty();
                         renderParty();
@@ -6853,6 +6908,7 @@
                     leftBtn.setAttribute('aria-label', 'Mover para a esquerda');
                     leftBtn.addEventListener('click', () => {
                         if (idx === 0) return;
+                        checkpoint('reordenar Pokémon na Party');
                         const tmp = partySlots[idx - 1];
                         partySlots[idx - 1] = partySlots[idx];
                         partySlots[idx] = tmp;
@@ -6869,6 +6925,7 @@
                     rightBtn.setAttribute('aria-label', 'Mover para a direita');
                     rightBtn.addEventListener('click', () => {
                         if (idx === 5) return;
+                        checkpoint('reordenar Pokémon na Party');
                         const tmp = partySlots[idx + 1];
                         partySlots[idx + 1] = partySlots[idx];
                         partySlots[idx] = tmp;
@@ -6938,6 +6995,7 @@
                     card.querySelector('.party-pick-form').textContent = item.formLabel || (item.paldeaN ? 'Jogo base / HOME' : 'Transferível via HOME');
                     card.addEventListener('click', () => {
                         const meta = getCustomInputs();
+                        checkpoint(`colocar ${meta.nickname || item.name} no espaço 0${activePartySlot + 1} da Party`);
                         partySlots[activePartySlot] = {
                             key: item.key,
                             shiny: meta.shiny,
@@ -6986,6 +7044,7 @@
             $('party-clear-btn')?.addEventListener('click', () => {
                 if (!partySlots.some(Boolean)) return;
                 if (!confirm('Limpar todos os 6 espaços da sua Party? (Isso não afeta suas capturas na Pokédex/Boxes).')) return;
+                checkpoint('limpar todos os espaços da Party');
                 partySlots = Array(6).fill(null);
                 persistParty();
                 renderParty();
@@ -7019,6 +7078,8 @@
                 const current = partySlots[activePartySlot];
                 if (!current) return;
                 const meta = getCustomInputs();
+                const item = HOME_BY_KEY.get(current.key);
+                checkpoint(`editar detalhes de ${meta.nickname || item?.name || 'Pokémon'} na Party`);
                 current.nickname = meta.nickname;
                 current.level = meta.level;
                 current.item = meta.item;
@@ -7026,10 +7087,12 @@
                 persistParty();
                 renderParty();
                 $('party-dialog').close();
-                const item = HOME_BY_KEY.get(current.key);
                 notify(`Detalhes de ${current.nickname || item?.name || 'Pokémon'} atualizados no Espaço 0${activePartySlot + 1}!`);
             });
             $('party-remove-current')?.addEventListener('click', () => {
+                const current = partySlots[activePartySlot];
+                const item = current ? HOME_BY_KEY.get(current.key) : null;
+                checkpoint(`remover ${current?.nickname || item?.name || 'Pokémon'} do espaço 0${activePartySlot + 1} da Party`);
                 partySlots[activePartySlot] = null;
                 persistParty();
                 renderParty();
