@@ -1569,373 +1569,6 @@
                 white-space: nowrap;
             }
 
-            .box-controls .btn {
-                min-width: 36px;
-                min-height: 36px;
-                width: 36px;
-                height: 36px;
-                padding: 0;
-                font-size: 18px;
-                border-radius: 10px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .box-toolbar {
-                gap: 8px;
-                margin-bottom: 10px;
-                align-items: center;
-            }
-
-            .box-view-btn {
-                font-size: 11px !important;
-                font-weight: 700 !important;
-                padding: 4px 8px !important;
-                border-radius: 9px !important;
-                background: rgba(105, 69, 165, 0.08) !important;
-                color: var(--ink) !important;
-                border: 1px solid var(--line) !important;
-                white-space: nowrap !important;
-                display: inline-flex !important;
-                align-items: center !important;
-                cursor: pointer;
-            }
-
-            .box-view-btn:hover {
-                background: rgba(105, 69, 165, 0.16) !important;
-            }
-
-            html[data-theme=dark] .box-view-btn {
-                background: rgba(255, 255, 255, 0.08) !important;
-                border-color: rgba(255, 255, 255, 0.15) !important;
-                color: var(--ink) !important;
-            }
-
-            .grid-scroll {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-                overscroll-behavior-x: contain;
-                padding: 2px 2px 8px 2px !important;
-                margin: 0 -4px !important;
-                scrollbar-width: thin;
-                scrollbar-color: rgba(105, 69, 165, 0.3) transparent;
-            }
-
-            .grid-scroll::-webkit-scrollbar {
-                height: 5px;
-            }
-
-            .grid-scroll::-webkit-scrollbar-thumb {
-                background: rgba(105, 69, 165, 0.25);
-                border-radius: 999px;
-            }
-
-            .mobile-hint {
-                display: none !important;
-            }
-
-            /* MODO 6x5 EXPANDIDO (Tamanho generoso para fácil toque e leitura) */
-            .box-grid {
-                min-width: 660px !important;
-                width: 660px !important;
-                grid-template-columns: 22px repeat(6, minmax(0, 1fr)) !important;
-                gap: 6px !important;
-            }
-
-            .column-label {
-                font-size: 0 !important;
-                line-height: 1 !important;
-                padding-bottom: 2px !important;
-            }
-
-            .column-label::after {
-                font-size: 10px !important;
-                font-weight: 700 !important;
-                color: #84738e !important;
-            }
-
-            .column-label:nth-of-type(1)::after { content: 'C1'; }
-            .column-label:nth-of-type(2)::after { content: 'C2'; }
-            .column-label:nth-of-type(3)::after { content: 'C3'; }
-            .column-label:nth-of-type(4)::after { content: 'C4'; }
-            .column-label:nth-of-type(5)::after { content: 'C5'; }
-            .column-label:nth-of-type(6)::after { content: 'C6'; }
-
-            .row-label {
-                position: sticky !important;
-                left: 0 !important;
-                z-index: 5 !important;
-                background: var(--white) !important;
-                box-shadow: 2px 0 6px rgba(48, 37, 67, 0.08);
-                border-radius: 4px;
-                font-size: 0 !important;
-                writing-mode: horizontal-tb !important;
-                transform: none !important;
-                width: 22px !important;
-                line-height: 1 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-
-            html[data-theme=dark] .row-label {
-                background: var(--white) !important;
-                box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
-            }
-
-            .row-label::after {
-                font-size: 10px !important;
-                font-weight: 700 !important;
-                color: #84738e !important;
-            }
-
-            .row-label:nth-of-type(1)::after { content: 'L1'; }
-            .row-label:nth-of-type(2)::after { content: 'L2'; }
-            .row-label:nth-of-type(3)::after { content: 'L3'; }
-            .row-label:nth-of-type(4)::after { content: 'L4'; }
-            .row-label:nth-of-type(5)::after { content: 'L5'; }
-
-            .slot-cell,
-            .slot.empty {
-                aspect-ratio: 1 / 1 !important;
-                min-height: unset !important;
-                height: auto !important;
-                border-radius: 11px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                overflow: hidden !important;
-                box-sizing: border-box !important;
-            }
-
-            .slot {
-                flex: 1 1 0 !important;
-                min-height: 0 !important;
-                height: auto !important;
-                max-height: calc(100% - 28px) !important;
-                padding: 4px 3px 1px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                overflow: hidden !important;
-                box-sizing: border-box !important;
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .slot img {
-                flex: 1 1 0 !important;
-                min-height: 0 !important;
-                max-width: 84% !important;
-                max-height: 100% !important;
-                width: auto !important;
-                height: auto !important;
-                margin: auto 0 !important;
-                object-fit: contain !important;
-                image-rendering: auto !important;
-            }
-
-            .slot-top {
-                flex: 0 0 auto !important;
-                font-size: 9.5px !important;
-                font-weight: 700 !important;
-                width: 100% !important;
-                padding: 0 2px !important;
-            }
-
-            .slot-badge {
-                font-size: 9.5px !important;
-            }
-
-            .shiny-button {
-                font-size: 14px !important;
-                padding: 1px 2px !important;
-            }
-
-            .slot-top .check {
-                font-size: 9.5px !important;
-                width: 14px !important;
-                height: 14px !important;
-            }
-
-            .slot-name {
-                flex: 0 0 auto !important;
-                font-size: 10.5px !important;
-                line-height: 1.15 !important;
-                font-weight: 700 !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 100% !important;
-                text-align: center !important;
-                padding: 0 2px 2px !important;
-                box-sizing: border-box !important;
-            }
-
-            .slot-footer {
-                flex: 0 0 28px !important;
-                height: 28px !important;
-                min-height: 28px !important;
-                max-height: 28px !important;
-                display: flex !important;
-                width: 100% !important;
-                z-index: 2 !important;
-                box-sizing: border-box !important;
-            }
-
-            .slot-footer .where-button,
-            .slot-footer .evolution-link {
-                flex: 1 1 50% !important;
-                height: 100% !important;
-                min-height: 100% !important;
-                max-height: 100% !important;
-                font-size: 9.5px !important;
-                font-weight: 700 !important;
-                padding: 0 2px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                white-space: nowrap !important;
-                box-sizing: border-box !important;
-            }
-
-            .slot-footer.no-evo .where-button {
-                flex: 1 1 100% !important;
-                font-size: 10px !important;
-            }
-
-            .slot.empty {
-                aspect-ratio: 1 / 1 !important;
-                min-height: unset !important;
-                height: auto !important;
-                border-radius: 11px !important;
-                padding: 4px !important;
-            }
-
-            .slot.empty .empty-symbol {
-                font-size: 18px !important;
-                margin-bottom: 0 !important;
-            }
-
-            .slot.empty .slot-name {
-                font-size: 8.5px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder {
-                position: absolute !important;
-                inset: 0 !important;
-                aspect-ratio: 1 / 1 !important;
-                border-radius: 11px !important;
-                padding: 4px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder strong {
-                font-size: 9px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder span {
-                font-size: 8px !important;
-            }
-
-            .slot-cell.filtered .filter-placeholder small {
-                display: none !important;
-            }
-
-            /* MODO 3 COLUNAS (Sem nenhuma rolagem lateral, quadrados grandes) */
-            .box-panel.view-3col .grid-scroll {
-                overflow-x: hidden !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-
-            .box-panel.view-3col .column-label,
-            .box-panel.view-3col .row-label {
-                display: none !important;
-            }
-
-            .box-panel.view-3col .box-grid {
-                min-width: 0 !important;
-                width: 100% !important;
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                gap: 8px !important;
-            }
-
-            .box-panel.view-3col .slot-cell,
-            .box-panel.view-3col .slot.empty {
-                aspect-ratio: 1 / 1 !important;
-                min-height: unset !important;
-                height: auto !important;
-                border-radius: 12px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                overflow: hidden !important;
-                box-sizing: border-box !important;
-            }
-
-            .box-panel.view-3col .slot {
-                flex: 1 1 0 !important;
-                min-height: 0 !important;
-                height: auto !important;
-                max-height: calc(100% - 28px) !important;
-                padding: 5px 4px 2px !important;
-                border-radius: 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                overflow: hidden !important;
-                box-sizing: border-box !important;
-            }
-
-            .box-panel.view-3col .slot img {
-                flex: 1 1 0 !important;
-                min-height: 0 !important;
-                max-width: 84% !important;
-                max-height: 100% !important;
-                width: auto !important;
-                height: auto !important;
-                object-fit: contain !important;
-                margin: auto 0 !important;
-            }
-
-            .box-panel.view-3col .slot-name {
-                flex: 0 0 auto !important;
-                font-size: 11px !important;
-                font-weight: 700 !important;
-                padding: 1px 3px 2px !important;
-                box-sizing: border-box !important;
-            }
-
-            .box-panel.view-3col .slot-footer {
-                flex: 0 0 28px !important;
-                height: 28px !important;
-                min-height: 28px !important;
-                max-height: 28px !important;
-                display: flex !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-            }
-
-            .box-panel.view-3col .slot-footer .where-button,
-            .box-panel.view-3col .slot-footer .evolution-link {
-                flex: 1 1 50% !important;
-                height: 100% !important;
-                min-height: 100% !important;
-                max-height: 100% !important;
-                font-size: 10px !important;
-                font-weight: 700 !important;
-                padding: 0 3px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                white-space: nowrap !important;
-                box-sizing: border-box !important;
-            }
-
             .box-meta {
                 margin-bottom: 10px;
                 flex-wrap: wrap;
@@ -3899,25 +3532,26 @@
         }
 
         .slot-form {
-            font-size: 10px;
-            line-height: 1.4;
+            font-size: 9.5px;
+            line-height: 1.1;
             text-align: center;
             color: var(--violet);
-            min-height: 28px;
-            margin-top: 3px
+            min-height: 0;
+            margin-top: 0
         }
 
         .slot-record {
             font-size: 8px;
-            line-height: 1.4;
+            line-height: 1.2;
             color: var(--muted);
-            min-height: 22px;
+            min-height: 0;
             text-align: center
         }
 
         .slot-form:empty,
         .slot-record:empty {
-            min-height: 0
+            min-height: 0;
+            display: none
         }
 
         .slots-progress {
@@ -3994,11 +3628,6 @@
             margin-top: 9px;
             font-size: 11px !important;
             white-space: normal
-        }
-
-        .slot-cell .slot {
-            min-height: unset !important;
-            aspect-ratio: 1 / 1 !important;
         }
 
         .account-button {
@@ -5031,21 +4660,60 @@
             display: flex !important;
             align-items: center !important;
             gap: 8px !important;
+            flex-wrap: nowrap !important;
         }
 
         .box-controls .btn {
             min-height: 40px !important;
             min-width: 40px !important;
+            height: 40px !important;
             border-radius: 10px !important;
             font-weight: 800 !important;
         }
 
+        #previous,
+        #next {
+            width: 40px !important;
+            min-width: 40px !important;
+            height: 40px !important;
+            min-height: 40px !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 18px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .box-controls .box-view-btn,
+        #box-view-btn,
         .box-view-btn {
-            padding: 0 12px !important;
-            font-size: 12.5px !important;
+            width: auto !important;
+            min-width: max-content !important;
+            height: 40px !important;
+            min-height: 40px !important;
+            padding: 0 14px !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
             background: var(--violet-soft) !important;
             color: var(--violet-2) !important;
-            border-color: rgba(105, 69, 165, 0.3) !important;
+            border: 1.5px solid rgba(105, 69, 165, 0.3) !important;
+            border-radius: 10px !important;
+        }
+
+        html[data-theme=dark] .box-controls .box-view-btn,
+        html[data-theme=dark] #box-view-btn,
+        html[data-theme=dark] .box-view-btn {
+            background: rgba(164, 126, 232, 0.16) !important;
+            color: #e9d8fd !important;
+            border-color: rgba(164, 126, 232, 0.38) !important;
         }
 
         /* Grade 6×5 no computador com rótulo lateral compacto para maximizar o tamanho dos cards */
@@ -5055,6 +4723,7 @@
             gap: 12px !important;
             align-items: stretch !important;
             min-width: 880px !important;
+            width: 100% !important;
         }
 
         .column-label {
@@ -5088,6 +4757,7 @@
         .box-panel.view-3col .box-grid {
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
             min-width: 0 !important;
+            width: 100% !important;
             gap: 12px !important;
         }
 
@@ -5100,7 +4770,11 @@
 
         /* Card da Box: Quadrado 1:1 perfeito, com CSS Grid interno que impede sobreposição */
         .slot-cell,
-        .slot.empty {
+        .box-panel .slot-cell,
+        .box-panel.view-3col .slot-cell,
+        .slot.empty,
+        .box-panel .slot.empty,
+        .box-panel.view-3col .slot.empty {
             aspect-ratio: 1 / 1 !important;
             width: 100% !important;
             height: auto !important;
@@ -5116,7 +4790,9 @@
             transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease !important;
         }
 
-        .slot.empty {
+        .slot.empty,
+        .box-panel .slot.empty,
+        .box-panel.view-3col .slot.empty {
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -5168,19 +4844,23 @@
         }
 
         /* Botão principal dentro do card (Topo + Sprite + Nome + Forma) */
-        .slot {
+        .slot,
+        .slot-cell .slot,
+        .box-panel .slot,
+        .box-panel.view-3col .slot {
             width: 100% !important;
             height: 100% !important;
             min-height: 0 !important;
             max-height: none !important;
+            aspect-ratio: auto !important;
             margin: 0 !important;
-            padding: 7px 8px 4px !important;
+            padding: 6px 8px 3px !important;
             border: 0 !important;
             border-radius: 0 !important;
             background: transparent !important;
             box-shadow: none !important;
             display: grid !important;
-            grid-template-rows: 24px minmax(0, 1fr) auto auto !important;
+            grid-template-rows: 22px minmax(0, 1fr) auto auto !important;
             align-items: center !important;
             justify-items: center !important;
             gap: 1px !important;
@@ -5188,9 +4868,17 @@
             cursor: pointer !important;
         }
 
+        .slot:has(.slot-form:not(:empty)),
+        .slot-cell .slot:has(.slot-form:not(:empty)),
+        .box-panel.view-3col .slot:has(.slot-form:not(:empty)) {
+            padding: 5px 8px 2px !important;
+            grid-template-rows: 20px minmax(0, 1fr) auto auto !important;
+            gap: 0px !important;
+        }
+
         .slot-top {
             width: 100% !important;
-            height: 24px !important;
+            height: 22px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
@@ -5290,12 +4978,15 @@
             color: #0b2618 !important;
         }
 
-        /* Sprite grande e centralizado sem empurrar o nome para fora */
-        .slot img {
+        /* Sprite grande e centralizado (inclusive para Pokémon com variações de forma) */
+        .slot img,
+        .slot-cell .slot img,
+        .box-panel .slot img,
+        .box-panel.view-3col .slot img {
             width: 100% !important;
             height: 100% !important;
             min-height: 0 !important;
-            max-width: 88% !important;
+            max-width: 90% !important;
             max-height: 100% !important;
             object-fit: contain !important;
             margin: 0 auto !important;
@@ -5308,13 +4999,14 @@
         }
 
         /* Nome do Pokémon sempre 100% visível e com alto contraste */
-        .slot-name {
+        .slot-name,
+        .box-panel.view-3col .slot-name {
             display: block !important;
             width: 100% !important;
             text-align: center !important;
             font-size: 13px !important;
             font-weight: 850 !important;
-            line-height: 1.15 !important;
+            line-height: 1.12 !important;
             color: #1e162b !important;
             white-space: nowrap !important;
             overflow: hidden !important;
@@ -5335,18 +5027,31 @@
             color: #e6fffa !important;
         }
 
-        /* Subtítulo de forma (Macho, Fêmea, Forma Aquática, etc.) visível quando existir */
-        .slot-form {
+        /* Subtítulo de forma (Macho, Fêmea, Forma Aquática, etc.) enxuto sem esmagar o sprite */
+        .slot-form,
+        .slot-cell .slot-form,
+        .box-panel.view-3col .slot-form {
             display: block !important;
             width: 100% !important;
+            min-height: 0 !important;
+            height: auto !important;
+            max-height: 12px !important;
+            margin: 0 !important;
+            padding: 0 2px !important;
             text-align: center !important;
             font-size: 9.5px !important;
             font-weight: 750 !important;
-            line-height: 1.1 !important;
+            line-height: 1.05 !important;
             color: var(--violet-2) !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
+        }
+
+        html[data-theme=dark] .slot-form,
+        html[data-theme=dark] .slot-cell .slot-form,
+        html[data-theme=dark] .box-panel.view-3col .slot-form {
+            color: #d8b4fe !important;
         }
 
         .slot-form:empty,
@@ -5354,6 +5059,18 @@
         .slot-record,
         .slot-position {
             display: none !important;
+            min-height: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* Modal de Formas Alternativas (#forms-dialog): sprites grandes e nítidos */
+        .form-card img {
+            width: 84px !important;
+            height: 84px !important;
+            object-fit: contain !important;
+            margin: 4px auto 6px !important;
+            filter: drop-shadow(0 4px 6px rgba(25, 16, 44, 0.2));
         }
 
         /* Rodapé do Card: Botões "📍 Onde" e "Nv. XX ↗" grandes, claros e fáceis de clicar/tocar */
@@ -5616,13 +5333,21 @@
 
         .party-pick-form {
             width: 100%;
+            min-height: 0 !important;
+            max-height: 12px !important;
+            margin: 0 !important;
             text-align: center;
             font-size: 10px;
             font-weight: 750;
+            line-height: 1.05;
             color: var(--teal);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .party-pick-form:empty {
+            display: none !important;
         }
 
         .party-load-more-wrap {
@@ -5762,27 +5487,54 @@
 
             /* Botões de Onde encontrar e Nível de Evolução ainda maiores e confortáveis para o polegar */
             .slot-cell,
+            .box-panel .slot-cell,
+            .box-panel.view-3col .slot-cell,
             .slot.empty {
                 grid-template-rows: minmax(0, 1fr) 36px !important;
             }
 
-            .slot-footer {
+            .slot-footer,
+            .box-panel.view-3col .slot-footer {
                 height: 36px !important;
                 min-height: 36px !important;
             }
 
             .where-button,
-            .evolution-link {
+            .evolution-link,
+            .box-panel.view-3col .where-button,
+            .box-panel.view-3col .evolution-link {
                 font-size: 11.5px !important;
                 padding: 0 6px !important;
             }
 
-            .slot-name {
+            .slot-name,
+            .box-panel.view-3col .slot-name {
                 font-size: 13px !important;
             }
 
             .slot-badge {
                 font-size: 12px !important;
+            }
+
+            .box-controls .box-view-btn,
+            #box-view-btn {
+                width: auto !important;
+                min-width: max-content !important;
+                height: 38px !important;
+                min-height: 38px !important;
+                padding: 0 12px !important;
+                font-size: 12.5px !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+
+            #previous,
+            #next {
+                width: 38px !important;
+                min-width: 38px !important;
+                height: 38px !important;
+                min-height: 38px !important;
+                padding: 0 !important;
             }
 
             /* Seletor do Pokémon HOME em 2 colunas quadradas amplas no celular */
