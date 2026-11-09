@@ -4327,16 +4327,221 @@
             display: none !important;
         }
 
+        /* === DESIGN SYSTEM GLOBAL & VARIÁVEIS DE TEMA (LIGHT & DARK) === */
+        :root {
+            --surface: #ffffff;
+            --surface-2: #f4f0fa;
+            --surface-3: #ebe4f6;
+            --border: #d8cee8;
+            --border-strong: #bcaad9;
+            --shadow: 0 12px 30px -12px rgba(38, 22, 68, 0.14);
+            --shadow-sm: 0 4px 12px rgba(38, 22, 68, 0.07);
+            --violet-soft: rgba(105, 69, 165, 0.11);
+            --violet-2: #5b3896;
+            --gold: #b87d0e;
+            --gold-soft: #fef5db;
+            --teal: #0e8a7c;
+            --teal-soft: rgba(14, 138, 124, 0.12);
+        }
+
+        html[data-theme=dark] {
+            --surface: #211a2c;
+            --surface-2: #191322;
+            --surface-3: #2b2238;
+            --border: #433554;
+            --border-strong: #614d79;
+            --shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.52);
+            --shadow-sm: 0 6px 16px rgba(0, 0, 0, 0.35);
+            --violet-soft: rgba(196, 176, 240, 0.14);
+            --violet-2: #d8c8ff;
+            --gold: #f5c14e;
+            --gold-soft: rgba(245, 193, 78, 0.18);
+            --teal: #4fd8c8;
+            --teal-soft: rgba(79, 216, 200, 0.16);
+        }
+
+        /* === ESTRUTURA GERAL, TOPBAR E HERO (COMPUTADOR E MOBILE) === */
+        .shell {
+            max-width: 1640px !important;
+            margin: 0 auto !important;
+            padding: 14px 24px 64px !important;
+        }
+
+        .topbar {
+            position: sticky !important;
+            top: 10px !important;
+            z-index: 45 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            border: 1.5px solid var(--border) !important;
+            border-radius: 16px !important;
+            padding: 10px 16px !important;
+            margin-bottom: 16px !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+
+        html[data-theme=dark] .topbar {
+            background: rgba(31, 24, 42, 0.9) !important;
+            border-color: var(--border) !important;
+        }
+
+        .top-actions {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            flex-wrap: wrap !important;
+        }
+
+        .top-actions .btn {
+            min-height: 38px !important;
+            padding: 7px 13px !important;
+            font-size: 13px !important;
+            font-weight: 750 !important;
+            border-radius: 10px !important;
+        }
+
+        .hero {
+            padding: 20px 24px !important;
+            margin-bottom: 18px !important;
+            border-radius: 18px !important;
+            grid-template-columns: minmax(0, 1fr) 150px !important;
+            gap: 20px !important;
+        }
+
+        .hero h1 {
+            font-size: clamp(22px, 2.4vw, 30px) !important;
+            line-height: 1.15 !important;
+            margin: 0 0 6px !important;
+        }
+
+        .hero p {
+            font-size: 14px !important;
+            line-height: 1.45 !important;
+            margin: 0 !important;
+        }
+
+        .hero-art {
+            width: 140px !important;
+            height: 140px !important;
+        }
+
+        /* === WORKSPACE & SIDEBAR (COMPUTADOR) === */
+        .workspace {
+            display: grid !important;
+            grid-template-columns: 236px minmax(0, 1fr) !important;
+            gap: 20px !important;
+            align-items: start !important;
+        }
+
+        @media(min-width: 1025px) {
+            .sidebar {
+                position: sticky !important;
+                top: 78px !important;
+                max-height: calc(100vh - 94px) !important;
+                overflow-y: auto !important;
+                scrollbar-width: thin;
+            }
+        }
+
+        .box-button {
+            padding: 10px 12px !important;
+            border-radius: 12px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            transition: all .14s ease !important;
+        }
+
+        .box-button strong {
+            font-size: 13.5px !important;
+            font-weight: 850 !important;
+            color: var(--ink) !important;
+        }
+
+        .box-button small {
+            font-size: 11.5px !important;
+            font-weight: 650 !important;
+            color: var(--muted) !important;
+        }
+
+        .box-button[aria-current="true"] {
+            border-color: var(--violet) !important;
+            background: var(--violet-soft) !important;
+            box-shadow: 0 0 0 2px rgba(105, 69, 165, 0.16) !important;
+        }
+
+        html[data-theme=dark] .box-button[aria-current="true"] {
+            border-color: #b794f4 !important;
+            background: rgba(183, 148, 244, 0.16) !important;
+        }
+
+        /* === ATALHOS DA COLEÇÃO, ROTA E BUSCA === */
+        .route-open {
+            padding: 14px 18px !important;
+            border-radius: 14px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            margin-bottom: 14px !important;
+        }
+
+        .collection-tools {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+            gap: 10px !important;
+            margin-bottom: 14px !important;
+        }
+
+        .collection-tool {
+            min-height: 60px !important;
+            padding: 11px 14px !important;
+            border-radius: 13px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+
+        .collection-tool strong {
+            font-size: 13.5px !important;
+            font-weight: 800 !important;
+            color: var(--ink) !important;
+        }
+
+        .collection-tool small {
+            font-size: 12px !important;
+            color: var(--muted) !important;
+        }
+
+        .search-area {
+            padding: 16px 18px !important;
+            border-radius: 16px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            margin-bottom: 18px !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+
+        .search-wrap input {
+            min-height: 44px !important;
+            font-size: 15px !important;
+        }
+
+        .filter-field select {
+            min-height: 42px !important;
+            font-size: 14px !important;
+            font-weight: 650 !important;
+            border-radius: 10px !important;
+        }
+
         /* === MINHA PARTY (POKÉMON HOME) — SEPARADO DA POKÉDEX/BOX === */
         .party-panel {
-            background: var(--surface);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-            margin-bottom: 18px;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
+            background: var(--surface) !important;
+            border: 1.5px solid var(--border) !important;
+            border-radius: 18px !important;
+            padding: 18px 20px !important;
+            margin-bottom: 18px !important;
+            box-shadow: var(--shadow) !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
 
         .party-panel::before {
@@ -4355,7 +4560,7 @@
             justify-content: space-between;
             gap: 14px;
             flex-wrap: wrap;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .party-title-wrap {
@@ -4365,14 +4570,14 @@
         }
 
         .party-icon {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             background: linear-gradient(135deg, rgba(22, 163, 148, 0.16), rgba(105, 69, 165, 0.16));
-            border: 1px solid rgba(22, 163, 148, 0.35);
+            border: 1px solid rgba(22, 163, 148, 0.38);
             display: grid;
             place-items: center;
-            font-size: 20px;
+            font-size: 21px;
             flex-shrink: 0;
         }
 
@@ -4389,26 +4594,21 @@
         }
 
         .home-pill {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 800;
-            padding: 2px 8px;
+            padding: 3px 9px;
             border-radius: 999px;
-            background: rgba(22, 163, 148, 0.14);
-            color: #0e7c70;
-            border: 1px solid rgba(22, 163, 148, 0.32);
+            background: var(--teal-soft);
+            color: var(--teal);
+            border: 1px solid rgba(22, 163, 148, 0.35);
             letter-spacing: 0.2px;
         }
 
-        html[data-theme=dark] .home-pill {
-            background: rgba(48, 196, 141, 0.16);
-            color: #5eead4;
-            border-color: rgba(94, 234, 212, 0.32);
-        }
-
         .party-title-text p {
-            margin: 3px 0 0;
-            font-size: 12.5px;
+            margin: 4px 0 0;
+            font-size: 13px;
             color: var(--muted);
+            line-height: 1.4;
         }
 
         .party-actions {
@@ -4423,135 +4623,132 @@
             font-weight: 800;
             color: var(--violet-2);
             background: var(--violet-soft);
-            padding: 6px 11px;
+            border: 1px solid rgba(105, 69, 165, 0.24);
+            padding: 6px 12px;
             border-radius: 999px;
         }
 
         .party-grid {
             display: grid;
             grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 10px;
+            gap: 12px;
             align-items: stretch;
         }
 
         .party-slot-cell {
             aspect-ratio: 1 / 1 !important;
             width: 100% !important;
-            border-radius: 14px !important;
+            border-radius: 15px !important;
             border: 1.5px solid var(--border) !important;
             background: var(--surface) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
+            display: grid !important;
+            grid-template-rows: minmax(0, 1fr) 32px !important;
             overflow: hidden !important;
             position: relative !important;
+            box-shadow: var(--shadow-sm) !important;
             transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease !important;
         }
 
         .party-slot-cell:hover {
             border-color: var(--violet-2) !important;
-            box-shadow: 0 8px 20px rgba(42, 24, 76, 0.12) !important;
+            box-shadow: 0 10px 24px rgba(42, 24, 76, 0.14) !important;
         }
 
         .party-slot-cell.filled {
-            background: linear-gradient(180deg, rgba(22, 163, 148, 0.07) 0%, var(--surface) 65%) !important;
-            border-color: rgba(22, 163, 148, 0.42) !important;
+            background: linear-gradient(180deg, rgba(22, 163, 148, 0.09) 0%, var(--surface) 68%) !important;
+            border-color: rgba(22, 163, 148, 0.48) !important;
         }
 
         .party-slot-cell.filled.shiny {
-            background: linear-gradient(180deg, rgba(201, 138, 16, 0.13) 0%, var(--surface) 65%) !important;
-            border-color: rgba(201, 138, 16, 0.55) !important;
+            background: linear-gradient(180deg, rgba(201, 138, 16, 0.16) 0%, var(--surface) 68%) !important;
+            border-color: rgba(201, 138, 16, 0.62) !important;
         }
 
         html[data-theme=dark] .party-slot-cell {
             background: #231c2e !important;
-            border-color: #493a59 !important;
+            border-color: #4b3b5c !important;
         }
 
         html[data-theme=dark] .party-slot-cell.filled {
-            background: linear-gradient(180deg, rgba(22, 163, 148, 0.18) 0%, #231c2e 70%) !important;
-            border-color: #2bb3a3 !important;
+            background: linear-gradient(180deg, rgba(22, 163, 148, 0.2) 0%, #231c2e 72%) !important;
+            border-color: #2fc4b2 !important;
         }
 
         html[data-theme=dark] .party-slot-cell.filled.shiny {
-            background: linear-gradient(180deg, rgba(242, 185, 59, 0.2) 0%, #231c2e 70%) !important;
-            border-color: #c9962a !important;
+            background: linear-gradient(180deg, rgba(242, 185, 59, 0.22) 0%, #231c2e 72%) !important;
+            border-color: #d9a332 !important;
+        }
+
+        .party-slot-cell.empty {
+            display: flex !important;
+            border: 0 !important;
+            background: var(--surface-2) !important;
+            box-shadow: none !important;
+        }
+
+        html[data-theme=dark] .party-slot-cell.empty {
+            background: #1c1626 !important;
         }
 
         .party-empty-btn {
             width: 100% !important;
             height: 100% !important;
-            border: 1.5px dashed rgba(105, 69, 165, 0.28) !important;
-            border-radius: 12px !important;
+            border: 2px dashed var(--border-strong) !important;
+            border-radius: 15px !important;
             background: transparent !important;
             color: var(--muted) !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 4px !important;
-            padding: 8px !important;
+            gap: 6px !important;
+            padding: 10px !important;
             cursor: pointer !important;
             font: inherit !important;
             transition: background .14s ease, color .14s ease, border-color .14s ease !important;
         }
 
-        .party-slot-cell.empty {
-            border: 0 !important;
-            background: var(--surface-2) !important;
-        }
-
-        html[data-theme=dark] .party-slot-cell.empty {
-            background: #1e1828 !important;
-        }
-
         html[data-theme=dark] .party-empty-btn {
-            border-color: rgba(201, 182, 242, 0.25) !important;
+            border-color: rgba(201, 182, 242, 0.28) !important;
         }
 
         .party-empty-btn:hover {
             background: var(--violet-soft) !important;
-            color: var(--violet) !important;
+            color: var(--violet-2) !important;
             border-color: var(--violet-2) !important;
         }
 
         .party-empty-plus {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 999px;
-            background: rgba(105, 69, 165, 0.12);
-            color: var(--violet);
+            background: var(--violet-soft);
+            color: var(--violet-2);
             display: grid;
             place-items: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             line-height: 1;
         }
 
-        html[data-theme=dark] .party-empty-plus {
-            background: rgba(201, 182, 242, 0.14);
-            color: #d8cbff;
-        }
-
         .party-empty-label {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--ink);
         }
 
         .party-empty-sub {
-            font-size: 10.5px;
+            font-size: 11px;
+            font-weight: 600;
             color: var(--muted);
         }
 
         .party-slot-main {
-            flex: 1 1 0 !important;
             min-height: 0 !important;
-            max-height: calc(100% - 28px) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-            padding: 6px 7px 3px !important;
+            height: 100% !important;
+            display: grid !important;
+            grid-template-rows: auto minmax(0, 1fr) !important;
+            padding: 7px 8px 4px !important;
             position: relative !important;
             overflow: hidden !important;
         }
@@ -4562,16 +4759,19 @@
             justify-content: space-between !important;
             gap: 4px !important;
             width: 100% !important;
-            flex-shrink: 0 !important;
             z-index: 2 !important;
         }
 
         .party-dex-badge {
-            font-size: 10px !important;
-            font-weight: 800 !important;
+            font-size: 11px !important;
+            font-weight: 850 !important;
             color: var(--muted) !important;
             font-variant-numeric: tabular-nums !important;
             white-space: nowrap !important;
+        }
+
+        html[data-theme=dark] .party-dex-badge {
+            color: #cbbce0 !important;
         }
 
         .party-lvl-pill {
@@ -4579,19 +4779,19 @@
             align-items: center !important;
             gap: 2px !important;
             background: var(--violet-soft) !important;
-            border: 1px solid rgba(105, 69, 165, 0.28) !important;
+            border: 1px solid rgba(105, 69, 165, 0.32) !important;
             border-radius: 999px !important;
-            padding: 1px 5px !important;
-            font-size: 10px !important;
-            font-weight: 800 !important;
+            padding: 2px 6px !important;
+            font-size: 10.5px !important;
+            font-weight: 850 !important;
             color: var(--violet-2) !important;
             line-height: 1 !important;
         }
 
         html[data-theme=dark] .party-lvl-pill {
-            background: rgba(201, 182, 242, 0.14) !important;
-            border-color: rgba(201, 182, 242, 0.32) !important;
-            color: #e4d9ff !important;
+            background: rgba(201, 182, 242, 0.16) !important;
+            border-color: rgba(201, 182, 242, 0.36) !important;
+            color: #eadfff !important;
         }
 
         .party-lvl-input {
@@ -4600,7 +4800,7 @@
             background: transparent !important;
             color: inherit !important;
             font: inherit !important;
-            font-size: 10.5px !important;
+            font-size: 11px !important;
             font-weight: 900 !important;
             text-align: center !important;
             padding: 0 !important;
@@ -4626,8 +4826,8 @@
             background: var(--surface);
             color: var(--violet-2);
             border-radius: 6px;
-            padding: 1px 5px;
-            font-size: 10px;
+            padding: 2px 6px;
+            font-size: 10.5px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -4640,34 +4840,41 @@
         .party-top-controls {
             display: inline-flex !important;
             align-items: center !important;
-            gap: 3px !important;
+            gap: 4px !important;
         }
 
         .party-icon-btn {
-            width: 22px !important;
-            height: 22px !important;
-            min-width: 22px !important;
-            min-height: 22px !important;
+            width: 25px !important;
+            height: 25px !important;
+            min-width: 25px !important;
+            min-height: 25px !important;
             border-radius: 999px !important;
             border: 1px solid var(--border) !important;
             background: var(--surface) !important;
-            color: var(--muted) !important;
+            color: var(--ink) !important;
             display: inline-grid !important;
             place-items: center !important;
             padding: 0 !important;
-            font-size: 12px !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
             line-height: 1 !important;
             cursor: pointer !important;
         }
 
+        html[data-theme=dark] .party-icon-btn {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            color: #f3ecff !important;
+        }
+
         .party-icon-btn:hover {
             border-color: var(--violet-2) !important;
-            color: var(--ink) !important;
+            background: var(--violet-soft) !important;
         }
 
         .party-icon-btn.shiny-active {
             background: var(--gold-soft) !important;
-            border-color: rgba(201, 138, 16, 0.55) !important;
+            border-color: rgba(201, 138, 16, 0.65) !important;
             color: var(--gold) !important;
         }
 
@@ -4678,23 +4885,23 @@
         }
 
         html[data-theme=dark] .party-icon-btn.remove-btn:hover {
-            background: rgba(239, 68, 68, 0.22) !important;
+            background: rgba(239, 68, 68, 0.25) !important;
             border-color: #f87171 !important;
             color: #fecaca !important;
         }
 
         .party-slot-body {
-            flex: 1 1 0 !important;
             min-height: 0 !important;
+            height: 100% !important;
             width: 100% !important;
             border: 0 !important;
             background: transparent !important;
-            padding: 0 !important;
+            padding: 2px 0 0 !important;
             margin: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
+            display: grid !important;
+            grid-template-rows: minmax(0, 1fr) auto auto !important;
             align-items: center !important;
-            justify-content: center !important;
+            justify-items: center !important;
             cursor: pointer !important;
             font: inherit !important;
             color: var(--ink) !important;
@@ -4702,68 +4909,64 @@
         }
 
         .party-slot-body img {
-            flex: 1 1 0 !important;
             min-height: 0 !important;
-            width: auto !important;
+            width: 100% !important;
             height: 100% !important;
-            max-width: 82% !important;
+            max-width: 86% !important;
             max-height: 100% !important;
             object-fit: contain !important;
             margin: 0 auto !important;
-            filter: drop-shadow(0 4px 6px rgba(25, 16, 44, 0.18));
+            filter: drop-shadow(0 4px 7px rgba(25, 16, 44, 0.22));
             transition: transform .15s ease;
         }
 
         .party-slot-body:hover img {
-            transform: scale(1.06);
+            transform: scale(1.07);
         }
 
         .party-slot-name {
             display: block !important;
             width: 100% !important;
             text-align: center !important;
-            font-size: 12px !important;
-            font-weight: 800 !important;
+            font-size: 13px !important;
+            font-weight: 850 !important;
             line-height: 1.15 !important;
             color: var(--ink) !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            flex-shrink: 0 !important;
             margin-top: 2px !important;
+        }
+
+        html[data-theme=dark] .party-slot-name {
+            color: #f8f4ff !important;
         }
 
         .party-slot-meta {
             display: block !important;
             width: 100% !important;
             text-align: center !important;
-            font-size: 10px !important;
-            font-weight: 700 !important;
+            font-size: 10.5px !important;
+            font-weight: 750 !important;
             line-height: 1.15 !important;
-            color: #0e7c70 !important;
+            color: var(--teal) !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            flex-shrink: 0 !important;
-        }
-
-        html[data-theme=dark] .party-slot-meta {
-            color: #5eead4 !important;
         }
 
         .party-slot-footer {
-            flex: 0 0 26px !important;
-            height: 26px !important;
+            height: 32px !important;
             display: grid !important;
-            grid-template-columns: 1fr auto auto !important;
+            grid-template-columns: 1fr 34px 34px !important;
             border-top: 1px solid var(--border) !important;
-            background: rgba(105, 69, 165, 0.05) !important;
+            background: rgba(105, 69, 165, 0.06) !important;
             width: 100% !important;
         }
 
         html[data-theme=dark] .party-slot-footer {
-            background: rgba(255, 255, 255, 0.04) !important;
-            border-top-color: #3d314c !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-top-color: #3f3250 !important;
         }
 
         .party-foot-btn {
@@ -4771,10 +4974,10 @@
             background: transparent !important;
             color: var(--violet-2) !important;
             font: inherit !important;
-            font-size: 10.5px !important;
+            font-size: 11.5px !important;
             font-weight: 800 !important;
             padding: 0 6px !important;
-            height: 26px !important;
+            height: 32px !important;
             cursor: pointer !important;
             display: inline-flex !important;
             align-items: center !important;
@@ -4789,11 +4992,11 @@
         }
 
         html[data-theme=dark] .party-foot-btn {
-            color: #d8cbff !important;
+            color: #e2d6ff !important;
         }
 
         html[data-theme=dark] .party-foot-btn + .party-foot-btn {
-            border-left-color: #3d314c !important;
+            border-left-color: #3f3250 !important;
         }
 
         .party-foot-btn:hover:not(:disabled) {
@@ -4806,19 +5009,458 @@
             cursor: default !important;
         }
 
-        /* Modal Pokémon HOME / Party Picker */
+        /* === BOX PANEL & CARDS 1:1 PERFEITOS (COMPUTADOR & MOBILE) === */
+        .box-panel {
+            padding: 20px 22px !important;
+            border-radius: 18px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            box-shadow: var(--shadow) !important;
+        }
+
+        .box-toolbar {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+            flex-wrap: wrap !important;
+            margin-bottom: 12px !important;
+        }
+
+        .box-controls {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+
+        .box-controls .btn {
+            min-height: 40px !important;
+            min-width: 40px !important;
+            border-radius: 10px !important;
+            font-weight: 800 !important;
+        }
+
+        .box-view-btn {
+            padding: 0 12px !important;
+            font-size: 12.5px !important;
+            background: var(--violet-soft) !important;
+            color: var(--violet-2) !important;
+            border-color: rgba(105, 69, 165, 0.3) !important;
+        }
+
+        /* Grade 6×5 no computador com rótulo lateral compacto para maximizar o tamanho dos cards */
+        .box-grid {
+            display: grid !important;
+            grid-template-columns: 22px repeat(6, minmax(136px, 1fr)) !important;
+            gap: 12px !important;
+            align-items: stretch !important;
+            min-width: 880px !important;
+        }
+
+        .column-label {
+            font-size: 11.5px !important;
+            font-weight: 800 !important;
+            color: var(--muted) !important;
+            text-align: center !important;
+            padding-bottom: 2px !important;
+        }
+
+        .row-label {
+            writing-mode: vertical-rl !important;
+            transform: rotate(180deg) !important;
+            text-align: center !important;
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            color: var(--muted) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            letter-spacing: 0.4px !important;
+        }
+
+        /* Modo Grade Adaptativa (sem barra de rolagem horizontal) */
+        .box-panel.view-3col .grid-scroll {
+            overflow-x: visible !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .box-panel.view-3col .box-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            min-width: 0 !important;
+            gap: 12px !important;
+        }
+
+        .box-panel.view-3col .box-grid > :first-child,
+        .box-panel.view-3col .column-label,
+        .box-panel.view-3col .row-label,
+        .box-panel.view-3col .mobile-hint {
+            display: none !important;
+        }
+
+        /* Card da Box: Quadrado 1:1 perfeito, com CSS Grid interno que impede sobreposição */
+        .slot-cell,
+        .slot.empty {
+            aspect-ratio: 1 / 1 !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            border-radius: 15px !important;
+            border: 1.5px solid var(--border) !important;
+            background: var(--surface) !important;
+            box-shadow: var(--shadow-sm) !important;
+            display: grid !important;
+            grid-template-rows: minmax(0, 1fr) 34px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease !important;
+        }
+
+        .slot.empty {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: var(--surface-2) !important;
+            border-style: dashed !important;
+            box-shadow: none !important;
+        }
+
+        /* Estados Claro e Escuro dos Cards da Box (Não capturado vs Capturado vs Shiny) */
+        html[data-theme=dark] .slot-cell {
+            background: #241d30 !important;
+            border-color: #4c3c5e !important;
+        }
+
+        html[data-theme=dark] .slot.empty {
+            background: #1b1524 !important;
+            border-color: #3a2d49 !important;
+        }
+
+        .slot-cell:hover {
+            border-color: var(--violet-2) !important;
+            box-shadow: 0 10px 22px rgba(38, 22, 68, 0.14) !important;
+        }
+
+        html[data-theme=dark] .slot-cell:hover {
+            border-color: #9f7aea !important;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        .slot-cell:has(.slot.caught) {
+            background: linear-gradient(180deg, #e7f8ef 0%, #f5fcf8 100%) !important;
+            border-color: #6bc497 !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.caught) {
+            background: linear-gradient(180deg, #17362b 0%, #162923 100%) !important;
+            border-color: #38a169 !important;
+        }
+
+        .slot-cell:has(.slot.shiny-caught) {
+            background: linear-gradient(180deg, #fef5db 0%, #fffbf0 100%) !important;
+            border-color: #e0a82e !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.shiny-caught) {
+            background: linear-gradient(180deg, #382b17 0%, #261e16 100%) !important;
+            border-color: #d69e2e !important;
+        }
+
+        /* Botão principal dentro do card (Topo + Sprite + Nome + Forma) */
+        .slot {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            margin: 0 !important;
+            padding: 7px 8px 4px !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            display: grid !important;
+            grid-template-rows: 24px minmax(0, 1fr) auto auto !important;
+            align-items: center !important;
+            justify-items: center !important;
+            gap: 1px !important;
+            overflow: hidden !important;
+            cursor: pointer !important;
+        }
+
+        .slot-top {
+            width: 100% !important;
+            height: 24px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 4px !important;
+            z-index: 2 !important;
+        }
+
+        .slot-badge {
+            font-size: 11.5px !important;
+            font-weight: 850 !important;
+            color: #554869 !important;
+            font-variant-numeric: tabular-nums !important;
+            letter-spacing: -0.2px !important;
+        }
+
+        html[data-theme=dark] .slot-badge {
+            color: #d4c6e8 !important;
+        }
+
+        .slot.caught .slot-badge {
+            color: #166534 !important;
+        }
+
+        html[data-theme=dark] .slot.caught .slot-badge {
+            color: #9ae6b4 !important;
+        }
+
+        .slot-status {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+        }
+
+        .shiny-button {
+            width: 24px !important;
+            height: 24px !important;
+            min-width: 24px !important;
+            min-height: 24px !important;
+            border-radius: 999px !important;
+            border: 1px solid rgba(105, 69, 165, 0.25) !important;
+            background: rgba(255, 255, 255, 0.75) !important;
+            color: #6b5b82 !important;
+            font-size: 13px !important;
+            display: inline-grid !important;
+            place-items: center !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+        }
+
+        html[data-theme=dark] .shiny-button {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.22) !important;
+            color: #d8c8f0 !important;
+        }
+
+        .shiny-button[aria-pressed="true"] {
+            background: #fef0c7 !important;
+            border-color: #d99b1e !important;
+            color: #b47808 !important;
+        }
+
+        html[data-theme=dark] .shiny-button[aria-pressed="true"] {
+            background: rgba(245, 193, 78, 0.24) !important;
+            border-color: #f5c14e !important;
+            color: #ffd666 !important;
+        }
+
+        .check {
+            width: 21px !important;
+            height: 21px !important;
+            min-width: 21px !important;
+            min-height: 21px !important;
+            border-radius: 999px !important;
+            font-size: 11.5px !important;
+            font-weight: 900 !important;
+            display: inline-grid !important;
+            place-items: center !important;
+            border: 1.5px solid rgba(105, 69, 165, 0.3) !important;
+            background: rgba(105, 69, 165, 0.08) !important;
+            color: transparent !important;
+        }
+
+        html[data-theme=dark] .check {
+            border-color: rgba(212, 198, 232, 0.32) !important;
+            background: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        .slot.caught .check {
+            background: #1f9d62 !important;
+            border-color: #1f9d62 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme=dark] .slot.caught .check {
+            background: #38c17a !important;
+            border-color: #38c17a !important;
+            color: #0b2618 !important;
+        }
+
+        /* Sprite grande e centralizado sem empurrar o nome para fora */
+        .slot img {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 0 !important;
+            max-width: 88% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            margin: 0 auto !important;
+            filter: drop-shadow(0 4px 6px rgba(25, 16, 44, 0.2)) !important;
+            transition: transform .15s ease !important;
+        }
+
+        .slot:hover img {
+            transform: scale(1.08) !important;
+        }
+
+        /* Nome do Pokémon sempre 100% visível e com alto contraste */
+        .slot-name {
+            display: block !important;
+            width: 100% !important;
+            text-align: center !important;
+            font-size: 13px !important;
+            font-weight: 850 !important;
+            line-height: 1.15 !important;
+            color: #1e162b !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            padding: 0 2px !important;
+            margin: 0 !important;
+        }
+
+        html[data-theme=dark] .slot-name {
+            color: #f7f3ff !important;
+        }
+
+        .slot.caught .slot-name {
+            color: #0f4c2c !important;
+        }
+
+        html[data-theme=dark] .slot.caught .slot-name {
+            color: #e6fffa !important;
+        }
+
+        /* Subtítulo de forma (Macho, Fêmea, Forma Aquática, etc.) visível quando existir */
+        .slot-form {
+            display: block !important;
+            width: 100% !important;
+            text-align: center !important;
+            font-size: 9.5px !important;
+            font-weight: 750 !important;
+            line-height: 1.1 !important;
+            color: var(--violet-2) !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .slot-form:empty,
+        .version-badge,
+        .slot-record,
+        .slot-position {
+            display: none !important;
+        }
+
+        /* Rodapé do Card: Botões "📍 Onde" e "Nv. XX ↗" grandes, claros e fáceis de clicar/tocar */
+        .slot-footer {
+            width: 100% !important;
+            height: 34px !important;
+            min-height: 34px !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            border-top: 1.5px solid var(--border) !important;
+            background: rgba(105, 69, 165, 0.05) !important;
+            z-index: 3 !important;
+        }
+
+        html[data-theme=dark] .slot-footer {
+            background: rgba(15, 11, 22, 0.48) !important;
+            border-top-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        .slot-cell:has(.slot.caught) .slot-footer {
+            border-top-color: rgba(56, 161, 105, 0.35) !important;
+            background: rgba(31, 157, 98, 0.08) !important;
+        }
+
+        html[data-theme=dark] .slot-cell:has(.slot.caught) .slot-footer {
+            border-top-color: rgba(56, 193, 122, 0.32) !important;
+            background: rgba(0, 0, 0, 0.26) !important;
+        }
+
+        .slot-footer.no-evo {
+            grid-template-columns: 1fr !important;
+        }
+
+        .slot-footer.no-evo .evolution-link.quiet {
+            display: none !important;
+        }
+
+        .where-button,
+        .evolution-link {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 5px !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            font-family: inherit !important;
+            font-size: 11px !important;
+            font-weight: 850 !important;
+            line-height: 1.1 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 2px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            cursor: pointer !important;
+            transition: background .12s ease, color .12s ease !important;
+        }
+
+        .where-button {
+            color: var(--ink) !important;
+        }
+
+        html[data-theme=dark] .where-button {
+            color: #efe8ff !important;
+        }
+
+        .evolution-link {
+            border-left: 1px solid var(--border) !important;
+            color: var(--violet-2) !important;
+            background: rgba(105, 69, 165, 0.06) !important;
+        }
+
+        html[data-theme=dark] .evolution-link {
+            border-left-color: rgba(255, 255, 255, 0.12) !important;
+            color: #ffd97d !important;
+            background: rgba(245, 193, 78, 0.09) !important;
+        }
+
+        .where-button:hover,
+        .evolution-link:hover {
+            background: var(--violet) !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme=dark] .where-button:hover,
+        html[data-theme=dark] .evolution-link:hover {
+            background: #7c52c9 !important;
+            color: #ffffff !important;
+        }
+
+        /* === MODAL POKÉMON HOME / PARTY PICKER === */
         .party-dialog {
-            max-width: 900px;
-            width: calc(100% - 24px);
+            max-width: 960px !important;
+            width: calc(100% - 24px) !important;
         }
 
         .party-custom-bar {
             display: grid;
-            grid-template-columns: 1.2fr 0.6fr 1.2fr auto;
+            grid-template-columns: 1.2fr 0.7fr 1.2fr auto;
             gap: 10px;
             align-items: end;
             background: var(--surface-2);
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             border-radius: 14px;
             padding: 12px 14px;
             margin-bottom: 12px;
@@ -4827,32 +5469,33 @@
         .party-field {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 750;
             color: var(--muted);
         }
 
         .party-field input {
             width: 100%;
-            min-height: 38px;
-            padding: 7px 10px;
+            min-height: 40px;
+            padding: 8px 11px;
             border-radius: 10px;
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             background: var(--surface);
             color: var(--ink);
             font: inherit;
-            font-size: 13.5px;
+            font-size: 14px;
+            font-weight: 650;
         }
 
         .party-shiny-toggle {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            min-height: 38px;
-            padding: 0 12px;
+            gap: 7px;
+            min-height: 40px;
+            padding: 0 13px;
             border-radius: 10px;
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             background: var(--surface);
             color: var(--ink);
             font-size: 13px;
@@ -4864,8 +5507,8 @@
 
         .party-shiny-toggle input {
             accent-color: var(--gold);
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
         }
 
         .party-current-banner {
@@ -4874,10 +5517,10 @@
             justify-content: space-between;
             gap: 12px;
             flex-wrap: wrap;
-            padding: 10px 14px;
-            border-radius: 12px;
-            background: rgba(22, 163, 148, 0.1);
-            border: 1px solid rgba(22, 163, 148, 0.35);
+            padding: 12px 14px;
+            border-radius: 13px;
+            background: var(--teal-soft);
+            border: 1.5px solid rgba(22, 163, 148, 0.38);
             margin-bottom: 12px;
         }
 
@@ -4888,29 +5531,29 @@
         }
 
         .party-current-info img {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
         }
 
         .party-picker-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
             gap: 10px;
             margin: 12px 0;
         }
 
         .party-pick-card {
             aspect-ratio: 1 / 1 !important;
-            border-radius: 13px !important;
+            border-radius: 14px !important;
             border: 1.5px solid var(--border) !important;
             background: var(--surface) !important;
             color: var(--ink) !important;
-            padding: 7px 6px !important;
-            display: flex !important;
-            flex-direction: column !important;
+            padding: 8px 7px !important;
+            display: grid !important;
+            grid-template-rows: auto minmax(0, 1fr) auto auto !important;
             align-items: center !important;
-            justify-content: space-between !important;
+            justify-items: center !important;
             cursor: pointer !important;
             font: inherit !important;
             overflow: hidden !important;
@@ -4930,7 +5573,7 @@
 
         .party-pick-card.active {
             border-color: #16a394 !important;
-            box-shadow: 0 0 0 2px rgba(22, 163, 148, 0.28) !important;
+            box-shadow: 0 0 0 2px rgba(22, 163, 148, 0.32) !important;
         }
 
         .party-pick-top {
@@ -4938,26 +5581,24 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 10.5px;
+            font-weight: 850;
             color: var(--muted);
-            flex-shrink: 0;
         }
 
         .party-pick-paldea {
-            font-size: 9px;
-            padding: 1px 5px;
+            font-size: 9.5px;
+            padding: 1px 6px;
             border-radius: 999px;
             background: var(--violet-soft);
             color: var(--violet-2);
         }
 
         .party-pick-card img {
-            flex: 1 1 0 !important;
             min-height: 0 !important;
-            width: auto !important;
+            width: 100% !important;
             height: 100% !important;
-            max-width: 78% !important;
+            max-width: 82% !important;
             max-height: 100% !important;
             object-fit: contain !important;
         }
@@ -4965,62 +5606,198 @@
         .party-pick-name {
             width: 100%;
             text-align: center;
-            font-size: 11.5px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 850;
             line-height: 1.15;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex-shrink: 0;
         }
 
         .party-pick-form {
             width: 100%;
             text-align: center;
-            font-size: 9.5px;
-            font-weight: 700;
-            color: #0e7c70;
+            font-size: 10px;
+            font-weight: 750;
+            color: var(--teal);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex-shrink: 0;
-        }
-
-        html[data-theme=dark] .party-pick-form {
-            color: #5eead4;
         }
 
         .party-load-more-wrap {
             display: flex;
             justify-content: center;
-            margin: 12px 0 4px;
+            margin: 14px 0 4px;
         }
 
-        @media(max-width: 750px) {
-            .party-panel {
-                padding: 14px 12px;
+        /* === RESPONSIVIDADE TABLET & NOTEBOOKS COMPACTOS (<= 1080px) === */
+        @media(max-width: 1080px) {
+            .workspace {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+
+            .sidebar {
+                position: static !important;
+                max-height: none !important;
+            }
+
+            .box-nav {
+                display: flex !important;
+                overflow-x: auto !important;
+                gap: 8px !important;
+                padding-bottom: 6px !important;
+                scroll-snap-type: x proximity !important;
+            }
+
+            .box-button {
+                flex: 0 0 124px !important;
+                scroll-snap-align: start !important;
             }
 
             .party-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 8px;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 12px !important;
+            }
+        }
+
+        /* === RESPONSIVIDADE MOBILE / CELULAR (<= 768px) === */
+        @media(max-width: 768px) {
+            .shell {
+                padding: 8px 12px 48px !important;
+            }
+
+            .topbar {
+                top: 6px !important;
+                padding: 10px 12px !important;
+                border-radius: 14px !important;
+                gap: 8px !important;
+            }
+
+            .top-actions {
+                width: 100% !important;
+                display: grid !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 6px !important;
+            }
+
+            .top-actions .save-pill {
+                grid-column: 1 / -1 !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 5px 10px !important;
+            }
+
+            .top-actions .btn {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 8px 6px !important;
+                font-size: 12.5px !important;
+            }
+
+            .hero {
+                grid-template-columns: 1fr !important;
+                padding: 16px !important;
+                gap: 10px !important;
+            }
+
+            .hero-art {
+                display: none !important;
+            }
+
+            .party-panel,
+            .box-panel,
+            .search-area {
+                padding: 14px 12px !important;
+                border-radius: 16px !important;
             }
 
             .party-custom-bar {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr !important;
             }
 
+            /* No modo 6×5 com scroll lateral no celular, cada coluna tem 138px (quadrado grande e legível) */
+            .box-grid {
+                grid-template-columns: repeat(6, 138px) !important;
+                min-width: 868px !important;
+                gap: 10px !important;
+            }
+
+            .box-grid > :first-child,
+            .row-label {
+                display: none !important;
+            }
+        }
+
+        /* === CELULARES (<= 560px): 2 CARDS QUADRADOS GRANDES POR LINHA === */
+        @media(max-width: 560px) {
+            /* Party: 2 colunas x 3 linhas de quadrados perfeitos (~170px x 170px cada!) */
+            .party-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 10px !important;
+            }
+
+            .party-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+            }
+
+            .party-actions {
+                display: grid !important;
+                grid-template-columns: auto 1fr !important;
+                gap: 8px !important;
+            }
+
+            .party-actions #party-clear-btn:not([hidden]) {
+                grid-column: 1 / -1 !important;
+            }
+
+            /* Box em Modo Grade Mobile: 2 colunas de quadrados grandes (~170px x 170px) sem rolagem lateral! */
+            .box-panel.view-3col .box-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 10px !important;
+            }
+
+            /* Botões de Onde encontrar e Nível de Evolução ainda maiores e confortáveis para o polegar */
+            .slot-cell,
+            .slot.empty {
+                grid-template-rows: minmax(0, 1fr) 36px !important;
+            }
+
+            .slot-footer {
+                height: 36px !important;
+                min-height: 36px !important;
+            }
+
+            .where-button,
+            .evolution-link {
+                font-size: 11.5px !important;
+                padding: 0 6px !important;
+            }
+
+            .slot-name {
+                font-size: 13px !important;
+            }
+
+            .slot-badge {
+                font-size: 12px !important;
+            }
+
+            /* Seletor do Pokémon HOME em 2 colunas quadradas amplas no celular */
             .party-picker-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 8px;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 10px !important;
             }
 
-            .party-slot-name {
-                font-size: 11px !important;
+            .party-custom-bar {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
             }
 
-            .party-slot-meta {
-                font-size: 9.5px !important;
+            .collection-tools {
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
@@ -5798,7 +6575,7 @@
             }
             $('close-location').addEventListener('click', () => $('location-dialog').close());
             $('close-evolution').addEventListener('click', () => $('evolution-dialog').close());
-            function goBox(b) { if (b < 1 || b > BOX_COUNT) return; currentBox = b; highlighted = 0; renderBox(); $('grid-scroll').scrollLeft = 0; try { localStorage.setItem(VIEW_KEY, String(b)); } catch { } }
+            function goBox(b) { if (b < 1 || b > BOX_COUNT) return; currentBox = b; highlighted = 0; renderBox(); $('grid-scroll').scrollLeft = 0; try { $('nav-' + b)?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch { } try { localStorage.setItem(VIEW_KEY, String(b)); } catch { } }
             for (let b = 1; b <= BOX_COUNT; b++) {
                 const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'box-button'; btn.id = 'nav-' + b; btn.innerHTML = `<strong>Box ${String(b).padStart(2, '0')}</strong><small></small><span class="mini-meter" aria-hidden="true"></span>`; btn.addEventListener('click', () => goBox(b)); $('box-nav').append(btn);
             }
@@ -6389,23 +7166,26 @@
                 } catch { setAccountUI('Modo offline: não foi possível carregar o serviço de nuvem.', true); }
             }
 
-            let boxViewMode = 'grid6';
-            try { boxViewMode = localStorage.getItem('paldea-box-view') || 'grid6'; } catch {}
-            function applyBoxView(mode) {
+            const defaultBoxView = (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ? 'grid3' : 'grid6';
+            let boxViewMode = defaultBoxView;
+            try { boxViewMode = localStorage.getItem('paldea-box-view-v2') || defaultBoxView; } catch {}
+            function applyBoxView(mode, savePref = false) {
                 boxViewMode = mode;
-                try { localStorage.setItem('paldea-box-view', mode); } catch {}
+                if (savePref) {
+                    try { localStorage.setItem('paldea-box-view-v2', mode); } catch {}
+                }
                 const panel = document.querySelector('.box-panel');
                 const btn = $('box-view-btn');
                 if (panel) panel.classList.toggle('view-3col', mode === 'grid3');
                 if (btn) {
-                    btn.textContent = mode === 'grid3' ? '☷ 3 Col' : '⊞ 6×5';
-                    btn.setAttribute('aria-label', mode === 'grid3' ? 'Modo 3 colunas ativo. Clique para mudar para 6×5.' : 'Modo 6×5 ativo. Clique para mudar para 3 colunas.');
+                    btn.textContent = mode === 'grid3' ? '☷ Grade' : '⊞ 6×5';
+                    btn.setAttribute('aria-label', mode === 'grid3' ? 'Modo Grade adaptativa ativo. Clique para mudar para Box 6×5.' : 'Modo Box 6×5 ativo. Clique para mudar para Grade adaptativa.');
                 }
             }
             $('box-view-btn')?.addEventListener('click', () => {
-                applyBoxView(boxViewMode === 'grid6' ? 'grid3' : 'grid6');
+                applyBoxView(boxViewMode === 'grid6' ? 'grid3' : 'grid6', true);
             });
-            applyBoxView(boxViewMode);
+            applyBoxView(boxViewMode, false);
 
             /* === SISTEMA MINHA PARTY (POKÉMON HOME · NATIONAL DEX #0001–#1025 + FORMAS) === */
             const NATIONAL_DEX = [
