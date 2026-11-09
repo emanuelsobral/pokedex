@@ -4375,14 +4375,17 @@
         .party-slot-main {
             min-height: 0 !important;
             height: 100% !important;
-            display: grid !important;
-            grid-template-rows: auto minmax(0, 1fr) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: space-between !important;
             padding: 7px 8px 4px !important;
             position: relative !important;
             overflow: hidden !important;
         }
 
         .party-slot-top {
+            flex: 0 0 auto !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
@@ -4520,17 +4523,19 @@
         }
 
         .party-slot-body {
+            flex: 1 1 0 !important;
             min-height: 0 !important;
             height: 100% !important;
             width: 100% !important;
             border: 0 !important;
             background: transparent !important;
-            padding: 2px 0 0 !important;
+            padding: 2px 4px !important;
             margin: 0 !important;
-            display: grid !important;
-            grid-template-rows: minmax(0, 1fr) auto auto !important;
+            display: flex !important;
+            flex-direction: column !important;
             align-items: center !important;
-            justify-items: center !important;
+            justify-content: space-between !important;
+            text-align: center !important;
             cursor: pointer !important;
             font: inherit !important;
             color: var(--ink) !important;
@@ -4538,13 +4543,17 @@
         }
 
         .party-slot-body img {
+            display: block !important;
+            flex: 1 1 0 !important;
             min-height: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 86% !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: 84% !important;
             max-height: 100% !important;
             object-fit: contain !important;
-            margin: 0 auto !important;
+            object-position: center center !important;
+            margin: auto !important;
+            align-self: center !important;
             filter: drop-shadow(0 4px 7px rgba(25, 16, 44, 0.22));
             transition: transform .15s ease;
         }
@@ -4555,6 +4564,7 @@
 
         .party-slot-name {
             display: block !important;
+            flex: 0 0 auto !important;
             width: 100% !important;
             text-align: center !important;
             font-size: 13px !important;
@@ -4573,6 +4583,7 @@
 
         .party-slot-meta {
             display: block !important;
+            flex: 0 0 auto !important;
             width: 100% !important;
             text-align: center !important;
             font-size: 10.5px !important;
@@ -4768,7 +4779,7 @@
             display: none !important;
         }
 
-        /* Card da Box: Quadrado 1:1 perfeito, com CSS Grid interno que impede sobreposição */
+        /* Card da Box: Quadrado 1:1 perfeito, com Flex Column interno que centraliza o Pokémon */
         .slot-cell,
         .box-panel .slot-cell,
         .box-panel.view-3col .slot-cell,
@@ -4783,8 +4794,10 @@
             border: 1.5px solid var(--border) !important;
             background: var(--surface) !important;
             box-shadow: var(--shadow-sm) !important;
-            display: grid !important;
-            grid-template-rows: minmax(0, 1fr) 34px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            justify-content: space-between !important;
             overflow: hidden !important;
             position: relative !important;
             transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease !important;
@@ -4848,21 +4861,23 @@
         .slot-cell .slot,
         .box-panel .slot,
         .box-panel.view-3col .slot {
+            flex: 1 1 0 !important;
             width: 100% !important;
             height: 100% !important;
             min-height: 0 !important;
             max-height: none !important;
             aspect-ratio: auto !important;
             margin: 0 !important;
-            padding: 6px 8px 3px !important;
+            padding: 6px 8px 4px !important;
             border: 0 !important;
             border-radius: 0 !important;
             background: transparent !important;
             box-shadow: none !important;
-            display: grid !important;
-            grid-template-rows: 22px minmax(0, 1fr) auto auto !important;
+            display: flex !important;
+            flex-direction: column !important;
             align-items: center !important;
-            justify-items: center !important;
+            justify-content: space-between !important;
+            text-align: center !important;
             gap: 1px !important;
             overflow: hidden !important;
             cursor: pointer !important;
@@ -4871,12 +4886,12 @@
         .slot:has(.slot-form:not(:empty)),
         .slot-cell .slot:has(.slot-form:not(:empty)),
         .box-panel.view-3col .slot:has(.slot-form:not(:empty)) {
-            padding: 5px 8px 2px !important;
-            grid-template-rows: 20px minmax(0, 1fr) auto auto !important;
+            padding: 5px 8px 3px !important;
             gap: 0px !important;
         }
 
         .slot-top {
+            flex: 0 0 auto !important;
             width: 100% !important;
             height: 22px !important;
             display: flex !important;
@@ -4983,13 +4998,17 @@
         .slot-cell .slot img,
         .box-panel .slot img,
         .box-panel.view-3col .slot img {
-            width: 100% !important;
-            height: 100% !important;
+            display: block !important;
+            flex: 1 1 0 !important;
+            width: auto !important;
+            height: auto !important;
             min-height: 0 !important;
-            max-width: 90% !important;
+            max-width: 86% !important;
             max-height: 100% !important;
             object-fit: contain !important;
-            margin: 0 auto !important;
+            object-position: center center !important;
+            margin: auto !important;
+            align-self: center !important;
             filter: drop-shadow(0 4px 6px rgba(25, 16, 44, 0.2)) !important;
             transition: transform .15s ease !important;
         }
@@ -5002,6 +5021,7 @@
         .slot-name,
         .box-panel.view-3col .slot-name {
             display: block !important;
+            flex: 0 0 auto !important;
             width: 100% !important;
             text-align: center !important;
             font-size: 13px !important;
@@ -5032,6 +5052,7 @@
         .slot-cell .slot-form,
         .box-panel.view-3col .slot-form {
             display: block !important;
+            flex: 0 0 auto !important;
             width: 100% !important;
             min-height: 0 !important;
             height: auto !important;
@@ -5075,6 +5096,7 @@
 
         /* Rodapé do Card: Botões "📍 Onde" e "Nv. XX ↗" grandes, claros e fáceis de clicar/tocar */
         .slot-footer {
+            flex: 0 0 34px !important;
             width: 100% !important;
             height: 34px !important;
             min-height: 34px !important;
@@ -5267,10 +5289,11 @@
             background: var(--surface) !important;
             color: var(--ink) !important;
             padding: 8px 7px !important;
-            display: grid !important;
-            grid-template-rows: auto minmax(0, 1fr) auto auto !important;
+            display: flex !important;
+            flex-direction: column !important;
             align-items: center !important;
-            justify-items: center !important;
+            justify-content: space-between !important;
+            text-align: center !important;
             cursor: pointer !important;
             font: inherit !important;
             overflow: hidden !important;
@@ -5294,6 +5317,7 @@
         }
 
         .party-pick-top {
+            flex: 0 0 auto !important;
             width: 100%;
             display: flex;
             align-items: center;
@@ -5312,15 +5336,21 @@
         }
 
         .party-pick-card img {
+            display: block !important;
+            flex: 1 1 0 !important;
             min-height: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
+            width: auto !important;
+            height: auto !important;
             max-width: 82% !important;
             max-height: 100% !important;
             object-fit: contain !important;
+            object-position: center center !important;
+            margin: auto !important;
+            align-self: center !important;
         }
 
         .party-pick-name {
+            flex: 0 0 auto !important;
             width: 100%;
             text-align: center;
             font-size: 12px;
@@ -5332,6 +5362,7 @@
         }
 
         .party-pick-form {
+            flex: 0 0 auto !important;
             width: 100%;
             min-height: 0 !important;
             max-height: 12px !important;
@@ -5486,15 +5517,9 @@
             }
 
             /* Botões de Onde encontrar e Nível de Evolução ainda maiores e confortáveis para o polegar */
-            .slot-cell,
-            .box-panel .slot-cell,
-            .box-panel.view-3col .slot-cell,
-            .slot.empty {
-                grid-template-rows: minmax(0, 1fr) 36px !important;
-            }
-
             .slot-footer,
             .box-panel.view-3col .slot-footer {
+                flex: 0 0 36px !important;
                 height: 36px !important;
                 min-height: 36px !important;
             }
