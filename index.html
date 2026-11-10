@@ -5577,6 +5577,141 @@
                 grid-template-columns: 1fr !important;
             }
         }
+
+        /* === NAVEGAÇÃO DE RETORNO NOS MODAIS DE MAPA E SUBMENUS === */
+        .evolution-dialog header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 10px !important;
+        }
+
+        .evolution-dialog header h2 {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+        }
+
+        .modal-back-btn {
+            flex: 0 0 auto !important;
+            min-height: 36px !important;
+            height: 36px !important;
+            padding: 0 12px !important;
+            border-radius: 999px !important;
+            font-size: 13px !important;
+            font-weight: 850 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px !important;
+            background: var(--violet-soft) !important;
+            color: var(--violet-2) !important;
+            border: 1.5px solid rgba(105, 69, 165, 0.35) !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            transition: background .15s ease, color .15s ease, transform .12s ease !important;
+        }
+
+        html[data-theme=dark] .modal-back-btn {
+            background: rgba(164, 126, 232, 0.2) !important;
+            color: #f1e8ff !important;
+            border-color: rgba(164, 126, 232, 0.45) !important;
+        }
+
+        .modal-back-btn:hover {
+            background: var(--violet) !important;
+            color: #ffffff !important;
+            border-color: var(--violet) !important;
+        }
+
+        .modal-back-bar {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 10px !important;
+            padding: 9px 12px !important;
+            margin: -4px 0 12px !important;
+            border-radius: 12px !important;
+            background: var(--violet-soft) !important;
+            border: 1.5px solid rgba(105, 69, 165, 0.28) !important;
+            font-size: 12.5px !important;
+            font-weight: 750 !important;
+            color: var(--violet-2) !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            text-align: left !important;
+        }
+
+        html[data-theme=dark] .modal-back-bar {
+            background: rgba(164, 126, 232, 0.14) !important;
+            border-color: rgba(164, 126, 232, 0.36) !important;
+            color: #e9d8fd !important;
+        }
+
+        .modal-back-bar:hover {
+            background: var(--violet) !important;
+            color: #ffffff !important;
+        }
+
+        .location-list li {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 8px !important;
+            flex-wrap: wrap !important;
+        }
+
+        .loc-area-select-btn {
+            border: 0 !important;
+            background: transparent !important;
+            color: var(--violet-2) !important;
+            font: inherit !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            padding: 2px 0 !important;
+            cursor: pointer !important;
+            text-align: left !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+        }
+
+        html[data-theme=dark] .loc-area-select-btn {
+            color: #d8b4fe !important;
+        }
+
+        .loc-area-select-btn:hover {
+            text-decoration: underline !important;
+        }
+
+        .loc-area-actions {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            flex-wrap: wrap !important;
+        }
+
+        .loc-area-route-btn,
+        .loc-area-ext-link {
+            font-size: 11px !important;
+            font-weight: 750 !important;
+            padding: 3px 8px !important;
+            border-radius: 8px !important;
+            border: 1px solid var(--border) !important;
+            background: var(--surface-2) !important;
+            color: var(--ink) !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+        }
+
+        html[data-theme=dark] .loc-area-route-btn,
+        html[data-theme=dark] .loc-area-ext-link {
+            background: rgba(255, 255, 255, 0.07) !important;
+            color: #efe8ff !important;
+        }
     </style>
 </head>
 
@@ -6271,7 +6406,7 @@
                 if (caught.has(n)) readyItems.delete(n); const focused = document.activeElement, focusId = focused?.id, starIndex = focused?.dataset?.entryStar; persist(); renderBox(); renderSearch(false); refreshTools();
                 const next = focusId ? $(focusId) : starIndex !== undefined ? $('box-grid').querySelector(`[data-entry-star="${starIndex}"]`) : null; if (next && !next.closest('.filtered')) next.focus({ preventScroll: true });
             }
-            function revealEntry(e) { if (!entryMatches(e)) resetFilters(); const w = entryPos(e.index); goBox(w.box); highlighted = e.key; const card = $(entryId(e)); card.classList.add('highlight'); card.focus({ preventScroll: true }); card.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' }); notify(`${entryName(e)}: box ${w.box}, linha ${w.row}, coluna ${w.col}, slot ${w.slot}.`); }
+            function revealEntry(e) { if (!entryMatches(e)) resetFilters(); const w = entryPos(e.index); goBox(w.box, false); highlighted = e.key; const card = $(entryId(e)); card.classList.add('highlight'); card.focus({ preventScroll: true }); card.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' }); notify(`${entryName(e)}: box ${w.box}, linha ${w.row}, coluna ${w.col}, slot ${w.slot}.`); }
             function reveal(n, formKey) { revealEntry(formKey ? ENTRY_BY_KEY.get(formKey) : FIRST_ENTRY.get(n)); }
             function renderSearch(announce = true) {
                 const raw = $('search').value.trim(), q = normalize(raw), region = $('search-results'), active = statusFilter !== 'all' || versionFilter !== 'all'; $('clear-search').hidden = !raw; region.replaceChildren(); region.hidden = !raw && !active; if (!raw && !active) { if (announce) $('search-status').textContent = ''; return; }
@@ -6280,15 +6415,100 @@
             }
 
             function toggleShiny(n) { checkpoint('alterar shiny de ' + DATA[n - 1].name); if (shinies.has(n)) { shinies.delete(n); clearSpeciesForms(n, true); } else { shinies.add(n); caught.add(n); } updateSpecies(n); notify(`${DATA[n - 1].name}: ${shinies.has(n) ? 'shiny registrado!' : 'shiny desmarcado; captura mantida.'}${storageOK ? '' : ' Exporte para guardar.'}`); }
-            function showEvolution(n) {
+            const modalHistory = [];
+            const NAV_DIALOG_IDS = ['evolution-dialog', 'route-dialog', 'location-dialog', 'missing-evo-dialog', 'forms-dialog', 'completion-dialog', 'items-dialog', 'regions-dialog'];
+            function clearModalHistory() { modalHistory.length = 0; syncAllDialogBackButtons(); }
+            function pushModalHistory(label, restoreFn) {
+                const openDialog = NAV_DIALOG_IDS.map(id => $(id)).find(d => d && d.open);
+                const scrollTop = openDialog ? openDialog.scrollTop : 0;
+                modalHistory.push({ label, restore: () => { restoreFn(); const nowOpen = NAV_DIALOG_IDS.map(id => $(id)).find(d => d && d.open); if (nowOpen) nowOpen.scrollTop = scrollTop; } });
+            }
+            function goBackModal() {
+                const prev = modalHistory.pop();
+                if (!prev) return;
+                NAV_DIALOG_IDS.forEach(id => { const d = $(id); if (d && d.open) d.close(); });
+                prev.restore();
+                syncAllDialogBackButtons();
+            }
+            function syncDialogBackUI(dialogId) {
+                const dlg = $(dialogId);
+                if (!dlg) return;
+                const header = dlg.querySelector('header');
+                if (header) {
+                    let backBtn = header.querySelector('.modal-back-btn');
+                    if (modalHistory.length > 0) {
+                        const prev = modalHistory[modalHistory.length - 1];
+                        if (!backBtn) {
+                            backBtn = document.createElement('button');
+                            backBtn.type = 'button';
+                            backBtn.className = 'btn modal-back-btn';
+                            backBtn.addEventListener('click', goBackModal);
+                            header.prepend(backBtn);
+                        }
+                        backBtn.textContent = '← Voltar';
+                        backBtn.title = `Voltar para ${prev.label}`;
+                        backBtn.setAttribute('aria-label', `Voltar para ${prev.label}`);
+                    } else if (backBtn) {
+                        backBtn.remove();
+                    }
+                }
+                let backBar = dlg.querySelector('.modal-back-bar');
+                if (modalHistory.length > 0) {
+                    const prev = modalHistory[modalHistory.length - 1];
+                    if (!backBar) {
+                        backBar = document.createElement('div');
+                        backBar.className = 'modal-back-bar';
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.addEventListener('click', goBackModal);
+                        backBar.append(btn);
+                        if (header && header.nextSibling) dlg.insertBefore(backBar, header.nextSibling);
+                        else dlg.prepend(backBar);
+                    }
+                    backBar.querySelector('button').textContent = `← Voltar para ${prev.label}`;
+                } else if (backBar) {
+                    backBar.remove();
+                }
+            }
+            function syncAllDialogBackButtons() { NAV_DIALOG_IDS.forEach(syncDialogBackUI); }
+            NAV_DIALOG_IDS.forEach(id => {
+                const dlg = $(id);
+                if (!dlg) return;
+                dlg.addEventListener('cancel', e => {
+                    if (modalHistory.length > 0) {
+                        e.preventDefault();
+                        goBackModal();
+                    }
+                });
+            });
+
+            function showEvolution(n, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
                 const p = DATA[n - 1], content = $('evolution-content'); content.replaceChildren(); $('evolution-title').textContent = p.name; $('evolution-intro').textContent = `#${pad(n)} de Paldea · Níveis e requisitos de evolução`;
                 function section(title, edges, incoming) {
                     if (!edges.length) return; const section = document.createElement('section'); section.className = 'evo-section'; const heading = document.createElement('h3'); heading.textContent = title; section.append(heading);
-                    for (const edge of edges) { const other = DATA[(incoming ? edge.from : edge.to) - 1], card = document.createElement('div'); card.className = 'evo-card'; card.innerHTML = '<div class="evo-card-head"><img alt=""><div><strong></strong><span class="evo-label"></span></div></div><p></p><button type="button" class="btn">Localizar na box</button>'; card.querySelector('img').src = other.sprite; card.querySelector('strong').textContent = `${DATA[edge.from - 1].name} → ${DATA[edge.to - 1].name}`; card.querySelector('.evo-label').textContent = edge.label; card.querySelector('p').textContent = edge.detail; card.querySelector('button').setAttribute('aria-label', `Localizar ${other.name} na box`); card.querySelector('button').addEventListener('click', () => { $('evolution-dialog').close(); reveal(other.n); }); section.append(card); } content.append(section);
+                    for (const edge of edges) {
+                        const other = DATA[(incoming ? edge.from : edge.to) - 1], card = document.createElement('div'); card.className = 'evo-card';
+                        card.innerHTML = '<div class="evo-card-head"><img alt=""><div><strong></strong><span class="evo-label"></span></div></div><p></p><div class="planner-actions"><button type="button" class="btn evo-where-btn">📍 Onde encontrar</button><button type="button" class="btn evo-locate-btn">Localizar na box</button></div>';
+                        card.querySelector('img').src = other.sprite; card.querySelector('strong').textContent = `${DATA[edge.from - 1].name} → ${DATA[edge.to - 1].name}`; card.querySelector('.evo-label').textContent = edge.label; card.querySelector('p').textContent = edge.detail;
+                        const whereBtn = card.querySelector('.evo-where-btn');
+                        whereBtn.setAttribute('aria-label', `Onde encontrar ${other.name}`);
+                        whereBtn.addEventListener('click', () => {
+                            pushModalHistory(`Evolução: ${p.name}`, () => showEvolution(n, true));
+                            $('evolution-dialog').close();
+                            showLocation(other.n, true);
+                        });
+                        const locateBtn = card.querySelector('.evo-locate-btn');
+                        locateBtn.setAttribute('aria-label', `Localizar ${other.name} na box`);
+                        locateBtn.addEventListener('click', () => { clearModalHistory(); $('evolution-dialog').close(); reveal(other.n); });
+                        section.append(card);
+                    }
+                    content.append(section);
                 }
                 section('Evolui de', p.evoFrom, true); section('Evolui para', p.evoTo, false);
                 if (!p.evoTo.length) { const note = document.createElement('p'); note.textContent = p.evoFrom.length ? 'Este é o último estágio desta linha dentro da Pokédex de Paldea.' : 'Não há pré-evolução ou evolução para esta espécie entre as 400 entradas de Paldea.'; content.append(note); }
-                $('evolution-dialog').showModal(); $('evolution-dialog').scrollTop = 0; $('close-evolution').focus();
+                syncDialogBackUI('evolution-dialog');
+                if (!$('evolution-dialog').open) $('evolution-dialog').showModal(); $('evolution-dialog').scrollTop = 0; $('close-evolution').focus();
             }
             const REGIONS = [...MAPDATA.regions].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
             const regionByKey = new Map(REGIONS.map(r => [r.key, r]));
@@ -6312,13 +6532,27 @@
             }
             function addLocationMap(content, p) {
                 let source = p; const seen = new Set(); while (!source.areas.length && source.evoFrom.length && !seen.has(source.n)) { seen.add(source.n); source = DATA[source.evoFrom[0].from - 1]; }
-                if (!source.areas.length) { const note = document.createElement('p'); note.className = 'map-fallback'; note.textContent = 'Não há uma região cadastrada para marcar no mapa. Consulte o caminho de obtenção abaixo.'; content.append(note); return; }
+                if (!source.areas.length) { const note = document.createElement('p'); note.className = 'map-fallback'; note.textContent = 'Não há uma região cadastrada para marcar no mapa. Consulte o caminho de obtenção abaixo.'; content.append(note); return null; }
                 const mapped = source.areas.map(a => regionByKey.get(a.original)).filter(Boolean), section = document.createElement('div'), heading = document.createElement('h3'), detail = document.createElement('div'); heading.textContent = source.n === p.n ? 'Mapa de onde encontrar' : `Mapa da pré-evolução: ${source.name}`; section.append(heading);
                 if (source.n !== p.n) { const note = document.createElement('p'); note.className = 'map-note'; note.textContent = `As marcações são de ${source.name}. Obtenha esse Pokémon e siga a evolução para chegar a ${p.name}; não são locais de aparição de ${p.name}.`; section.append(note); }
                 detail.className = 'map-region-detail'; const title = document.createElement('strong'), description = document.createElement('span'), button = document.createElement('button'); button.type = 'button'; button.className = 'btn primary'; button.textContent = 'Ver pendentes nesta região'; detail.append(title, description, document.createElement('br'), button);
                 let selected = mapped[0].key;
-                function selectedRegion(key) { selected = key; const count = DATA.filter(q => q.areas.some(a => a.original === key) && q.exclusive !== 'scarlet' && !caught.has(q.n)).length; title.textContent = regionByKey.get(key).name; description.textContent = `${count} Pokémon pendentes com área cadastrada aqui para Violet.`; }
-                const map = createRegionMap(mapped, { onSelect: selectedRegion, label: `${mapped.length} ${mapped.length === 1 ? 'região marcada' : 'regiões marcadas'}` }); selectedRegion(selected); button.addEventListener('click', () => { $('location-dialog').close(); showRoute(selected); }); section.append(map.root, detail); content.append(section);
+                let areaSelectCallbacks = [];
+                function selectedRegion(key) {
+                    selected = key;
+                    const count = DATA.filter(q => q.areas.some(a => a.original === key) && q.exclusive !== 'scarlet' && !caught.has(q.n)).length;
+                    title.textContent = regionByKey.get(key).name;
+                    description.textContent = `${count} Pokémon pendentes com área cadastrada aqui para Violet.`;
+                    areaSelectCallbacks.forEach(fn => fn(key));
+                }
+                const map = createRegionMap(mapped, { onSelect: selectedRegion, label: `${mapped.length} ${mapped.length === 1 ? 'região marcada' : 'regiões marcadas'}` }); selectedRegion(selected);
+                button.addEventListener('click', () => {
+                    pushModalHistory(`Onde encontrar: ${p.name}`, () => showLocation(p.n, true));
+                    $('location-dialog').close();
+                    showRoute(selected, true);
+                });
+                section.append(map.root, detail); content.append(section);
+                return { map, getSelected: () => selected, onAreaSelect: fn => { areaSelectCallbacks.push(fn); fn(selected); } };
             }
             function routeEligible(p) { const game = $('route-game').value; return (game === 'all' || p.exclusive === 'both' || p.exclusive === 'forms' || p.exclusive === game) && (!$('route-pending').checked || !caught.has(p.n)); }
             function renderRoute() {
@@ -6331,28 +6565,141 @@
                     const card = document.createElement('article'); card.className = 'route-card'; card.dataset.routeSpecies = p.n; card.innerHTML = '<div class="route-card-head"><img alt=""><div><strong></strong><small></small></div></div><div class="route-card-actions"><button type="button" class="btn primary route-capture"></button><button type="button" class="btn route-where">Onde encontrar</button><button type="button" class="btn route-box">Ver na box</button></div>'; card.querySelector('img').src = shinies.has(p.n) ? p.shinySprite : p.sprite; card.querySelector('strong').textContent = `#${pad(p.n)} ${p.name}`; const w = pos(p.n); card.querySelector('small').textContent = `Box ${w.box} · L${w.row} C${w.col}${['scarlet', 'violet'].includes(p.exclusive) ? ' · ' + p.exclusive : ''}`;
                     if (p.n <= 9 || p.n >= 393 || p.n === 223) { const note = document.createElement('p'); note.className = 'route-special'; note.textContent = 'Obtenção especial ou forma exclusiva: consulte os detalhes.'; card.insertBefore(note, card.lastChild); }
                     const capture = card.querySelector('.route-capture'); capture.textContent = caught.has(p.n) ? '✓ Capturado' : 'Marcar capturado'; capture.disabled = caught.has(p.n); capture.setAttribute('aria-label', `Marcar ${p.name} como capturado`); capture.addEventListener('click', () => { const top = list.scrollTop; checkpoint('capturar ' + p.name + ' na rota'); caught.add(p.n); updateSpecies(p.n); renderRoute(); list.scrollTop = top; notify(`${p.name}: captura registrada na sua rota.`); const next = list.querySelector('.route-capture:not(:disabled)'); if (next) next.focus({ preventScroll: true }); else $('route-region-title').focus({ preventScroll: true }); });
-                    card.querySelector('.route-where').addEventListener('click', () => { $('route-dialog').close(); showLocation(p.n); }); card.querySelector('.route-box').addEventListener('click', () => { $('route-dialog').close(); clearSearch(); reveal(p.n); }); list.append(card);
+                    card.querySelector('.route-where').addEventListener('click', () => {
+                        const savedRegion = routeSelection;
+                        pushModalHistory(`Rota: ${regionByKey.get(savedRegion)?.name || 'Mapa'}`, () => showRoute(savedRegion, true));
+                        $('route-dialog').close();
+                        showLocation(p.n, true);
+                    });
+                    card.querySelector('.route-box').addEventListener('click', () => { clearModalHistory(); $('route-dialog').close(); clearSearch(); reveal(p.n); }); list.append(card);
                 }
             }
-            function showRoute(key) { if (key && regionByKey.has(key)) routeSelection = key; if (!routeMap) { routeMap = createRegionMap(REGIONS, { selected: routeSelection, zoom: routeZoom, onZoom: z => routeZoom = z, onSelect: key => { routeSelection = key; renderRoute(); }, label: 'Escolha uma região no mapa' }); $('route-map').append(routeMap.root); } renderRoute(); if (!$('route-dialog').open) $('route-dialog').showModal(); $('route-dialog').scrollTop = 0; $('close-route').focus(); }
-            $('open-route').addEventListener('click', () => showRoute()); $('close-route').addEventListener('click', () => $('route-dialog').close()); $('route-game').addEventListener('change', renderRoute); $('route-pending').addEventListener('change', renderRoute);
+            function showRoute(key, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                if (key && regionByKey.has(key)) routeSelection = key;
+                if (!routeMap) { routeMap = createRegionMap(REGIONS, { selected: routeSelection, zoom: routeZoom, onZoom: z => routeZoom = z, onSelect: key => { routeSelection = key; renderRoute(); }, label: 'Escolha uma região no mapa' }); $('route-map').append(routeMap.root); }
+                renderRoute();
+                syncDialogBackUI('route-dialog');
+                if (!$('route-dialog').open) $('route-dialog').showModal();
+                $('route-dialog').scrollTop = 0; $('close-route').focus();
+            }
+            $('open-route').addEventListener('click', () => showRoute()); $('close-route').addEventListener('click', () => { clearModalHistory(); $('route-dialog').close(); }); $('route-game').addEventListener('change', renderRoute); $('route-pending').addEventListener('change', renderRoute);
 
-            function showLocation(n) {
+            function showLocation(n, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
                 const p = DATA[n - 1], content = $('location-content'); content.replaceChildren(); $('location-title').textContent = 'Onde encontrar'; $('location-subtitle').textContent = `#${pad(n)} ${p.name} · Paldea`;
                 const compare = document.createElement('div'); compare.className = 'sprite-comparison'; for (const [label, src] of [['Normal', p.sprite], ['Shiny', p.shinySprite]]) { const figure = document.createElement('figure'), img = document.createElement('img'), caption = document.createElement('figcaption'); img.src = src; img.alt = `${p.name} ${label.toLowerCase()}`; img.width = 96; img.height = 96; caption.textContent = label; figure.append(img, caption); compare.append(figure); }
                 const info = document.createElement('p'); info.className = 'version-info ' + p.exclusive;
                 info.textContent = p.exclusive === 'scarlet' ? 'Origem nativa: Scarlet. Para sua coleção de Violet, use troca ou outra forma compatível de obter um exemplar da outra versão.' : p.exclusive === 'violet' ? 'Origem nativa: Violet. Em Scarlet, a espécie pode ser obtida por troca ou outros recursos entre versões.' : p.exclusive === 'forms' ? 'Tauros tem formas exclusivas por versão. Combat Breed aparece nos dois jogos; Blaze em Scarlet e Aqua em Violet.' : 'Disponível em Scarlet e Violet.'; content.append(info);
                 if (p.locationNote) { const note = document.createElement('p'); note.className = 'where-note'; note.textContent = p.locationNote; content.append(note); }
-                addLocationMap(content, p);
-                if (p.areas.length) { const h = document.createElement('h3'); h.textContent = p.n <= 9 ? 'Local de obtenção' : 'Áreas registradas no jogo base'; content.append(h); const list = document.createElement('ul'); list.className = 'location-list'; for (const area of p.areas) { const li = document.createElement('li'), link = document.createElement('a'); link.href = area.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = area.name; li.append(link); if (area.original !== area.name) { const original = document.createElement('small'); original.textContent = area.original; li.append(original); } list.append(li); } content.append(list); }
-                if (p.evoFrom.length) { const h = document.createElement('h3'); h.textContent = p.areas.length ? 'Também por evolução' : 'Caminho de obtenção por evolução'; content.append(h); for (const e of p.evoFrom) { const parent = DATA[e.from - 1], note = document.createElement('p'), btn = document.createElement('button'); note.className = 'where-note'; note.textContent = `${parent.name} → ${p.name}: ${e.detail}`; btn.className = 'btn loc-evolution'; btn.type = 'button'; btn.textContent = `Onde encontrar ${parent.name}`; btn.dataset.parentLocation = parent.n; btn.addEventListener('click', () => showLocation(parent.n)); content.append(note, btn); } }
-                content.append(compare); if (FORMS.some(f => f.n === n)) content.append(toolButton('Ver formas de ' + p.name, () => { $('location-dialog').close(); showForms(n); }));
+                const locMapCtrl = addLocationMap(content, p);
+                if (p.areas.length) {
+                    const h = document.createElement('h3'); h.textContent = p.n <= 9 ? 'Local de obtenção' : 'Áreas registradas no jogo base'; content.append(h);
+                    const list = document.createElement('ul'); list.className = 'location-list';
+                    const areaItems = new Map();
+                    for (const area of p.areas) {
+                        const li = document.createElement('li');
+                        const mainCol = document.createElement('div'); mainCol.className = 'location-area-main';
+                        if (locMapCtrl && regionByKey.has(area.original)) {
+                            const selectBtn = document.createElement('button');
+                            selectBtn.type = 'button';
+                            selectBtn.className = 'location-area-select';
+                            selectBtn.textContent = `📍 ${area.name}`;
+                            selectBtn.title = 'Destacar esta região no mapa acima';
+                            selectBtn.addEventListener('click', () => {
+                                locMapCtrl.map.choose(area.original, true);
+                                locMapCtrl.map.root.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                            });
+                            mainCol.append(selectBtn);
+                        } else {
+                            const strong = document.createElement('strong');
+                            strong.textContent = area.name;
+                            mainCol.append(strong);
+                        }
+                        if (area.original !== area.name) { const original = document.createElement('small'); original.textContent = area.original; mainCol.append(original); }
+                        const actionsCol = document.createElement('div'); actionsCol.className = 'location-area-actions';
+                        if (regionByKey.has(area.original)) {
+                            const routeBtn = document.createElement('button');
+                            routeBtn.type = 'button';
+                            routeBtn.className = 'btn';
+                            routeBtn.textContent = 'Ver região';
+                            routeBtn.addEventListener('click', () => {
+                                pushModalHistory(`Onde encontrar: ${p.name}`, () => showLocation(p.n, true));
+                                $('location-dialog').close();
+                                showRoute(area.original, true);
+                            });
+                            actionsCol.append(routeBtn);
+                        }
+                        const link = document.createElement('a'); link.href = area.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Serebii ↗';
+                        actionsCol.append(link);
+                        li.append(mainCol, actionsCol);
+                        list.append(li);
+                        areaItems.set(area.original, li);
+                    }
+                    if (locMapCtrl) {
+                        locMapCtrl.onAreaSelect(key => {
+                            for (const [k, li] of areaItems) li.classList.toggle('active-area', k === key);
+                        });
+                    }
+                    content.append(list);
+                }
+                if (p.evoFrom.length) {
+                    const h = document.createElement('h3'); h.textContent = p.areas.length ? 'Também por evolução' : 'Caminho de obtenção por evolução'; content.append(h);
+                    for (const e of p.evoFrom) {
+                        const parent = DATA[e.from - 1], note = document.createElement('p'), btn = document.createElement('button');
+                        note.className = 'where-note'; note.textContent = `${parent.name} → ${p.name}: ${e.detail}`;
+                        btn.className = 'btn loc-evolution'; btn.type = 'button'; btn.textContent = `Onde encontrar ${parent.name}`; btn.dataset.parentLocation = parent.n;
+                        btn.addEventListener('click', () => {
+                            pushModalHistory(`Onde encontrar: ${p.name}`, () => showLocation(p.n, true));
+                            showLocation(parent.n, true);
+                        });
+                        content.append(note, btn);
+                    }
+                }
+                content.append(compare);
+                if (FORMS.some(f => f.n === n)) {
+                    content.append(toolButton('Ver formas de ' + p.name, () => {
+                        pushModalHistory(`Onde encontrar: ${p.name}`, () => showLocation(p.n, true));
+                        $('location-dialog').close();
+                        showForms(n, true);
+                    }));
+                }
                 const links = document.createElement('div'); links.className = 'source-links'; for (const [label, url] of [['Fonte das áreas', p.locationSource], ['Exclusivos por versão', 'https://pokemondb.net/scarlet-violet/exclusive'], ...(p.extraSource ? [['Guia do encontro especial', p.extraSource]] : [])]) { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = label; links.append(a); } content.append(links);
+                syncDialogBackUI('location-dialog');
                 if (!$('location-dialog').open) $('location-dialog').showModal(); $('location-dialog').scrollTop = 0; $('close-location').focus();
             }
-            $('close-location').addEventListener('click', () => $('location-dialog').close());
-            $('close-evolution').addEventListener('click', () => $('evolution-dialog').close());
-            function goBox(b) { if (b < 1 || b > BOX_COUNT) return; currentBox = b; highlighted = 0; renderBox(); $('grid-scroll').scrollLeft = 0; try { $('nav-' + b)?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch { } try { localStorage.setItem(VIEW_KEY, String(b)); } catch { } }
+            $('close-location').addEventListener('click', () => { clearModalHistory(); $('location-dialog').close(); });
+            $('close-evolution').addEventListener('click', () => { clearModalHistory(); $('evolution-dialog').close(); });
+            function goBox(b, preserveWindowScroll = true) {
+                if (b < 1 || b > BOX_COUNT) return;
+                const savedScrollX = window.scrollX, savedScrollY = window.scrollY;
+                const activeEl = document.activeElement;
+                currentBox = b;
+                highlighted = 0;
+                renderBox();
+                $('grid-scroll').scrollLeft = 0;
+                if (activeEl === $('previous') && $('previous').disabled) $('next')?.focus({ preventScroll: true });
+                else if (activeEl === $('next') && $('next').disabled) $('previous')?.focus({ preventScroll: true });
+                try {
+                    const nav = $('box-nav'), navBtn = $('nav-' + b);
+                    if (nav && navBtn) {
+                        const targetLeft = Math.max(0, navBtn.offsetLeft - (nav.clientWidth - navBtn.clientWidth) / 2);
+                        const targetTop = Math.max(0, navBtn.offsetTop - (nav.clientHeight - navBtn.clientHeight) / 2);
+                        nav.scrollTo({ left: targetLeft, top: targetTop, behavior: 'smooth' });
+                    }
+                } catch { }
+                if (preserveWindowScroll) {
+                    if (window.scrollY !== savedScrollY || window.scrollX !== savedScrollX) {
+                        window.scrollTo(savedScrollX, savedScrollY);
+                    }
+                    requestAnimationFrame(() => {
+                        if (window.scrollY !== savedScrollY || window.scrollX !== savedScrollX) {
+                            window.scrollTo(savedScrollX, savedScrollY);
+                        }
+                    });
+                }
+                try { localStorage.setItem(VIEW_KEY, String(b)); } catch { }
+            }
             for (let b = 1; b <= BOX_COUNT; b++) {
                 const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'box-button'; btn.id = 'nav-' + b; btn.innerHTML = `<strong>Box ${String(b).padStart(2, '0')}</strong><small></small><span class="mini-meter" aria-hidden="true"></span>`; btn.addEventListener('click', () => goBox(b)); $('box-nav').append(btn);
             }
@@ -6389,6 +6736,13 @@
             function clearSpeciesForms(n, onlyShiny = false) { for (const f of FORMS.filter(f => f.n === n)) { formShiny.delete(f.key); if (!onlyShiny) formCaught.delete(f.key); } }
             function missingEvolutions() { return DATA.filter(p => !caught.has(p.n) && p.evoFrom.some(e => caught.has(e.from))); }
             function toolButton(label, action) { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = label; b.addEventListener('click', action); return b; }
+            function showMissingEvolutions(fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                renderMissingEvolutions();
+                syncDialogBackUI('missing-evo-dialog');
+                if (!$('missing-evo-dialog').open) $('missing-evo-dialog').showModal();
+                $('close-missing-evo').focus();
+            }
             function renderMissingEvolutions() {
                 const list = $('missing-evo-list'), all = missingEvolutions(), q = normalize($('missing-evo-search').value), rows = all.filter(p => !q || normalize(p.name).includes(q) || String(p.n) === q); list.replaceChildren();
                 $('missing-evo-count').textContent = `${all.length} evoluções pendentes · ${rows.length} nesta busca`;
@@ -6397,11 +6751,20 @@
                     const card = document.createElement('article'); card.className = 'planner-card'; card.dataset.missingEvolution = p.n; const head = document.createElement('h3'); head.textContent = `#${pad(p.n)} ${p.name}`; card.append(head);
                     for (const edge of p.evoFrom.filter(e => caught.has(e.from))) { const note = document.createElement('p'); note.textContent = `✓ ${DATA[edge.from - 1].name} → ${p.name}: ${edge.detail}`; card.append(note); }
                     const controls = document.createElement('div'); controls.className = 'planner-actions'; const capture = toolButton('Já evoluí / obtive', () => { checkpoint('registrar evolução de ' + p.name); caught.add(p.n); updateSpecies(p.n); renderMissingEvolutions(); notify(p.name + ': captura registrada. A pré-evolução permanece no histórico.'); $('missing-evo-count').focus(); }); capture.classList.add('primary'); capture.dataset.evoCapture = p.n;
-                    controls.append(capture, toolButton('Ver na box', () => { $('missing-evo-dialog').close(); clearSearch(); reveal(p.n); })); card.append(controls); list.append(card);
+                    controls.append(
+                        capture,
+                        toolButton('Onde encontrar', () => {
+                            pushModalHistory('Evoluções que faltam', () => showMissingEvolutions(true));
+                            $('missing-evo-dialog').close();
+                            showLocation(p.n, true);
+                        }),
+                        toolButton('Ver na box', () => { clearModalHistory(); $('missing-evo-dialog').close(); clearSearch(); reveal(p.n); })
+                    );
+                    card.append(controls); list.append(card);
                 }
             }
-            $('open-missing-evo').addEventListener('click', () => { renderMissingEvolutions(); $('missing-evo-dialog').showModal(); $('close-missing-evo').focus(); });
-            $('close-missing-evo').addEventListener('click', () => $('missing-evo-dialog').close()); $('missing-evo-search').addEventListener('input', renderMissingEvolutions);
+            $('open-missing-evo').addEventListener('click', () => showMissingEvolutions());
+            $('close-missing-evo').addEventListener('click', () => { clearModalHistory(); $('missing-evo-dialog').close(); }); $('missing-evo-search').addEventListener('input', renderMissingEvolutions);
             function renderForms() {
                 const list = $('forms-list'), q = normalize($('forms-search').value), pending = $('forms-pending').checked; list.replaceChildren(); let shown = 0;
                 for (const p of DATA) {
@@ -6410,7 +6773,7 @@
                     for (const f of items) {
                         shown++; const card = document.createElement('article'); card.className = 'form-card'; card.dataset.form = f.key; card.classList.toggle('recorded', formCaught.has(f.key)); const img = document.createElement('img'); img.src = formShiny.has(f.key) ? f.shinySprite : f.sprite; img.alt = p.name + ' · ' + f.label; img.width = 72; img.height = 72; const label = document.createElement('strong'); label.textContent = f.label; const note = document.createElement('p'); note.textContent = f.note; const buttons = document.createElement('div'); buttons.className = 'planner-actions';
                         const capture = toolButton(formCaught.has(f.key) ? '✓ Registrada' : 'Registrar forma', () => toggleForm(f, false)); capture.dataset.formCapture = f.key; capture.setAttribute('aria-pressed', String(formCaught.has(f.key))); capture.setAttribute('aria-label', `${formCaught.has(f.key) ? 'Desmarcar' : 'Registrar'} ${p.name} ${f.label}`);
-                        const shiny = toolButton(formShiny.has(f.key) ? '★ Shiny' : '☆ Shiny', () => toggleForm(f, true)); shiny.dataset.formShiny = f.key; shiny.setAttribute('aria-pressed', String(formShiny.has(f.key))); shiny.setAttribute('aria-label', `Shiny de ${p.name} ${f.label}`); const location = pos(p.n, f.key), place = document.createElement('small'); place.className = 'form-box-position'; place.textContent = `Box ${location.box} · L${location.row} C${location.col} · Slot ${location.slot}`; const locate = toolButton('Ver na box', () => { $('forms-dialog').close(); clearSearch(); reveal(p.n, f.key); }); locate.dataset.formBox = f.key; buttons.append(capture, shiny, locate); card.append(img, label, place, note, buttons); cards.append(card);
+                        const shiny = toolButton(formShiny.has(f.key) ? '★ Shiny' : '☆ Shiny', () => toggleForm(f, true)); shiny.dataset.formShiny = f.key; shiny.setAttribute('aria-pressed', String(formShiny.has(f.key))); shiny.setAttribute('aria-label', `Shiny de ${p.name} ${f.label}`); const location = pos(p.n, f.key), place = document.createElement('small'); place.className = 'form-box-position'; place.textContent = `Box ${location.box} · L${location.row} C${location.col} · Slot ${location.slot}`; const locate = toolButton('Ver na box', () => { clearModalHistory(); $('forms-dialog').close(); clearSearch(); reveal(p.n, f.key); }); locate.dataset.formBox = f.key; buttons.append(capture, shiny, locate); card.append(img, label, place, note, buttons); cards.append(card);
                     }
                     const source = document.createElement('a'); source.href = 'https://www.serebii.net/pokedex-sv/' + p.name.toLowerCase().replace('é', 'e') + '/'; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.textContent = 'Consultar formas e detalhes da espécie ↗'; source.className = 'forms-source'; section.append(source); list.append(section);
                 }
@@ -6423,8 +6786,16 @@
                 else if (formCaught.has(f.key)) { formCaught.delete(f.key); formShiny.delete(f.key); } else { formCaught.add(f.key); caught.add(f.n); }
                 updateSpecies(f.n); if ($('forms-dialog').open) { renderForms(); const selector = shiny ? 'data-form-shiny' : 'data-form-capture', next = $('forms-list').querySelector(`[${selector}="${f.key}"]`); (next || $('forms-count')).focus({ preventScroll: true }); } notify('Forma atualizada. Desmarcar uma forma mantém o registro geral da espécie.');
             }
-            function showForms(n) { $('forms-search').value = n ? DATA[n - 1].name : ''; $('forms-pending').checked = false; renderForms(); $('forms-dialog').showModal(); $('close-forms').focus(); }
-            $('open-forms').addEventListener('click', () => showForms()); $('close-forms').addEventListener('click', () => $('forms-dialog').close()); $('forms-search').addEventListener('input', renderForms); $('forms-pending').addEventListener('change', renderForms);
+            function showForms(n, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                $('forms-search').value = n ? DATA[n - 1].name : '';
+                $('forms-pending').checked = false;
+                renderForms();
+                syncDialogBackUI('forms-dialog');
+                if (!$('forms-dialog').open) $('forms-dialog').showModal();
+                $('close-forms').focus();
+            }
+            $('open-forms').addEventListener('click', () => showForms()); $('close-forms').addEventListener('click', () => { clearModalHistory(); $('forms-dialog').close(); }); $('forms-search').addEventListener('input', renderForms); $('forms-pending').addEventListener('change', renderForms);
             function editRoute(label, edit) { checkpoint(label); edit(); persist(); refreshTools(); }
             function renderItinerary() {
                 const list = $('itinerary-list'); list.replaceChildren(); const done = itinerary.filter(s => s.visited).length, eligible = DATA.filter(routeEligible), unique = eligible.filter(p => p.areas.some(a => itinerary.some(s => s.key === a.original)));
@@ -6458,6 +6829,13 @@
                 if (p.evoFrom.length) return { kind: 'evolve', why: p.evoFrom.map(e => `Primeiro obtenha ${DATA[e.from - 1].name}. ${e.detail}`).join(' ') };
                 return { kind: 'special', why: p.locationNote || 'Consulte os detalhes de obtenção.' };
             }
+            function showCompletion(fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                renderCompletion();
+                syncDialogBackUI('completion-dialog');
+                if (!$('completion-dialog').open) $('completion-dialog').showModal();
+                $('close-completion').focus();
+            }
             function renderCompletion() {
                 const missing = DATA.filter(p => !caught.has(p.n)), q = normalize($('completion-search').value), classified = missing.map(p => ({ p, ...completionPath(p) }));
                 const cards = $('completion-categories'); cards.replaceChildren();
@@ -6475,13 +6853,25 @@
                     const head = document.createElement('div'); head.className = 'route-card-head'; const img = document.createElement('img'); img.src = p.sprite; img.alt = ''; img.width = 48; img.height = 48; const text = document.createElement('div'), title = document.createElement('strong'), tag = document.createElement('small'); title.textContent = `#${pad(p.n)} ${p.name}`; tag.textContent = CATEGORY_LABELS[kind]; text.append(title, tag); head.append(img, text);
                     const note = document.createElement('p'); note.textContent = why; const controls = document.createElement('div'); controls.className = 'planner-actions';
                     const capture = toolButton('Registrar obtido', () => { checkpoint('registrar ' + p.name); caught.add(p.n); updateSpecies(p.n); $('completion-count').focus(); notify(p.name + ': registrado na Pokédex.'); }); capture.classList.add('primary'); capture.dataset.completionCapture = p.n;
-                    controls.append(capture, toolButton('Como obter', () => { $('completion-dialog').close(); showLocation(p.n); }), toolButton('Ver na box', () => { $('completion-dialog').close(); clearSearch(); reveal(p.n); }));
-                    if (ITEM_TARGETS.has(p.n)) controls.append(toolButton('Itens necessários', () => { $('completion-dialog').close(); showItems(p.n); }));
+                    controls.append(
+                        capture,
+                        toolButton('Como obter', () => {
+                            pushModalHistory('O que falta para completar?', () => showCompletion(true));
+                            $('completion-dialog').close();
+                            showLocation(p.n, true);
+                        }),
+                        toolButton('Ver na box', () => { clearModalHistory(); $('completion-dialog').close(); clearSearch(); reveal(p.n); })
+                    );
+                    if (ITEM_TARGETS.has(p.n)) controls.append(toolButton('Itens necessários', () => {
+                        pushModalHistory('O que falta para completar?', () => showCompletion(true));
+                        $('completion-dialog').close();
+                        showItems(p.n, true);
+                    }));
                     card.append(head, note, controls); list.append(card);
                 }
             }
-            $('open-completion').addEventListener('click', () => { renderCompletion(); $('completion-dialog').showModal(); $('close-completion').focus(); });
-            $('close-completion').addEventListener('click', () => $('completion-dialog').close()); $('completion-game').addEventListener('change', () => { completionPage = 1; renderCompletion(); }); $('completion-search').addEventListener('input', () => { completionPage = 1; renderCompletion(); }); $('completion-prev').addEventListener('click', () => { completionPage--; renderCompletion(); $('completion-count').focus(); }); $('completion-next').addEventListener('click', () => { completionPage++; renderCompletion(); $('completion-count').focus(); });
+            $('open-completion').addEventListener('click', () => showCompletion());
+            $('close-completion').addEventListener('click', () => { clearModalHistory(); $('completion-dialog').close(); }); $('completion-game').addEventListener('change', () => { completionPage = 1; renderCompletion(); }); $('completion-search').addEventListener('input', () => { completionPage = 1; renderCompletion(); }); $('completion-prev').addEventListener('click', () => { completionPage--; renderCompletion(); $('completion-count').focus(); }); $('completion-next').addEventListener('click', () => { completionPage++; renderCompletion(); $('completion-count').focus(); });
             function pendingItems() { return EVOLUTION_ITEMS.filter(r => !caught.has(r.n)); }
             function renderItems() {
                 const pending = pendingItems(), q = normalize($('items-search').value), list = $('items-list'); list.replaceChildren();
@@ -6493,14 +6883,51 @@
                 for (const r of rows) {
                     const p = DATA[r.n - 1], card = document.createElement('article'); card.className = 'planner-card item-card'; card.dataset.itemTarget = r.n; card.classList.toggle('item-ready', readyItems.has(r.n)); const h = document.createElement('h3'); h.textContent = `${r.quantity} × ${r.name}`; const target = document.createElement('p'); target.className = 'item-target'; target.textContent = `#${pad(p.n)} ${p.name} · ${r.label}`; const detail = document.createElement('p'); detail.textContent = r.detail;
                     const label = document.createElement('label'); label.className = 'item-check'; const check = document.createElement('input'); check.type = 'checkbox'; check.checked = readyItems.has(r.n); check.dataset.itemReady = r.n; check.setAttribute('aria-label', 'Itens separados para ' + p.name); check.addEventListener('change', () => { checkpoint('alterar itens de ' + p.name); if (check.checked) readyItems.add(r.n); else readyItems.delete(r.n); persist(); refreshTools(); const current = $('items-list').querySelector(`[data-item-ready="${r.n}"]`); (current || $('items-count')).focus({ preventScroll: true }); notify('Checklist de ' + p.name + ' atualizada.'); }); label.append(check, document.createTextNode(` Já separei ${r.quantity === 1 ? 'o item correto' : 'os ' + r.quantity + ' itens'} para esta evolução`));
-                    const buttons = document.createElement('div'); buttons.className = 'planner-actions'; buttons.append(toolButton('Ver requisitos', () => { $('items-dialog').close(); showEvolution(p.n); }), toolButton('Ver na box', () => { $('items-dialog').close(); clearSearch(); reveal(p.n); })); card.append(h, target, detail, label, buttons); list.append(card);
+                    const buttons = document.createElement('div'); buttons.className = 'planner-actions';
+                    buttons.append(
+                        toolButton('Ver requisitos', () => {
+                            const savedQuery = $('items-search').value;
+                            pushModalHistory('Itens de evolução', () => { $('items-search').value = savedQuery; renderItems(); syncDialogBackUI('items-dialog'); $('items-dialog').showModal(); });
+                            $('items-dialog').close();
+                            showEvolution(p.n, true);
+                        }),
+                        toolButton('Onde encontrar', () => {
+                            const savedQuery = $('items-search').value;
+                            pushModalHistory('Itens de evolução', () => { $('items-search').value = savedQuery; renderItems(); syncDialogBackUI('items-dialog'); $('items-dialog').showModal(); });
+                            $('items-dialog').close();
+                            showLocation(p.n, true);
+                        }),
+                        toolButton('Ver na box', () => { clearModalHistory(); $('items-dialog').close(); clearSearch(); reveal(p.n); })
+                    );
+                    card.append(h, target, detail, label, buttons); list.append(card);
                 }
             }
-            function showItems(n) { $('items-search').value = n ? DATA[n - 1].name : ''; $('items-unready').checked = false; $('items-parent').checked = false; renderItems(); $('items-dialog').showModal(); $('close-items').focus(); }
-            $('open-items').addEventListener('click', () => showItems()); $('close-items').addEventListener('click', () => $('items-dialog').close()); $('items-search').addEventListener('input', renderItems); $('items-unready').addEventListener('change', renderItems); $('items-parent').addEventListener('change', renderItems);
+            function showItems(n, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                $('items-search').value = n ? DATA[n - 1].name : '';
+                $('items-unready').checked = false;
+                $('items-parent').checked = false;
+                renderItems();
+                syncDialogBackUI('items-dialog');
+                if (!$('items-dialog').open) $('items-dialog').showModal();
+                $('close-items').focus();
+            }
+            $('open-items').addEventListener('click', () => showItems()); $('close-items').addEventListener('click', () => { clearModalHistory(); $('items-dialog').close(); }); $('items-search').addEventListener('input', renderItems); $('items-unready').addEventListener('change', renderItems); $('items-parent').addEventListener('change', renderItems);
             function nativeForGame(p, game) { return game === 'all' || p.exclusive === 'both' || p.exclusive === 'forms' || p.exclusive === game; }
             function regionStats(key, game) { const members = DATA.filter(p => nativeForGame(p, game) && p.areas.some(a => a.original === key)), done = members.filter(p => caught.has(p.n)).length; return { total: members.length, done, missing: members.length - done, percent: members.length ? Math.round(done / members.length * 100) : 0 }; }
             function renderRouteProgress() { const s = regionStats(routeSelection, $('route-game').value); $('route-region-progress').textContent = `Coleção nesta região: ${s.done} / ${s.total} espécies registradas · ${s.missing} pendentes (${s.percent}%).`; }
+            function showRegionsDialog(focusKey, fromSubmenu = false) {
+                if (!fromSubmenu) clearModalHistory();
+                if (focusKey && regionByKey.has(focusKey)) regionFocus = focusKey;
+                if (!regionsMap) {
+                    regionsMap = createRegionMap(REGIONS, { selected: regionFocus, label: 'Progresso da coleção por região', onSelect: key => { regionFocus = key; renderRegions(); } });
+                    $('regions-map').append(regionsMap.root);
+                }
+                renderRegions();
+                syncDialogBackUI('regions-dialog');
+                if (!$('regions-dialog').open) $('regions-dialog').showModal();
+                $('close-regions').focus();
+            }
             function renderRegions() {
                 const game = $('regions-game').value, q = normalize($('regions-search').value), stats = REGIONS.map(r => ({ ...r, ...regionStats(r.key, game) }));
                 regionsMap.updateCounts(new Map(stats.map(r => [r.key, r.missing]))); regionsMap.select(regionFocus);
@@ -6513,9 +6940,16 @@
                 if (!rows.length) { const p = document.createElement('p'); p.className = 'route-empty'; p.textContent = 'Nenhuma região corresponde à busca.'; list.append(p); }
                 regionsMap.root.querySelectorAll('.map-marker').forEach((pin, i) => { const s = stats.find(r => r.key === pin.dataset.region); pin.classList.toggle('region-complete', s.total > 0 && s.missing === 0); pin.title = `${s.name}: ${s.done}/${s.total}, ${s.missing} pendentes`; pin.setAttribute('aria-label', pin.title); regionsMap.root.querySelector('select').options[i].textContent = `${i + 1}. ${s.name} · ${s.done}/${s.total}`; });
             }
-            function openRegionRoute(key) { $('regions-dialog').close(); $('route-game').value = $('regions-game').value; $('route-pending').checked = true; showRoute(key); }
-            $('open-regions').addEventListener('click', () => { if (!regionsMap) { regionsMap = createRegionMap(REGIONS, { selected: regionFocus, label: 'Progresso da coleção por região', onSelect: key => { regionFocus = key; renderRegions(); } }); $('regions-map').append(regionsMap.root); } renderRegions(); $('regions-dialog').showModal(); $('close-regions').focus(); });
-            $('close-regions').addEventListener('click', () => $('regions-dialog').close()); $('regions-game').addEventListener('change', renderRegions); $('regions-search').addEventListener('input', renderRegions); $('regions-sort').addEventListener('change', renderRegions); $('region-open-route').addEventListener('click', () => openRegionRoute(regionFocus));
+            function openRegionRoute(key) {
+                const savedFocus = key || regionFocus;
+                pushModalHistory('Progresso por região', () => showRegionsDialog(savedFocus, true));
+                $('regions-dialog').close();
+                $('route-game').value = $('regions-game').value;
+                $('route-pending').checked = true;
+                showRoute(key, true);
+            }
+            $('open-regions').addEventListener('click', () => showRegionsDialog());
+            $('close-regions').addEventListener('click', () => { clearModalHistory(); $('regions-dialog').close(); }); $('regions-game').addEventListener('change', renderRegions); $('regions-search').addEventListener('input', renderRegions); $('regions-sort').addEventListener('change', renderRegions); $('region-open-route').addEventListener('click', () => openRegionRoute(regionFocus));
             function refreshCompletionTools() {
                 $('completion-summary').textContent = `${400 - caught.size} Pokémon para completar os 400`;
                 const items = pendingItems(); $('items-summary').textContent = `${items.filter(r => !readyItems.has(r.n)).length} evoluções com itens por separar`;
